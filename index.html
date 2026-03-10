@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>BrainDrop ⚡ AI Study Companion</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b14;--bg2:#12121f;--bg3:#1a1a2e;--bgH:#1f1f3a;--np:#b44aff;--nk:#ff6b9d;--nc:#00f5d4;--ny:#fee440;--nb:#4cc9f0;--no:#ff6d00;--ng:#39ff14;--nr:#ff1744;--t1:#eef0ff;--t2:#a0a4c4;--t3:#5c5f80;--bd:rgba(255,255,255,0.05);--gf:linear-gradient(135deg,#ff6b9d,#b44aff);--gi:linear-gradient(135deg,#4cc9f0,#00f5d4);--gg:linear-gradient(135deg,#fee440,#ff6d00);--xp:linear-gradient(90deg,#b44aff,#ff6b9d,#00f5d4)}
+*{margin:0;padding:0;box-sizing:border-box}html{height:100%}body{font-family:'Fredoka',sans-serif;background:var(--bg);color:var(--t1);height:100%;overflow:hidden}
+.bgfx{position:fixed;inset:0;z-index:0;pointer-events:none}.bgfx::before{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(180,74,255,.12),transparent 70%);top:-100px;left:-100px;animation:d1 20s ease-in-out infinite}.bgfx::after{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(0,245,212,.08),transparent 70%);bottom:-150px;right:-150px;animation:d2 25s ease-in-out infinite}@keyframes d1{0%,100%{transform:translate(0,0)}50%{transform:translate(100px,80px)}}@keyframes d2{0%,100%{transform:translate(0,0)}50%{transform:translate(-80px,-60px)}}
+.pgrid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.03;background-image:linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);background-size:24px 24px}
+.app{position:relative;z-index:1;display:flex;flex-direction:column;height:100vh}
+.top{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;min-height:56px;background:rgba(18,18,31,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--bd);position:relative}.top::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--xp);opacity:.5}
+.brand{display:flex;align-items:center;gap:10px}.bico{width:38px;height:38px;border-radius:10px;background:var(--gf);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;box-shadow:0 0 16px rgba(255,107,157,.4);position:relative}.bico::after{content:'✦';position:absolute;top:-4px;right:-4px;font-size:10px;color:var(--ny);animation:sp 2s ease-in-out infinite}@keyframes sp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
+.bname{font-size:1.35rem;font-weight:700;background:var(--gf);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.btag{font-size:.6rem;color:var(--t3);text-transform:uppercase;letter-spacing:2px;font-weight:500}
+.topc{display:flex;align-items:center;gap:8px}
+.gps{display:flex;background:var(--bg3);border-radius:9px;padding:3px;border:1px solid var(--bd)}.gp{padding:6px 16px;border:none;border-radius:7px;font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .25s;background:0 0;color:var(--t3);text-transform:uppercase;letter-spacing:1px}.gp.on{background:var(--gf);color:#fff;box-shadow:0 2px 10px rgba(180,74,255,.3)}.gp:hover:not(.on){color:var(--t2)}
+.ib{width:36px;height:36px;border-radius:9px;background:var(--bg3);border:1px solid var(--bd);color:var(--t3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all .2s}.ib:hover{border-color:var(--np);color:var(--np)}
+.xps{display:flex;align-items:center;gap:14px;padding:6px 20px;background:rgba(26,26,46,.6);border-bottom:1px solid var(--bd);font-size:.75rem;flex-shrink:0}.xpi{display:flex;align-items:center;gap:5px;color:var(--t3)}.xpi .v{color:var(--ny);font-weight:700;font-family:'Space Mono',monospace}.xbw{flex:1;height:6px;border-radius:3px;background:var(--bg3);overflow:hidden;max-width:200px}.xbf{height:100%;width:0%;border-radius:3px;background:var(--xp);transition:width .8s cubic-bezier(.22,1,.36,1)}.xl{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--t3)}
+.mn{display:flex;flex:1;overflow:hidden}
+.sb{width:200px;flex-shrink:0;padding:14px 8px;background:rgba(18,18,31,.5);border-right:1px solid var(--bd);display:flex;flex-direction:column;gap:4px;overflow-y:auto}.sbl{font-size:.58rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--t3);padding:10px 12px 6px;font-weight:600}
+.sbb{display:flex;align-items:center;gap:10px;padding:10px 12px;border:none;border-radius:9px;background:0 0;color:var(--t2);font-family:'Fredoka',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .2s;text-align:left;width:100%;position:relative}.sbb:hover{background:var(--bgH);color:var(--t1)}.sbb.on{background:rgba(180,74,255,.1);color:var(--np)}.sbb.on::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:20px;border-radius:0 3px 3px 0;background:var(--np)}
+.sbi{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.sdv{height:1px;background:var(--bd);margin:8px 12px}
+.kbc{margin-top:auto;padding:12px;background:var(--bg3);border-radius:10px;border:1px solid var(--bd)}.kbct{font-size:.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--t3);margin-bottom:6px;font-weight:600}.kbcv{font-size:.8rem;font-weight:500}.kbcv.ok{color:var(--ng)}.kbcv.no{color:var(--no)}.kbcv.load{color:var(--nb)}
+.aibadge{display:flex;gap:6px;margin-top:8px}.aib{font-size:.6rem;padding:3px 8px;border-radius:5px;font-weight:600;font-family:'Space Mono',monospace}.aib.cl{background:rgba(180,74,255,.15);color:var(--np)}.aib.gm{background:rgba(0,245,212,.12);color:var(--nc)}
+.ct{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.mds{display:flex;gap:6px;padding:10px 18px;background:rgba(18,18,31,.4);border-bottom:1px solid var(--bd);overflow-x:auto;flex-shrink:0}.mds::-webkit-scrollbar{height:0}
+.mt{display:flex;align-items:center;gap:7px;padding:8px 15px;border:1px solid var(--bd);border-radius:9px;background:var(--bg3);color:var(--t3);font-family:'Fredoka',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;transition:all .25s;white-space:nowrap}.mt:hover{border-color:rgba(180,74,255,.2);color:var(--t2)}.mt.on{border-color:var(--np);background:rgba(180,74,255,.08);color:var(--np);box-shadow:0 0 12px rgba(180,74,255,.1)}.mt .em{font-size:1rem}
+.ch{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;scroll-behavior:smooth}.ch::-webkit-scrollbar{width:5px}.ch::-webkit-scrollbar-thumb{background:rgba(180,74,255,.2);border-radius:3px}
+.hero{max-width:640px;margin:auto;text-align:center;padding:32px 20px}.hchar{font-size:4rem;margin-bottom:16px;animation:hf 3s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(180,74,255,.4))}@keyframes hf{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-8px) rotate(-2deg)}75%{transform:translateY(-4px) rotate(2deg)}}
+.htit{font-size:1.6rem;font-weight:700;margin-bottom:8px;background:var(--gf);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.hsub{color:var(--t2);font-size:.92rem;line-height:1.6;margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.chip{padding:9px 16px;border-radius:20px;background:var(--bg3);border:1px solid var(--bd);color:var(--t2);font-size:.8rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:'Fredoka',sans-serif}.chip:hover{border-color:var(--nk);color:var(--nk);background:rgba(255,107,157,.06);transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,107,157,.1)}
+.pdfstat{margin-top:18px;font-size:.75rem;color:var(--t3);padding:8px 16px;background:var(--bg3);border-radius:10px;display:inline-block;border:1px solid var(--bd)}
+.msg{display:flex;gap:12px;max-width:82%;animation:mi .35s ease}.msg.u{margin-left:auto;flex-direction:row-reverse}@keyframes mi{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.av{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;font-weight:700}.av.a{background:var(--gf);box-shadow:0 0 10px rgba(180,74,255,.3)}.av.uu{background:var(--gg);box-shadow:0 0 10px rgba(254,228,64,.2)}
+.bb{padding:14px 18px;border-radius:14px;font-size:.88rem;line-height:1.7;word-break:break-word}.msg.a .bb{background:var(--bg3);border:1px solid var(--bd)}.msg.u .bb{background:rgba(180,74,255,.12);border:1px solid rgba(180,74,255,.2)}
+.bb h1{font-size:1.1rem;margin:10px 0 6px;color:var(--nk)}.bb h2{font-size:1rem;margin:8px 0 4px;color:var(--np)}.bb h3{font-size:.92rem;margin:6px 0 3px;color:var(--nc)}.bb p{margin:5px 0}.bb ul,.bb ol{padding-left:18px;margin:6px 0}.bb li{margin-bottom:3px}.bb strong{color:var(--ny);font-weight:600}.bb em{color:var(--nc)}.bb code{background:rgba(180,74,255,.1);padding:2px 6px;border-radius:4px;font-family:'Space Mono',monospace;font-size:.82em;color:var(--nc)}.bb pre{background:var(--bg);padding:12px;border-radius:8px;overflow-x:auto;margin:8px 0;border:1px solid var(--bd)}.bb pre code{background:none;padding:0}.bb blockquote{border-left:3px solid var(--np);padding:8px 12px;margin:8px 0;background:rgba(180,74,255,.04);border-radius:0 8px 8px 0;color:var(--t2);font-style:italic}.bb table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.82rem}.bb th,.bb td{border:1px solid var(--bd);padding:7px 10px;text-align:left}.bb th{background:rgba(180,74,255,.1);color:var(--np);font-weight:600}.bb hr{border:none;border-top:1px solid var(--bd);margin:10px 0}
+.typ{display:flex;gap:5px;padding:14px 18px}.dt{width:7px;height:7px;border-radius:50%;background:var(--np);animation:bo 1.4s infinite ease-in-out}.dt:nth-child(2){animation-delay:.16s}.dt:nth-child(3){animation-delay:.32s}@keyframes bo{0%,80%,100%{transform:scale(.5);opacity:.3}40%{transform:scale(1);opacity:1}}
+.iz{padding:12px 18px 16px;background:rgba(18,18,31,.85);backdrop-filter:blur(16px);border-top:1px solid var(--bd);flex-shrink:0}.ir{display:flex;align-items:flex-end;gap:10px;max-width:760px;margin:0 auto}
+.tx{flex:1;padding:12px 16px;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;color:var(--t1);font-family:'Fredoka',sans-serif;font-size:.88rem;resize:none;outline:none;min-height:44px;max-height:140px;line-height:1.5;transition:border-color .2s}.tx:focus{border-color:var(--np);box-shadow:0 0 12px rgba(180,74,255,.1)}.tx::placeholder{color:var(--t3)}
+.sn{width:44px;height:44px;border-radius:10px;background:var(--gf);border:none;color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}.sn:hover{transform:scale(1.06);box-shadow:0 0 18px rgba(180,74,255,.4)}.sn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.ft{padding:8px 20px;text-align:center;font-size:.65rem;color:var(--t3);border-top:1px solid var(--bd);background:rgba(11,11,20,.6);flex-shrink:0}.ft a{color:var(--np);text-decoration:none}
+.ov{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}.ov.sh{opacity:1;pointer-events:auto}
+.mdl{background:var(--bg3);border:1px solid var(--bd);border-radius:18px;padding:28px;width:90%;max-width:500px;box-shadow:0 20px 60px rgba(0,0,0,.5);transform:translateY(16px);transition:transform .3s;max-height:90vh;overflow-y:auto}.ov.sh .mdl{transform:translateY(0)}.mdl h2{font-size:1.2rem;margin-bottom:18px}
+.fg{margin-bottom:16px}.fl{display:block;font-size:.75rem;color:var(--t2);margin-bottom:5px;font-weight:500}.fi{width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--bd);border-radius:8px;color:var(--t1);font-family:'Fredoka',sans-serif;font-size:.88rem;outline:none}.fi:focus{border-color:var(--np)}.fh{font-size:.7rem;color:var(--t3);margin-top:4px}.fh a{color:var(--np)}
+.kbt{width:100%;height:150px;padding:12px;background:var(--bg);border:1px solid var(--bd);border-radius:8px;color:var(--t1);font-family:'Space Mono',monospace;font-size:.78rem;resize:vertical;outline:none}
+.ma{display:flex;gap:8px;justify-content:flex-end;margin-top:20px}.bg{padding:9px 18px;border-radius:8px;border:none;font-family:'Fredoka',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer}.bg.s{background:var(--bg);border:1px solid var(--bd);color:var(--t2)}.bg.p{background:var(--gf);color:#fff}
+.aisw{display:flex;gap:6px;margin-bottom:16px}.aisw-btn{flex:1;padding:10px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--t2);font-family:'Fredoka',sans-serif;font-size:.8rem;cursor:pointer;text-align:center;transition:all .2s}.aisw-btn.on{border-color:var(--np);background:rgba(180,74,255,.1);color:var(--np)}.aisw-btn:hover:not(.on){border-color:rgba(180,74,255,.2)}
+.mnv{display:none}
+@media(max-width:768px){.sb{display:none}.top{padding:8px 14px}.bname{font-size:1.1rem}.btag{display:none}.xps{padding:5px 14px;gap:10px;font-size:.68rem}.mds{padding:8px 12px;gap:4px}.mt{padding:7px 11px;font-size:.72rem}.mt .em{font-size:.9rem}.ch{padding:14px}.iz{padding:10px 14px 14px}.ct{padding-bottom:58px}.mnv{display:flex!important;position:fixed;bottom:0;left:0;right:0;background:rgba(18,18,31,.95);backdrop-filter:blur(16px);border-top:1px solid var(--bd);padding:6px 2px;z-index:100;justify-content:space-around}.mb{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;color:var(--t3);font-size:.58rem;padding:4px 6px;border-radius:8px;cursor:pointer;font-family:'Fredoka',sans-serif;font-weight:500}.mb .mi{font-size:1.2rem}.mb.on{color:var(--np)}}
+</style>
+</head>
+<body>
+<div class="bgfx"></div><div class="pgrid"></div>
+<div class="app">
+<header class="top">
+  <div class="brand"><div class="bico">⚡</div><div><div class="bname">BrainDrop</div><div class="btag">AI Study Companion · Claude + Gemini</div></div></div>
+  <div class="topc">
+    <div class="gps"><button class="gp on" onclick="setG(10)">X</button><button class="gp" onclick="setG(7)">VII</button></div>
+    <button class="ib" onclick="openM('set')" title="Settings">⚙</button>
+    <button class="ib" onclick="openM('kb')" title="Load Extra Content">📚</button>
+  </div>
+</header>
+<div class="xps">
+  <div class="xpi">🔥 <span class="v" id="stk">0</span></div>
+  <div class="xpi">⚡ <span class="v" id="xpv">0</span> XP</div>
+  <div class="xbw"><div class="xbf" id="xpb"></div></div>
+  <div class="xl" id="lvl">Lvl 1 — Newbie</div>
+  <div class="xpi" style="margin-left:auto">📊 <span class="v" id="qc">0</span> Qs</div>
+</div>
+<div class="mn">
+<aside class="sb">
+  <div class="sbl">Subjects</div>
+  <button class="sbb on" data-s="mathematics" onclick="setS(this)"><span class="sbi" style="background:rgba(180,74,255,.15);color:#b44aff">∑</span>Mathematics</button>
+  <button class="sbb" data-s="science" onclick="setS(this)"><span class="sbi" style="background:rgba(0,245,212,.12);color:#00f5d4">⚗</span>Science</button>
+  <button class="sbb" data-s="english" onclick="setS(this)"><span class="sbi" style="background:rgba(254,228,64,.12);color:#fee440">✎</span>English</button>
+  <button class="sbb" data-s="social-science" onclick="setS(this)"><span class="sbi" style="background:rgba(255,107,157,.12);color:#ff6b9d">🌏</span>Social Science</button>
+  <button class="sbb" data-s="hindi" onclick="setS(this)"><span class="sbi" style="background:rgba(76,201,240,.12);color:#4cc9f0">अ</span>Hindi</button>
+  <div class="sdv"></div>
+  <div class="kbc">
+    <div class="kbct">Knowledge Base</div>
+    <div class="kbcv no" id="kbs">Loading PDFs...</div>
+    <div class="aibadge"><span class="aib cl">Claude</span><span class="aib gm">Gemini</span></div>
+  </div>
+</aside>
+<main class="ct">
+  <div class="mds">
+    <button class="mt on" data-m="explain" onclick="setMd(this)"><span class="em">📖</span> Explain</button>
+    <button class="mt" data-m="socratic" onclick="setMd(this)"><span class="em">🧠</span> Socratic</button>
+    <button class="mt" data-m="quiz" onclick="setMd(this)"><span class="em">🎮</span> Quiz Me</button>
+    <button class="mt" data-m="examprep" onclick="setMd(this)"><span class="em">🎯</span> Exam Prep</button>
+    <button class="mt" data-m="tutor" onclick="setMd(this)"><span class="em">🤖</span> AI Tutor</button>
+  </div>
+  <div class="ch" id="ch"></div>
+  <div class="iz"><div class="ir">
+    <textarea class="tx" id="inp" rows="1" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();go()}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,140)+'px'"></textarea>
+    <button class="sn" id="sb" onclick="go()">➤</button>
+  </div></div>
+</main>
+</div>
+<div class="ft">© 2025 <a href="mailto:raja.cloudmdm@gmail.com">Raja Shahnawaz Soni</a> · BrainDrop — Powered by Claude + Gemini · Built with ❤ for learning</div>
+</div>
+
+<!-- Mobile nav -->
+<nav class="mnv">
+  <button class="mb on" data-s="mathematics" onclick="mN(this)"><span class="mi">∑</span>Maths</button>
+  <button class="mb" data-s="science" onclick="mN(this)"><span class="mi">⚗</span>Science</button>
+  <button class="mb" data-s="english" onclick="mN(this)"><span class="mi">✎</span>English</button>
+  <button class="mb" data-s="social-science" onclick="mN(this)"><span class="mi">🌏</span>SST</button>
+  <button class="mb" data-s="hindi" onclick="mN(this)"><span class="mi">अ</span>Hindi</button>
+</nav>
+
+<!-- Settings Modal -->
+<div class="ov" id="setO"><div class="mdl"><h2>⚙ Settings</h2>
+  <p style="color:var(--t2);font-size:.8rem;margin-bottom:14px">BrainDrop uses both Claude and Gemini AI. Enter one or both keys below.</p>
+  <div class="fg"><label class="fl">Anthropic API Key (Claude — the teaching brain)</label><input type="password" class="fi" id="ckI" placeholder="sk-ant-..."><div class="fh">Get key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> → pay-per-use</div></div>
+  <div class="fg"><label class="fl">Gemini API Key (PDF reader + fallback)</label><input type="password" class="fi" id="gkI" placeholder="AIza..."><div class="fh">Free key → <a href="https://aistudio.google.com/apikey" target="_blank">Google AI Studio</a> (no credit card)</div></div>
+  <div class="fg"><label class="fl">Your Name (optional)</label><input type="text" class="fi" id="nI" placeholder="What should I call you?"></div>
+  <div class="fg"><label class="fl">Preferred AI for teaching</label>
+    <div class="aisw"><button class="aisw-btn on" onclick="setAIPref('claude',this)">🟣 Claude (recommended)</button><button class="aisw-btn" onclick="setAIPref('gemini',this)">🟢 Gemini</button><button class="aisw-btn" onclick="setAIPref('auto',this)">🔄 Auto (smart switch)</button></div>
+    <div class="fh">Auto mode uses Claude first, falls back to Gemini if rate limited</div>
+  </div>
+  <div class="ma"><button class="bg s" onclick="closeM('set')">Cancel</button><button class="bg p" onclick="saveC()">Save ✨</button></div>
+</div></div>
+
+<!-- KB Modal -->
+<div class="ov" id="kbO"><div class="mdl"><h2>📚 Load Extra Content</h2>
+  <p style="color:var(--t2);font-size:.82rem;margin-bottom:12px">NCERT PDFs auto-load from the <code>/books/</code> folder. Use this to add extra notes, sample papers, or reference material.</p>
+  <div class="fg"><label class="fl">Subject</label><select class="fi" id="kSel"><option value="mathematics">Mathematics</option><option value="science">Science</option><option value="english">English</option><option value="social-science">Social Science</option><option value="hindi">Hindi</option></select></div>
+  <div class="fg"><label class="fl">Extra Content</label><textarea class="kbt" id="kTx" placeholder="Paste sample papers, extra notes, reference material..."></textarea></div>
+  <div class="ma"><button class="bg s" onclick="closeM('kb')">Cancel</button><button class="bg p" onclick="lKB()">Load ⚡</button></div>
+</div></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   BrainDrop Engine v2 — Dual AI (Claude + Gemini) + PDF.js
+   © Raja Shahnawaz Soni | raja.cloudmdm@gmail.com
+   ═══════════════════════════════════════════════════════════════ */
+
+// ═══ STATE ═══
+const Z = {
+  g: 10, s: 'mathematics', m: 'explain',
+  ck: '', gk: '', n: '', pref: 'claude',
+  h: [], kb: {}, pdfKB: {},
+  busy: false, xp: 0, str: 0, qc: 0
+};
+
+try {
+  const sv = JSON.parse(localStorage.getItem('bd2') || '{}');
+  Object.assign(Z, { ck: sv.ck||'', gk: sv.gk||'', n: sv.n||'', pref: sv.pref||'claude', xp: sv.xp||0, str: sv.str||0, qc: sv.qc||0 });
+} catch(e) {}
+
+// ═══ PDF BOOK PATHS (relative to repo root) ═══
+const BOOKS = {
+  10: {
+    mathematics: 'books/grade10/maths.pdf',
+    science: 'books/grade10/science.pdf',
+    english: 'books/grade10/english.pdf',
+    'social-science': 'books/grade10/social-science.pdf',
+    hindi: 'books/grade10/hindi.pdf'
+  },
+  7: {
+    mathematics: 'books/grade7/maths.pdf',
+    science: 'books/grade7/science.pdf',
+    english: 'books/grade7/english.pdf',
+    'social-science': 'books/grade7/social-science.pdf',
+    hindi: 'books/grade7/hindi.pdf'
+  }
+};
+
+// ═══ PDF.js LOADER ═══
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+async function loadPDF(path) {
+  try {
+    const pdf = await pdfjsLib.getDocument(path).promise;
+    let text = '';
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      text += content.items.map(item => item.str).join(' ') + '\n\n';
+    }
+    return text;
+  } catch(e) {
+    console.log(`PDF not found: ${path}`);
+    return null;
+  }
+}
+
+async function loadAllPDFs() {
+  const el = document.getElementById('kbs');
+  el.textContent = 'Loading PDFs...';
+  el.className = 'kbcv load';
+
+  let loaded = 0, total = 0;
+  const books = BOOKS[Z.g] || {};
+
+  for (const [sub, path] of Object.entries(books)) {
+    total++;
+    const text = await loadPDF(path);
+    if (text && text.trim().length > 100) {
+      Z.pdfKB[`${Z.g}_${sub}`] = text;
+      loaded++;
+    }
+  }
+
+  updateKBStat();
+  if (loaded > 0) console.log(`Loaded ${loaded}/${total} PDFs for Grade ${Z.g}`);
+}
+
+function getKBForCurrentSubject() {
+  const pdfContent = Z.pdfKB[`${Z.g}_${Z.s}`] || '';
+  const extraContent = Z.kb[Z.s] || '';
+  let combined = '';
+  if (pdfContent) combined += pdfContent.substring(0, 50000);
+  if (extraContent) combined += '\n\nADDITIONAL REFERENCE MATERIAL:\n' + extraContent.substring(0, 15000);
+  return combined;
+}
+
+function updateKBStat() {
+  const el = document.getElementById('kbs');
+  const pdfLoaded = !!Z.pdfKB[`${Z.g}_${Z.s}`];
+  const extraLoaded = !!Z.kb[Z.s];
+
+  if (pdfLoaded && extraLoaded) { el.textContent = '✓ NCERT + extras loaded'; el.className = 'kbcv ok'; }
+  else if (pdfLoaded) { el.textContent = '✓ NCERT PDF loaded'; el.className = 'kbcv ok'; }
+  else if (extraLoaded) { el.textContent = '✓ Extra content loaded'; el.className = 'kbcv ok'; }
+  else { el.textContent = 'No content yet — add PDFs to /books/'; el.className = 'kbcv no'; }
+}
+
+// ═══ TOPICS ═══
+const T={10:{mathematics:["Real Numbers & Euclid's Division","Polynomials — Zeroes","Linear Equations Pair","Quadratic Equations","Arithmetic Progressions","Triangles & Similarity","Coordinate Geometry","Trigonometry","Circles & Tangents","Surface Areas & Volumes","Statistics","Probability"],science:["Chemical Reactions","Acids, Bases & Salts","Metals & Non-metals","Life Processes","Control & Coordination","Heredity & Evolution","Light — Reflection & Refraction","Electricity & Circuits","Magnetic Effects","Our Environment"],english:["Formal Letter Writing","Reading Comprehension","Tenses & Usage","Direct & Indirect Speech","Active & Passive Voice","Report Writing","Poem Analysis","Story Writing","Question Tags","Essay Writing"],"social-science":["Rise of Nationalism — Europe","Nationalism in India","Resources & Development","Agriculture","Power Sharing","Federalism","Development","Sectors of Economy","Money & Credit","Globalisation"],hindi:["पत्र लेखन","अनुच्छेद लेखन","समास","मुहावरे","संधि विच्छेद","पद परिचय","वाक्य रचना","अलंकार","सूचना लेखन","विज्ञापन लेखन"]},7:{mathematics:["Integers","Fractions & Decimals","Data Handling","Simple Equations","Lines & Angles","Triangles","Perimeter & Area","Rational Numbers","Practical Geometry","Symmetry"],science:["Nutrition in Plants","Nutrition in Animals","Heat & Temperature","Acids & Bases","Physical & Chemical Changes","Weather & Climate","Respiration","Soil Types","Motion & Time","Light & Shadows"],english:["Reading Comprehension","Nouns & Pronouns","Adjectives & Adverbs","Simple Tenses","Prepositions","Conjunctions","Sentence Formation","Paragraph Writing","Story Completion","Letter Writing"],"social-science":["Tracing Changes","New Kings & Kingdoms","Environment","Our Changing Earth","Inside Our Earth","Democracy & Equality","Government & Health","Markets","Ads & Democracy","Gender & Equality"],hindi:["संज्ञा और सर्वनाम","विशेषण","क्रिया","वचन","लिंग","विलोम शब्द","पर्यायवाची","अनेकार्थी शब्द","चित्र वर्णन","अपठित गद्यांश"]}};
+
+// ═══ EXAM PATTERNS (Grade 10) ═══
+const EP={mathematics:{hot:[{t:"Quadratic Equations",f:"95%",m:"8-10"},{t:"Arithmetic Progressions",f:"100%",m:"8-12"},{t:"Statistics",f:"100%",m:"8-10"},{t:"Triangles",f:"90%",m:"6-8"},{t:"Trig Identities",f:"92%",m:"6-8"},{t:"Surface Areas & Volumes",f:"88%",m:"6-8"}],tr:["Forgetting extraneous roots in quadratics","Mixing AP nth-term vs sum formula","Sign errors in coordinate geometry","Wrong median class in grouped data","Not showing constructions in proofs"]},science:{hot:[{t:"Chemical Reactions",f:"100%",m:"5-8"},{t:"Life Processes",f:"95%",m:"8-10"},{t:"Electricity",f:"100%",m:"8-10"},{t:"Light — Mirror/Lens",f:"92%",m:"6-8"},{t:"Heredity",f:"88%",m:"5-6"},{t:"Magnetic Effects",f:"85%",m:"5-8"}],tr:["Unbalanced equations","Series vs parallel confusion","Sign convention errors","Incomplete ray diagrams","Mixing arteries & veins"]},english:{hot:[{t:"Letter Writing",f:"100%",m:"5"},{t:"Reading Comprehension",f:"100%",m:"10"},{t:"Grammar",f:"100%",m:"4-5"},{t:"Report Writing",f:"85%",m:"5"}],tr:["Wrong letter format","No textual evidence","Tense inconsistency","Passive voice with modals"]},"social-science":{hot:[{t:"Nationalism in India",f:"95%",m:"5-8"},{t:"Federalism",f:"92%",m:"5-6"},{t:"Development & Sectors",f:"90%",m:"5-8"},{t:"Resources",f:"88%",m:"5-6"}],tr:["Confusing dates","No real-world examples","Missing map work","Vague answers"]},hindi:{hot:[{t:"पत्र लेखन",f:"100%",m:"5"},{t:"अनुच्छेद",f:"95%",m:"5"},{t:"व्याकरण",f:"100%",m:"4-5"}],tr:["गलत प्रारूप","विषय से भटकना","समास/संधि भ्रम"]}};
+
+// ═══ SYSTEM PROMPT ═══
+function sysP() {
+  const nm = Z.n ? ` Student's name: ${Z.n}.` : '';
+  const kbc = getKBForCurrentSubject();
+  const kbi = kbc ? `\n\nKNOWLEDGE BASE (NCERT textbook — use as PRIMARY source. Every answer must align with this content):\n---\n${kbc.substring(0,45000)}\n---` : '';
+  const sn = {mathematics:'Mathematics',science:'Science',english:'English','social-science':'Social Science',hindi:'Hindi'};
+  const ep = EP[Z.s];
+  const epb = (Z.g===10&&ep) ? `\n\nEXAM PATTERNS (2015-2024):\nHigh-freq: ${ep.hot.map(h=>`${h.t} (${h.f}, ${h.m} marks)`).join('; ')}.\nCommon traps: ${ep.tr.join('; ')}.` : '';
+
+  const base = `You are BrainDrop, an expert CBSE ${sn[Z.s]} tutor for Grade ${Z.g}. You speak like a cool, encouraging older sibling.${nm}
+
+Rules:
+- Patient, fun, never condescending. Use simple language.
+- Indian examples (cricket, Bollywood, food, festivals, daily life)
+- Break complex concepts into small steps
+- Use mnemonics and memory tricks
+- For formulas: explain WHY they work, not just HOW
+- Use emojis naturally but sparingly
+- If student uses Hindi/Hinglish, match their style
+- For Hindi subject: respond in Devanagari
+- Markdown: **bold** for key terms, bullets, > callouts, \`code\` for formulas
+- ASCII diagrams for geometry, circuits, biological processes where helpful
+- Hype them up when they get things right!
+- IMPORTANT: If NCERT content is provided in the knowledge base, ALWAYS refer to it. Use exact definitions, theorems, and examples from the textbook.${kbi}${epb}`;
+
+  const mp = {
+    explain: base+'\n\nMODE: Explain\n- Clear structured explanations\n- Step-by-step with worked examples\n- Real-world Indian examples\n- ASCII diagrams where helpful\n- Memory tricks at the end\n- End with 1-2 Quick Check questions',
+    socratic: base+'\n\nMODE: Socratic\n- NEVER give direct answers\n- Guide through questions, ONE at a time\n- Start from what they know\n- Gentle hints if stuck\n- Celebrate discoveries\n- "What if..." "Think about..." "Can you connect..."',
+    quiz: base+'\n\nMODE: Quiz\n- One question at a time, 4 options (A-D)\n- Mix: 40% easy, 40% medium, 20% HOTS\n- After answer: explain correct + why others wrong\n- Board exam patterns for Grade 10\n- After 5 Qs: score + areas to improve\n- Include past year style questions',
+    examprep: base+'\n\nMODE: Exam Prep\n- Board exam patterns from last 10 years\n- Which topics appear most, expected marks\n- Cheat sheets, common traps, full-marks format\n- Time management tips\n- HOTS question practice\n- Sample answers as examiners want them',
+    tutor: base+'\n\nMODE: AI Tutor\n- Personal tutor — answer anything\n- Adapt to student level\n- Simplify proactively if confused\n- Suggest what to study next\n- Connect related topics\n- Be encouraging about progress'
+  };
+  return mp[Z.m] || mp.explain;
+}
+
+// ═══ DUAL AI ENGINE ═══
+async function callClaude(userMsg) {
+  const messages = Z.h.slice(-16).map(m => ({
+    role: m.role === 'model' ? 'assistant' : 'user',
+    content: m.text
+  }));
+  messages.push({ role: 'user', content: userMsg });
+
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-api-key': Z.ck, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 4096,
+      system: sysP(),
+      messages: messages
+    })
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message || 'Claude API error');
+  return data.content?.[0]?.text || "Hmm, didn't get a response. Try again?";
+}
+
+async function callGemini(userMsg) {
+  const history = Z.h.slice(-16).map(m => ({ role: m.role === 'model' ? 'model' : 'user', parts: [{ text: m.text }] }));
+  history.push({ role: 'user', parts: [{ text: userMsg }] });
+
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${Z.gk}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      system_instruction: { parts: [{ text: sysP() }] },
+      contents: history,
+      generationConfig: { temperature: 0.75, maxOutputTokens: 4096, topP: 0.95 },
+      safetySettings: [
+        { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
+      ]
+    })
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message || 'Gemini API error');
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || "Hmm, didn't get a response. Try again?";
+}
+
+async function callAI(userMsg) {
+  // Check if any keys are available
+  const hasClaude = !!Z.ck;
+  const hasGemini = !!Z.gk;
+
+  if (!hasClaude && !hasGemini) {
+    addM('ai', '⚙️ **Hey!** You need at least one API key to start learning.\n\nClick ⚙ in the top right and add:\n- **Claude key** from [console.anthropic.com](https://console.anthropic.com) (best for teaching)\n- **Gemini key** from [Google AI Studio](https://aistudio.google.com/apikey) (free, no credit card)\n\n> 💡 Tip: Add both for the ultimate combo — Claude teaches, Gemini is your free backup!');
+    return;
+  }
+
+  Z.h.push({ role: 'user', text: userMsg });
+  showT(); Z.busy = true; document.getElementById('sb').disabled = true;
+
+  let reply = '', usedAI = '';
+
+  try {
+    // Determine which AI to use
+    const primary = Z.pref === 'auto' ? (hasClaude ? 'claude' : 'gemini') :
+                    Z.pref === 'claude' ? (hasClaude ? 'claude' : 'gemini') :
+                    (hasGemini ? 'gemini' : 'claude');
+
+    try {
+      if (primary === 'claude') {
+        reply = await callClaude(userMsg); usedAI = 'Claude';
+      } else {
+        reply = await callGemini(userMsg); usedAI = 'Gemini';
+      }
+    } catch (primaryErr) {
+      // Fallback to the other AI
+      console.log(`${primary} failed: ${primaryErr.message}, trying fallback...`);
+      const fallback = primary === 'claude' ? 'gemini' : 'claude';
+      const hasFallback = fallback === 'claude' ? hasClaude : hasGemini;
+
+      if (hasFallback) {
+        if (fallback === 'claude') { reply = await callClaude(userMsg); usedAI = 'Claude (fallback)'; }
+        else { reply = await callGemini(userMsg); usedAI = 'Gemini (fallback)'; }
+      } else {
+        throw primaryErr;
+      }
+    }
+
+    Z.h.push({ role: 'model', text: reply });
+    hideT();
+    addM('ai', reply, usedAI);
+    gXP(Z.m === 'quiz' ? 15 : 10);
+    Z.qc++;
+    saveZ();
+
+  } catch(e) {
+    hideT();
+    let em = `❌ **Oops!** \`${e.message}\`\n\n`;
+    if (e.message.includes('API key') || e.message.includes('401')) em += '> Check your API key(s) in ⚙ Settings.';
+    else if (e.message.includes('429') || e.message.includes('quota') || e.message.includes('rate')) em += '> Rate limit hit. Wait a minute and try again!';
+    else em += '> Try again shortly.';
+    addM('ai', em);
+  }
+
+  Z.busy = false; document.getElementById('sb').disabled = false;
+}
+
+// ═══ RENDERING ═══
+function md(t) {
+  return t
+    .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/(?<!\*)\*([^*]+?)\*(?!\*)/g, '<em>$1</em>')
+    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+    .replace(/^---$/gm, '<hr>')
+    .replace(/^[\-\*] (.+)$/gm, '<li>$1</li>')
+    .replace(/((?:<li>.*?<\/li>\s*)+)/gs, '<ul>$1</ul>')
+    .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
+    .replace(/\n{2,}/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+}
+
+function showW() {
+  const topics = (T[Z.g] && T[Z.g][Z.s]) || [];
+  const md_ = {
+    explain:{i:'📖',t:'Ready to learn?',s:"Pick a topic — I'll break it down with NCERT examples, diagrams & memory hacks!"},
+    socratic:{i:'🧠',t:"Let's think together!",s:"I won't give answers — I'll guide you to discover them yourself!"},
+    quiz:{i:'🎮',t:'Game on!',s:'Board-exam style Qs. Earn XP and level up!'},
+    examprep:{i:'🎯',t:'Exam mode: ON',s:"Top topics from last 10 years of boards, common traps & cheat sheets."},
+    tutor:{i:'🤖',t:'Your AI tutor is here!',s:'Ask literally anything. No judgement, just knowledge drops.'}
+  };
+  const m = md_[Z.m] || md_.explain;
+  const pdfLoaded = !!Z.pdfKB[`${Z.g}_${Z.s}`];
+  const pdfNote = pdfLoaded
+    ? `<div class="pdfstat">📚 NCERT textbook loaded (${Math.round(Z.pdfKB[Z.g+'_'+Z.s].length/1000)}K chars) · Answers grounded in your textbook</div>`
+    : `<div class="pdfstat">💡 Add NCERT PDFs to <code>/books/</code> folder for textbook-accurate answers</div>`;
+
+  document.getElementById('ch').innerHTML = `<div class="hero"><div class="hchar">${m.i}</div><div class="htit">${m.t}</div><div class="hsub">${m.s}</div><div class="chips">${topics.slice(0,8).map(t=>`<button class="chip" onclick="ask(this.textContent)">${t}</button>`).join('')}</div>${pdfNote}</div>`;
+}
+
+function addM(role, text, aiLabel) {
+  const c = document.getElementById('ch');
+  const h = c.querySelector('.hero'); if (h) h.remove();
+  const d = document.createElement('div');
+  d.className = `msg ${role==='user'?'u':'a'}`;
+  const badge = (role !== 'user' && aiLabel) ? `<div style="font-size:.6rem;color:var(--t3);margin-top:6px;font-family:'Space Mono',monospace">— ${aiLabel}</div>` : '';
+  d.innerHTML = `<div class="av ${role==='user'?'uu':'a'}">${role==='user'?'✦':'⚡'}</div><div class="bb">${role==='user'?text:md(text)}${badge}</div>`;
+  c.appendChild(d); c.scrollTop = c.scrollHeight;
+}
+
+function showT() {
+  const c = document.getElementById('ch');
+  const d = document.createElement('div'); d.className = 'msg a'; d.id = 'ty';
+  d.innerHTML = '<div class="av a">⚡</div><div class="bb typ"><div class="dt"></div><div class="dt"></div><div class="dt"></div></div>';
+  c.appendChild(d); c.scrollTop = c.scrollHeight;
+}
+function hideT() { const t = document.getElementById('ty'); if(t) t.remove(); }
+
+// ═══ XP ═══
+function gXP(a){Z.xp+=a;Z.str++;uXP()}
+function uXP(){
+  document.getElementById('xpv').textContent=Z.xp;document.getElementById('stk').textContent=Z.str;document.getElementById('qc').textContent=Z.qc;
+  const lv=[{x:0,n:'Newbie',l:1},{x:50,n:'Curious Mind',l:2},{x:150,n:'Knowledge Seeker',l:3},{x:300,n:'Brain Warrior',l:4},{x:500,n:'Quiz Master',l:5},{x:800,n:'Scholar',l:6},{x:1200,n:'Genius',l:7},{x:2000,n:'Legend',l:8}];
+  let c=lv[0],nx=lv[1];for(let i=lv.length-1;i>=0;i--){if(Z.xp>=lv[i].x){c=lv[i];nx=lv[i+1]||{x:c.x+500};break}}
+  document.getElementById('lvl').textContent=`Lvl ${c.l} — ${c.n}`;
+  document.getElementById('xpb').style.width=Math.min(((Z.xp-c.x)/(nx.x-c.x))*100,100)+'%';
+}
+function saveZ(){try{localStorage.setItem('bd2',JSON.stringify({ck:Z.ck,gk:Z.gk,n:Z.n,pref:Z.pref,xp:Z.xp,str:Z.str,qc:Z.qc}))}catch(e){}}
+
+// ═══ ACTIONS ═══
+function go(){if(Z.busy)return;const i=document.getElementById('inp');const m=i.value.trim();if(!m)return;i.value='';i.style.height='auto';addM('user',m);callAI(m)}
+function ask(topic){const pf={explain:'Explain this clearly with NCERT examples: ',socratic:"Let's explore together: ",quiz:'Quiz me on: ',examprep:'Complete exam prep for: ',tutor:'I want to learn about: '};const msg=(pf[Z.m]||'Explain: ')+topic;addM('user',msg);callAI(msg)}
+
+function setG(g){Z.g=g;document.querySelectorAll('.gp').forEach(b=>b.classList.toggle('on',(b.textContent==='X'?10:7)===g));Z.h=[];loadAllPDFs();showW()}
+function setS(b){Z.s=b.dataset.s;document.querySelectorAll('.sbb').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('.mb').forEach(x=>x.classList.toggle('on',x.dataset.s===Z.s));Z.h=[];updateKBStat();showW()}
+function mN(b){Z.s=b.dataset.s;document.querySelectorAll('.mb').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('.sbb').forEach(x=>x.classList.toggle('on',x.dataset.s===Z.s));Z.h=[];updateKBStat();showW()}
+function setMd(b){Z.m=b.dataset.m;document.querySelectorAll('.mt').forEach(x=>x.classList.remove('on'));b.classList.add('on');Z.h=[];showW()}
+
+function openM(id){document.getElementById(id==='set'?'setO':'kbO').classList.add('sh')}
+function closeM(id){document.getElementById(id==='set'?'setO':'kbO').classList.remove('sh')}
+
+function setAIPref(pref, btn){Z.pref=pref;document.querySelectorAll('.aisw-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on')}
+
+function saveC(){
+  Z.ck=document.getElementById('ckI').value.trim();
+  Z.gk=document.getElementById('gkI').value.trim();
+  Z.n=document.getElementById('nI').value.trim();
+  saveZ();closeM('set');
+  const keys=[];if(Z.ck)keys.push('Claude');if(Z.gk)keys.push('Gemini');
+  if(keys.length) addM('ai',`✨ **All set${Z.n?', '+Z.n:''}!** Connected to: **${keys.join(' + ')}**\n\n> Pick a topic above or type your question. Let's crush it! 🔥`);
+}
+
+function lKB(){const sub=document.getElementById('kSel').value;const txt=document.getElementById('kTx').value.trim();if(!txt)return;Z.kb[sub]=txt;closeM('kb');updateKBStat();addM('ai',`📚 **Extra content loaded for ${sub}!** (${Math.round(txt.length/1000)}K chars)\n\nThis supplements the NCERT textbook. Ask me anything! 🧠`)}
+
+// ═══ INIT ═══
+document.getElementById('ckI').value = Z.ck;
+document.getElementById('gkI').value = Z.gk;
+document.getElementById('nI').value = Z.n;
+document.querySelectorAll('.aisw-btn').forEach(b => {
+  const prefs = ['claude','gemini','auto'];
+  const idx = [...b.parentElement.children].indexOf(b);
+  b.classList.toggle('on', prefs[idx] === Z.pref);
+});
+uXP(); showW(); loadAllPDFs();
+document.querySelectorAll('.ov').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('sh')})});
+</script>
+</body>
+</html>
