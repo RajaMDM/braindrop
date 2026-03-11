@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>BrainDrop ⚡ AI Study Companion</title>
+<title>BrainDrop ⚡ For Alishba & Inaayah</title>
+<meta name="description" content="AI-powered CBSE study companion built by Raja Shahnawaz Soni for his daughters Alishba & Inaayah — open for every student. Powered by Claude, Gemini & Groq.">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0b0b14;--bg2:#12121f;--bg3:#1a1a2e;--bgH:#1f1f3a;--np:#b44aff;--nk:#ff6b9d;--nc:#00f5d4;--ny:#fee440;--nb:#4cc9f0;--no:#ff6d00;--ng:#39ff14;--nr:#ff1744;--t1:#eef0ff;--t2:#a0a4c4;--t3:#5c5f80;--bd:rgba(255,255,255,0.05);--gf:linear-gradient(135deg,#ff6b9d,#b44aff);--gi:linear-gradient(135deg,#4cc9f0,#00f5d4);--gg:linear-gradient(135deg,#fee440,#ff6d00);--xp:linear-gradient(90deg,#b44aff,#ff6b9d,#00f5d4)}
@@ -18,6 +20,7 @@
 .topc{display:flex;align-items:center;gap:8px}
 .gps{display:flex;background:var(--bg3);border-radius:9px;padding:3px;border:1px solid var(--bd)}.gp{padding:6px 16px;border:none;border-radius:7px;font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .25s;background:0 0;color:var(--t3);text-transform:uppercase;letter-spacing:1px}.gp.on{background:var(--gf);color:#fff;box-shadow:0 2px 10px rgba(180,74,255,.3)}.gp:hover:not(.on){color:var(--t2)}
 .ib{width:36px;height:36px;border-radius:9px;background:var(--bg3);border:1px solid var(--bd);color:var(--t3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all .2s}.ib:hover{border-color:var(--np);color:var(--np)}
+.ubadge{display:flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;background:var(--bg3);border:1px solid var(--bd);border-radius:20px;font-size:.75rem;color:var(--t2);cursor:pointer;transition:all .2s}.ubadge:hover{border-color:var(--np)}.ubadge img{width:28px;height:28px;border-radius:50%;border:2px solid var(--np)}.ubadge .uinit{width:28px;height:28px;border-radius:50%;background:var(--gf);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#fff}
 .xps{display:flex;align-items:center;gap:14px;padding:6px 20px;background:rgba(26,26,46,.6);border-bottom:1px solid var(--bd);font-size:.75rem;flex-shrink:0}.xpi{display:flex;align-items:center;gap:5px;color:var(--t3)}.xpi .v{color:var(--ny);font-weight:700;font-family:'Space Mono',monospace}.xbw{flex:1;height:6px;border-radius:3px;background:var(--bg3);overflow:hidden;max-width:200px}.xbf{height:100%;width:0%;border-radius:3px;background:var(--xp);transition:width .8s cubic-bezier(.22,1,.36,1)}.xl{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--t3)}
 .mn{display:flex;flex:1;overflow:hidden}
 .sb{width:200px;flex-shrink:0;padding:14px 8px;background:rgba(18,18,31,.5);border-right:1px solid var(--bd);display:flex;flex-direction:column;gap:4px;overflow-y:auto}.sbl{font-size:.58rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--t3);padding:10px 12px 6px;font-weight:600}
@@ -25,7 +28,8 @@
 .sbi{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem}
 .sdv{height:1px;background:var(--bd);margin:8px 12px}
 .kbc{margin-top:auto;padding:12px;background:var(--bg3);border-radius:10px;border:1px solid var(--bd)}.kbct{font-size:.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--t3);margin-bottom:6px;font-weight:600}.kbcv{font-size:.8rem;font-weight:500}.kbcv.ok{color:var(--ng)}.kbcv.no{color:var(--no)}.kbcv.load{color:var(--nb)}
-.aibadge{display:flex;gap:6px;margin-top:8px}.aib{font-size:.6rem;padding:3px 8px;border-radius:5px;font-weight:600;font-family:'Space Mono',monospace}.aib.cl{background:rgba(180,74,255,.15);color:var(--np)}.aib.gm{background:rgba(0,245,212,.12);color:var(--nc)}
+.aibadge{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}.aib{font-size:.55rem;padding:2px 6px;border-radius:5px;font-weight:600;font-family:'Space Mono',monospace}.aib.cl{background:rgba(180,74,255,.15);color:var(--np)}.aib.gm{background:rgba(0,245,212,.12);color:var(--nc)}.aib.gpt{background:rgba(16,163,127,.12);color:#10a37f}.aib.gq{background:rgba(255,109,0,.12);color:var(--no)}.aib.ds{background:rgba(76,201,240,.12);color:var(--nb)}.aib.ms{background:rgba(255,23,68,.12);color:var(--nr)}
+.membadge{margin-top:6px;font-size:.62rem;color:var(--nb);display:flex;align-items:center;gap:4px}
 .ct{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .mds{display:flex;gap:6px;padding:10px 18px;background:rgba(18,18,31,.4);border-bottom:1px solid var(--bd);overflow-x:auto;flex-shrink:0}.mds::-webkit-scrollbar{height:0}
 .mt{display:flex;align-items:center;gap:7px;padding:8px 15px;border:1px solid var(--bd);border-radius:9px;background:var(--bg3);color:var(--t3);font-family:'Fredoka',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;transition:all .25s;white-space:nowrap}.mt:hover{border-color:rgba(180,74,255,.2);color:var(--t2)}.mt.on{border-color:var(--np);background:rgba(180,74,255,.08);color:var(--np);box-shadow:0 0 12px rgba(180,74,255,.1)}.mt .em{font-size:1rem}
@@ -34,6 +38,7 @@
 .htit{font-size:1.6rem;font-weight:700;margin-bottom:8px;background:var(--gf);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.hsub{color:var(--t2);font-size:.92rem;line-height:1.6;margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto}
 .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.chip{padding:9px 16px;border-radius:20px;background:var(--bg3);border:1px solid var(--bd);color:var(--t2);font-size:.8rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:'Fredoka',sans-serif}.chip:hover{border-color:var(--nk);color:var(--nk);background:rgba(255,107,157,.06);transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,107,157,.1)}
 .pdfstat{margin-top:18px;font-size:.75rem;color:var(--t3);padding:8px 16px;background:var(--bg3);border-radius:10px;display:inline-block;border:1px solid var(--bd)}
+.memstat{margin-top:8px;font-size:.7rem;color:var(--nb);padding:5px 12px;background:rgba(76,201,240,.06);border-radius:8px;display:inline-block;border:1px solid rgba(76,201,240,.15)}
 .msg{display:flex;gap:12px;max-width:82%;animation:mi .35s ease}.msg.u{margin-left:auto;flex-direction:row-reverse}@keyframes mi{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 .av{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;font-weight:700}.av.a{background:var(--gf);box-shadow:0 0 10px rgba(180,74,255,.3)}.av.uu{background:var(--gg);box-shadow:0 0 10px rgba(254,228,64,.2)}
 .bb{padding:14px 18px;border-radius:14px;font-size:.88rem;line-height:1.7;word-break:break-word}.msg.a .bb{background:var(--bg3);border:1px solid var(--bd)}.msg.u .bb{background:rgba(180,74,255,.12);border:1px solid rgba(180,74,255,.2)}
@@ -42,26 +47,79 @@
 .iz{padding:12px 18px 16px;background:rgba(18,18,31,.85);backdrop-filter:blur(16px);border-top:1px solid var(--bd);flex-shrink:0}.ir{display:flex;align-items:flex-end;gap:10px;max-width:760px;margin:0 auto}
 .tx{flex:1;padding:12px 16px;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;color:var(--t1);font-family:'Fredoka',sans-serif;font-size:.88rem;resize:none;outline:none;min-height:44px;max-height:140px;line-height:1.5;transition:border-color .2s}.tx:focus{border-color:var(--np);box-shadow:0 0 12px rgba(180,74,255,.1)}.tx::placeholder{color:var(--t3)}
 .sn{width:44px;height:44px;border-radius:10px;background:var(--gf);border:none;color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}.sn:hover{transform:scale(1.06);box-shadow:0 0 18px rgba(180,74,255,.4)}.sn:disabled{opacity:.35;cursor:not-allowed;transform:none}
-.ft{padding:8px 20px;text-align:center;font-size:.65rem;color:var(--t3);border-top:1px solid var(--bd);background:rgba(11,11,20,.6);flex-shrink:0}.ft a{color:var(--np);text-decoration:none}
+.ft{padding:12px 20px;text-align:center;font-size:.65rem;color:var(--t3);border-top:1px solid var(--bd);background:rgba(11,11,20,.6);flex-shrink:0;line-height:1.6}.ft a{color:var(--np);text-decoration:none}.ft .ded{color:var(--nk);font-style:italic;font-size:.68rem}
 .ov{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}.ov.sh{opacity:1;pointer-events:auto}
-.mdl{background:var(--bg3);border:1px solid var(--bd);border-radius:18px;padding:28px;width:90%;max-width:500px;box-shadow:0 20px 60px rgba(0,0,0,.5);transform:translateY(16px);transition:transform .3s;max-height:90vh;overflow-y:auto}.ov.sh .mdl{transform:translateY(0)}.mdl h2{font-size:1.2rem;margin-bottom:18px}
-.fg{margin-bottom:16px}.fl{display:block;font-size:.75rem;color:var(--t2);margin-bottom:5px;font-weight:500}.fi{width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--bd);border-radius:8px;color:var(--t1);font-family:'Fredoka',sans-serif;font-size:.88rem;outline:none}.fi:focus{border-color:var(--np)}.fh{font-size:.7rem;color:var(--t3);margin-top:4px}.fh a{color:var(--np)}
+.mdl{background:var(--bg3);border:1px solid var(--bd);border-radius:18px;padding:28px;width:90%;max-width:540px;box-shadow:0 20px 60px rgba(0,0,0,.5);transform:translateY(16px);transition:transform .3s;max-height:90vh;overflow-y:auto}.ov.sh .mdl{transform:translateY(0)}.mdl h2{font-size:1.2rem;margin-bottom:18px}
+.fg{margin-bottom:14px}.fl{display:block;font-size:.75rem;color:var(--t2);margin-bottom:5px;font-weight:500}.fi{width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--bd);border-radius:8px;color:var(--t1);font-family:'Fredoka',sans-serif;font-size:.88rem;outline:none}.fi:focus{border-color:var(--np)}.fh{font-size:.7rem;color:var(--t3);margin-top:4px}.fh a{color:var(--np)}
 .kbt{width:100%;height:150px;padding:12px;background:var(--bg);border:1px solid var(--bd);border-radius:8px;color:var(--t1);font-family:'Space Mono',monospace;font-size:.78rem;resize:vertical;outline:none}
 .ma{display:flex;gap:8px;justify-content:flex-end;margin-top:20px}.bg{padding:9px 18px;border-radius:8px;border:none;font-family:'Fredoka',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer}.bg.s{background:var(--bg);border:1px solid var(--bd);color:var(--t2)}.bg.p{background:var(--gf);color:#fff}
-.aisw{display:flex;gap:6px;margin-bottom:16px}.aisw-btn{flex:1;padding:10px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--t2);font-family:'Fredoka',sans-serif;font-size:.8rem;cursor:pointer;text-align:center;transition:all .2s}.aisw-btn.on{border-color:var(--np);background:rgba(180,74,255,.1);color:var(--np)}.aisw-btn:hover:not(.on){border-color:rgba(180,74,255,.2)}
+.aisec{border:1px solid var(--bd);border-radius:10px;padding:12px;margin-bottom:12px;background:var(--bg)}.aisec-hd{font-size:.72rem;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:6px}.aisec-hd .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+/* Login gate */
+.login-gate{position:fixed;inset:0;z-index:500;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;transition:opacity .5s,transform .5s}.login-gate.hidden{opacity:0;pointer-events:none;transform:scale(1.05)}
+.login-box{max-width:460px;padding:40px 30px;animation:loginIn .8s ease}@keyframes loginIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.login-logo{font-size:4rem;margin-bottom:16px;filter:drop-shadow(0 0 30px rgba(180,74,255,.5));animation:hf 3s ease-in-out infinite}
+.login-title{font-size:2rem;font-weight:700;background:var(--gf);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.login-ded{color:var(--nk);font-size:.85rem;font-style:italic;margin-bottom:6px;font-weight:500}
+.login-quote{color:var(--t3);font-size:.78rem;margin-bottom:24px;line-height:1.5;max-width:380px;margin-left:auto;margin-right:auto;font-style:italic}
+.login-sub{color:var(--t2);font-size:.88rem;margin-bottom:24px;line-height:1.6}
+.login-gsign{display:flex;justify-content:center;margin-bottom:16px}
+.login-divider{display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--t3);font-size:.75rem}.login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:var(--bd)}
+.login-bypass-form{text-align:left;background:var(--bg3);border:1px solid var(--bd);border-radius:12px;padding:16px}
+.login-bypass-form label{font-size:.78rem;color:var(--t2);display:block;margin-bottom:6px}
+.login-bypass-form input{width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--bd);border-radius:8px;color:var(--t1);font-family:'Fredoka',sans-serif;font-size:.88rem;outline:none;margin-bottom:10px}.login-bypass-form input:focus{border-color:var(--np)}
+.login-bypass-form button{width:100%;padding:11px;border-radius:8px;border:none;background:var(--bg3);border:1px solid var(--np);color:var(--np);font-family:'Fredoka',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}.login-bypass-form button:hover{background:rgba(180,74,255,.1)}
+.login-note{font-size:.65rem;color:var(--t3);margin-top:20px;line-height:1.6}
+/* Stats modal */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.stat-card{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:12px;text-align:center}.stat-card .sv{font-size:1.5rem;font-weight:700;font-family:'Space Mono',monospace}.stat-card .sl{font-size:.68rem;color:var(--t3);margin-top:4px}
+.log-table{width:100%;border-collapse:collapse;font-size:.72rem;margin-top:12px}.log-table th,.log-table td{border:1px solid var(--bd);padding:6px 8px;text-align:left}.log-table th{background:rgba(180,74,255,.08);color:var(--np);font-weight:600}
 .mnv{display:none}
 @media(max-width:768px){.sb{display:none}.top{padding:8px 14px}.bname{font-size:1.1rem}.btag{display:none}.xps{padding:5px 14px;gap:10px;font-size:.68rem}.mds{padding:8px 12px;gap:4px}.mt{padding:7px 11px;font-size:.72rem}.mt .em{font-size:.9rem}.ch{padding:14px}.iz{padding:10px 14px 14px}.ct{padding-bottom:58px}.mnv{display:flex!important;position:fixed;bottom:0;left:0;right:0;background:rgba(18,18,31,.95);backdrop-filter:blur(16px);border-top:1px solid var(--bd);padding:6px 2px;z-index:100;justify-content:space-around}.mb{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;color:var(--t3);font-size:.58rem;padding:4px 6px;border-radius:8px;cursor:pointer;font-family:'Fredoka',sans-serif;font-weight:500}.mb .mi{font-size:1.2rem}.mb.on{color:var(--np)}}
 </style>
 </head>
 <body>
 <div class="bgfx"></div><div class="pgrid"></div>
-<div class="app">
+
+<!-- ═══ LOGIN GATE ═══ -->
+<div class="login-gate" id="loginGate">
+  <div class="bgfx"></div><div class="pgrid"></div>
+  <div class="login-box">
+    <div class="login-logo">⚡</div>
+    <div class="login-title">BrainDrop</div>
+    <div class="login-ded">Dedicated to Alishba & Inaayah ✦ Open for every student everywhere</div>
+    <div class="login-quote">"Built by a father who believes his daughters can conquer anything — and so can you."<br><span style="font-size:.68rem;color:var(--t3);font-style:normal">— Raja Shahnawaz Soni</span></div>
+    <div class="login-sub">Multiple AI engines. Every CBSE subject. One mission — your success.</div>
+    <div class="login-gsign" id="gSignBtn"></div>
+    <div class="login-divider">or continue as guest</div>
+    <div class="login-bypass-form">
+      <label>What's your name? *</label>
+      <input id="bypassName" placeholder="Enter your name to continue..." autocomplete="name">
+      <button onclick="bypassLogin()">Start Learning →</button>
+    </div>
+    <div class="login-note">
+      Crafted with ❤ by <strong style="color:var(--np)">Raja Shahnawaz Soni</strong><br>
+      <a href="mailto:raja.cloudmdm@gmail.com" style="color:var(--nc)">raja.cloudmdm@gmail.com</a> ·
+      <a href="https://www.linkedin.com/in/raja-shahnawaz/" target="_blank" style="color:var(--nb)">LinkedIn</a> ·
+      <a href="https://github.com/RajaMDM" target="_blank" style="color:var(--ng)">GitHub</a><br>
+      <span style="font-size:.6rem">Powered by Claude · Gemini · GPT · Groq · DeepSeek · Mistral · Ollama</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MAIN APP ═══ -->
+<div class="app" id="mainApp" style="display:none">
 <header class="top">
-  <div class="brand"><div class="bico">⚡</div><div><div class="bname">BrainDrop</div><div class="btag">AI Study Companion · Claude + Gemini</div></div></div>
+  <div class="brand"><div class="bico">⚡</div><div><div class="bname">BrainDrop</div><div class="btag">For Alishba & Inaayah · 7 AI Engines</div></div></div>
   <div class="topc">
     <div class="gps"><button class="gp on" onclick="setG(10)">X</button><button class="gp" onclick="setG(7)">VII</button></div>
-    <button class="ib" onclick="openM('set')" title="Settings">⚙</button>
+    <button class="ib" onclick="openM('set')" title="Settings & API Keys">⚙</button>
     <button class="ib" onclick="openM('kb')" title="Load Extra Content">📚</button>
+    <button class="ib" onclick="openM('stats')" title="Usage Stats">📊</button>
+    <button class="ib" onclick="clearMemory()" title="Clear Memory">🧹</button>
+    <div class="ubadge" id="userBadge" onclick="signOut()" title="Click to sign out" style="display:none">
+      <img id="userAvatar" src="" alt="" style="display:none">
+      <span class="uinit" id="userInit"></span>
+      <span id="userName"></span>
+    </div>
   </div>
 </header>
 <div class="xps">
@@ -70,6 +128,7 @@
   <div class="xbw"><div class="xbf" id="xpb"></div></div>
   <div class="xl" id="lvl">Lvl 1 — Newbie</div>
   <div class="xpi" style="margin-left:auto">📊 <span class="v" id="qc">0</span> Qs</div>
+  <div class="xpi">🤖 <span class="v" id="aiUsed">—</span></div>
 </div>
 <div class="mn">
 <aside class="sb">
@@ -83,7 +142,10 @@
   <div class="kbc">
     <div class="kbct">Knowledge Base</div>
     <div class="kbcv no" id="kbs">Loading PDFs...</div>
-    <div class="aibadge"><span class="aib cl">Claude</span><span class="aib gm">Gemini</span></div>
+    <div class="aibadge">
+      <span class="aib cl">Claude</span><span class="aib gm">Gemini</span><span class="aib gpt">GPT</span><span class="aib gq">Groq</span><span class="aib ds">DeepSeek</span><span class="aib ms">Mistral</span><span class="aib" style="background:rgba(139,92,246,.12);color:#8b5cf6">Ollama</span>
+    </div>
+    <div class="membadge" id="memBadge">🧠 Memory: loading...</div>
   </div>
 </aside>
 <main class="ct">
@@ -101,7 +163,10 @@
   </div></div>
 </main>
 </div>
-<div class="ft">© 2025 <a href="mailto:raja.cloudmdm@gmail.com">Raja Shahnawaz Soni</a> · BrainDrop — Powered by Claude + Gemini · Built with ❤ for learning</div>
+<div class="ft">
+  <div class="ded">"Built by a father who believes his daughters can conquer anything — and so can you." — For Alishba & Inaayah ✦</div>
+  © 2025 <a href="mailto:raja.cloudmdm@gmail.com">Raja Shahnawaz Soni</a> · <a href="mailto:raja.cloudmdm@gmail.com">raja.cloudmdm@gmail.com</a> · <a href="https://www.linkedin.com/in/raja-shahnawaz/" target="_blank">LinkedIn</a> · <a href="https://github.com/RajaMDM" target="_blank">GitHub</a> · BrainDrop — 7 AI Engines
+</div>
 </div>
 
 <!-- Mobile nav -->
@@ -113,374 +178,470 @@
   <button class="mb" data-s="hindi" onclick="mN(this)"><span class="mi">अ</span>Hindi</button>
 </nav>
 
-<!-- Settings Modal -->
-<div class="ov" id="setO"><div class="mdl"><h2>⚙ Settings</h2>
-  <p style="color:var(--t2);font-size:.8rem;margin-bottom:14px">BrainDrop uses both Claude and Gemini AI. Enter one or both keys below.</p>
-  <div class="fg"><label class="fl">Anthropic API Key (Claude — the teaching brain)</label><input type="password" class="fi" id="ckI" placeholder="sk-ant-..."><div class="fh">Get key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> → pay-per-use</div></div>
-  <div class="fg"><label class="fl">Gemini API Key (PDF reader + fallback)</label><input type="password" class="fi" id="gkI" placeholder="AIza..."><div class="fh">Free key → <a href="https://aistudio.google.com/apikey" target="_blank">Google AI Studio</a> (no credit card)</div></div>
-  <div class="fg"><label class="fl">Your Name (optional)</label><input type="text" class="fi" id="nI" placeholder="What should I call you?"></div>
-  <div class="fg"><label class="fl">Preferred AI for teaching</label>
-    <div class="aisw"><button class="aisw-btn on" onclick="setAIPref('claude',this)">🟣 Claude (recommended)</button><button class="aisw-btn" onclick="setAIPref('gemini',this)">🟢 Gemini</button><button class="aisw-btn" onclick="setAIPref('auto',this)">🔄 Auto (smart switch)</button></div>
-    <div class="fh">Auto mode uses Claude first, falls back to Gemini if rate limited</div>
+<!-- ═══ SETTINGS MODAL ═══ -->
+<div class="ov" id="setO"><div class="mdl"><h2>⚙ Settings & API Keys</h2>
+  <p style="color:var(--t2);font-size:.8rem;margin-bottom:14px">Add any combination of AI engines. More keys = more options + better fallback.</p>
+
+  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#b44aff"></span> Anthropic Claude (recommended for teaching)</div>
+    <input type="password" class="fi" id="ckI" placeholder="sk-ant-..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> · Pay-per-use · Model: Haiku 4.5</div>
   </div>
+  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#00f5d4"></span> Google Gemini (free tier available)</div>
+    <input type="password" class="fi" id="gkI" placeholder="AIza..." style="margin-bottom:4px"><div class="fh">Free key → <a href="https://aistudio.google.com/apikey" target="_blank">Google AI Studio</a> · No credit card · Model: Gemini 2.5 Flash</div>
+  </div>
+  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#10a37f"></span> OpenAI GPT</div>
+    <input type="password" class="fi" id="okI" placeholder="sk-..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a> · Pay-per-use · Model: GPT-4o-mini</div>
+  </div>
+  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#ff6d00"></span> Groq (ultra-fast, free tier)</div>
+    <input type="password" class="fi" id="qkI" placeholder="gsk_..." style="margin-bottom:4px"><div class="fh">Free key → <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a> · Free tier generous · Model: Llama 3.3 70B</div>
+  </div>
+  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#4cc9f0"></span> DeepSeek (great at maths)</div>
+    <input type="password" class="fi" id="dkI" placeholder="sk-..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://platform.deepseek.com/api_keys" target="_blank">platform.deepseek.com</a> · Very cheap · Model: DeepSeek Chat</div>
+  </div>
+  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#ff1744"></span> Mistral (strong multilingual/Hindi)</div>
+    <input type="password" class="fi" id="mkI" placeholder="..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://console.mistral.ai/api-keys" target="_blank">console.mistral.ai</a> · Free tier · Model: Mistral Small</div>
+  </div>
+  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#8b5cf6"></span> Ollama (local/offline — no API key needed)</div>
+    <input type="text" class="fi" id="olURL" placeholder="http://localhost:11434" style="margin-bottom:4px" value="http://localhost:11434">
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px"><input type="text" class="fi" id="olModel" placeholder="llama3.2" style="flex:1" value="llama3.2"><button class="bg p" style="padding:6px 14px;font-size:.72rem" onclick="testOllama()">Test</button></div>
+    <div class="fh">Install → <a href="https://ollama.com/download" target="_blank">ollama.com</a> · Run <code>ollama pull llama3.2</code> · 100% free & offline · <span id="olStat" style="color:var(--t3)">Not tested</span></div>
+  </div>
+
+  <div class="fg"><label class="fl">Your Name</label><input type="text" class="fi" id="nI" placeholder="What should I call you?"></div>
+  <div class="fg"><label class="fl">Primary AI Engine</label>
+    <select class="fi" id="prefSel">
+      <option value="auto">🔄 Auto (smart fallback chain)</option>
+      <option value="claude">🟣 Claude</option>
+      <option value="gemini">🟢 Gemini</option>
+      <option value="openai">🟩 GPT</option>
+      <option value="groq">🟠 Groq</option>
+      <option value="deepseek">🔵 DeepSeek</option>
+      <option value="mistral">🔴 Mistral</option>
+      <option value="ollama">🟣 Ollama (local)</option>
+    </select>
+    <div class="fh">Auto mode tries your preferred engine first, falls back through others if rate limited or errored.</div>
+  </div>
+  <div class="fg"><label class="fl">Daily Claude Limit (cost control)</label><input type="number" class="fi" id="dlI" placeholder="50" min="5" max="500" value="50"><div class="fh">Claude auto-switches to fallback after this limit. Free engines (Gemini, Groq) are unlimited.</div></div>
   <div class="ma"><button class="bg s" onclick="closeM('set')">Cancel</button><button class="bg p" onclick="saveC()">Save ✨</button></div>
 </div></div>
 
-<!-- KB Modal -->
+<!-- ═══ KB MODAL ═══ -->
 <div class="ov" id="kbO"><div class="mdl"><h2>📚 Load Extra Content</h2>
-  <p style="color:var(--t2);font-size:.82rem;margin-bottom:12px">NCERT PDFs auto-load from the <code>/books/</code> folder. Use this to add extra notes, sample papers, or reference material.</p>
+  <p style="color:var(--t2);font-size:.82rem;margin-bottom:12px">NCERT PDFs auto-load from <code>/books/</code>. Use this for extra notes or sample papers.</p>
   <div class="fg"><label class="fl">Subject</label><select class="fi" id="kSel"><option value="mathematics">Mathematics</option><option value="science">Science</option><option value="english">English</option><option value="social-science">Social Science</option><option value="hindi">Hindi</option></select></div>
   <div class="fg"><label class="fl">Extra Content</label><textarea class="kbt" id="kTx" placeholder="Paste sample papers, extra notes, reference material..."></textarea></div>
   <div class="ma"><button class="bg s" onclick="closeM('kb')">Cancel</button><button class="bg p" onclick="lKB()">Load ⚡</button></div>
 </div></div>
 
+<!-- ═══ STATS MODAL ═══ -->
+<div class="ov" id="statsO"><div class="mdl" style="max-width:600px"><h2>📊 Usage Dashboard</h2>
+  <p style="color:var(--t2);font-size:.82rem;margin-bottom:12px">Activity log across all users of this BrainDrop instance.</p>
+  <div class="stat-grid" id="statGrid"></div>
+  <h3 style="font-size:.85rem;margin-top:16px;color:var(--np)">Recent Activity Log</h3>
+  <div style="max-height:250px;overflow-y:auto"><table class="log-table" id="logTable"><thead><tr><th>Time</th><th>User</th><th>Subject</th><th>Mode</th><th>AI</th></tr></thead><tbody id="logBody"></tbody></table></div>
+  <div class="ma"><button class="bg s" onclick="exportStats()">📥 Export CSV</button><button class="bg p" onclick="closeM('stats')">Close</button></div>
+</div></div>
+
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   BrainDrop Engine v2 — Dual AI (Claude + Gemini) + PDF.js
+   BrainDrop v5 — 6 AI Engines · Chat Memory · Stats Logging
+   Dedicated to Alishba & Inaayah
    © Raja Shahnawaz Soni | raja.cloudmdm@gmail.com
    ═══════════════════════════════════════════════════════════════ */
 
+const CONFIG = {
+  GOOGLE_CLIENT_ID: '342934078544-l6d5a8okr7853alv8fhrpi64f7vvd3lr.apps.googleusercontent.com',
+  ALLOWED_EMAILS: ['raja.cloudmdm@gmail.com','alishba.soni10@gmail.com','inaayah.soni@globalschoolsalumni.org'], // empty = allow all. Add emails to restrict.
+  // Pre-fill API keys so users don't need to enter them (loaded after auth)
+  DEFAULT_KEYS: {
+    claude: '',
+    gemini: '',
+    groq: '',
+    ollama: ''     // 'active' if Ollama is running locally
+  }
+};
+
+// ═══ AI PROVIDER REGISTRY ═══
+const AI_PROVIDERS = {
+  claude:   { name:'Claude',   color:'#b44aff', model:'claude-haiku-4-5-20251001', keyField:'ckI', stateKey:'ck' },
+  gemini:   { name:'Gemini',   color:'#00f5d4', model:'gemini-2.5-flash',          keyField:'gkI', stateKey:'gk' },
+  openai:   { name:'GPT',      color:'#10a37f', model:'gpt-4o-mini',               keyField:'okI', stateKey:'ok' },
+  groq:     { name:'Groq',     color:'#ff6d00', model:'llama-3.3-70b-versatile',   keyField:'qkI', stateKey:'qk' },
+  deepseek: { name:'DeepSeek', color:'#4cc9f0', model:'deepseek-chat',             keyField:'dkI', stateKey:'dk' },
+  mistral:  { name:'Mistral',  color:'#ff1744', model:'mistral-small-latest',      keyField:'mkI', stateKey:'mk' },
+  ollama:   { name:'Ollama',   color:'#8b5cf6', model:'llama3.2',                  keyField:'olURL', stateKey:'ol' }
+};
+const PROVIDER_ORDER = ['claude','gemini','openai','groq','deepseek','mistral','ollama'];
+
 // ═══ STATE ═══
 const Z = {
-  g: 10, s: 'mathematics', m: 'explain',
-  ck: '', gk: '', n: '', pref: 'claude',
-  h: [], kb: {}, pdfKB: {},
-  busy: false, xp: 0, str: 0, qc: 0
+  g:10, s:'mathematics', m:'explain',
+  ck:'', gk:'', ok:'', qk:'', dk:'', mk:'', // API keys
+  ol:'', olURL:'http://localhost:11434', olModel:'llama3.2', // Ollama
+  n:'', pref:'auto',
+  h:[], kb:{}, pdfKB:{},
+  busy:false, xp:0, str:0, qc:0,
+  usage:{ claude:0, gemini:0, openai:0, groq:0, deepseek:0, mistral:0, ollama:0, date:new Date().toDateString() },
+  dailyLimit:50,
+  user:null, lastAI:''
 };
-
 try {
-  const sv = JSON.parse(localStorage.getItem('bd2') || '{}');
-  Object.assign(Z, { ck: sv.ck||'', gk: sv.gk||'', n: sv.n||'', pref: sv.pref||'claude', xp: sv.xp||0, str: sv.str||0, qc: sv.qc||0 });
-} catch(e) {}
+  const sv = JSON.parse(localStorage.getItem('bd2')||'{}');
+  Object.assign(Z,{ck:sv.ck||'',gk:sv.gk||'',ok:sv.ok||'',qk:sv.qk||'',dk:sv.dk||'',mk:sv.mk||'',ol:sv.ol||'',olURL:sv.olURL||'http://localhost:11434',olModel:sv.olModel||'llama3.2',n:sv.n||'',pref:sv.pref||'auto',xp:sv.xp||0,str:sv.str||0,qc:sv.qc||0,dailyLimit:sv.dailyLimit||50});
+  if(sv.usage){if(sv.usage.date===new Date().toDateString())Z.usage=sv.usage;else Z.usage={claude:0,gemini:0,openai:0,groq:0,deepseek:0,mistral:0,date:new Date().toDateString()};}
+} catch(e){}
 
-// ═══ PDF BOOK PATHS (relative to repo root) ═══
-const BOOKS = {
-  10: {
-    mathematics: 'books/grade10/maths.pdf',
-    science: 'books/grade10/science.pdf',
-    english: 'books/grade10/english.pdf',
-    'social-science': 'books/grade10/social-science.pdf',
-    hindi: 'books/grade10/hindi.pdf'
-  },
-  7: {
-    mathematics: 'books/grade7/maths.pdf',
-    science: 'books/grade7/science.pdf',
-    english: 'books/grade7/english.pdf',
-    'social-science': 'books/grade7/social-science.pdf',
-    hindi: 'books/grade7/hindi.pdf'
-  }
-};
-
-// ═══ PDF.js LOADER ═══
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-async function loadPDF(path) {
+// ═══════════════════════════════════════════════════════════════
+// LOGGING & STATS ENGINE
+// ═══════════════════════════════════════════════════════════════
+function logEvent(type, data) {
   try {
-    const pdf = await pdfjsLib.getDocument(path).promise;
-    let text = '';
-    for (let i = 1; i <= pdf.numPages; i++) {
-      const page = await pdf.getPage(i);
-      const content = await page.getTextContent();
-      text += content.items.map(item => item.str).join(' ') + '\n\n';
-    }
-    return text;
-  } catch(e) {
-    console.log(`PDF not found: ${path}`);
-    return null;
+    const logs = JSON.parse(localStorage.getItem('bd_logs')||'[]');
+    logs.push({ ts:new Date().toISOString(), user:Z.user?.name||Z.n||'Unknown', email:Z.user?.email||'guest', type, ...data });
+    // Keep last 500 entries
+    if(logs.length>500) logs.splice(0,logs.length-500);
+    localStorage.setItem('bd_logs',JSON.stringify(logs));
+  } catch(e){}
+}
+
+function getLogs(){ try{return JSON.parse(localStorage.getItem('bd_logs')||'[]')}catch(e){return []} }
+
+function renderStats(){
+  const logs=getLogs();
+  const chats=logs.filter(l=>l.type==='chat');
+  const users=[...new Set(logs.map(l=>l.user))];
+  const today=new Date().toDateString();
+  const todayChats=chats.filter(l=>new Date(l.ts).toDateString()===today);
+  const aiCounts={};chats.forEach(l=>{aiCounts[l.ai]=(aiCounts[l.ai]||0)+1});
+  const topAI=Object.entries(aiCounts).sort((a,b)=>b[1]-a[1])[0];
+
+  document.getElementById('statGrid').innerHTML=`
+    <div class="stat-card"><div class="sv" style="color:var(--np)">${chats.length}</div><div class="sl">Total Questions</div></div>
+    <div class="stat-card"><div class="sv" style="color:var(--nc)">${users.length}</div><div class="sl">Unique Users</div></div>
+    <div class="stat-card"><div class="sv" style="color:var(--ny)">${todayChats.length}</div><div class="sl">Today's Questions</div></div>
+    <div class="stat-card"><div class="sv" style="color:var(--nk)">${topAI?topAI[0]:'—'}</div><div class="sl">Most Used AI${topAI?' ('+topAI[1]+')':''}</div></div>`;
+
+  const recent=chats.slice(-30).reverse();
+  document.getElementById('logBody').innerHTML=recent.map(l=>{
+    const t=new Date(l.ts);
+    return `<tr><td>${t.toLocaleDateString('en-IN')} ${t.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}</td><td>${l.user}</td><td>${l.subject||'—'}</td><td>${l.mode||'—'}</td><td style="color:${AI_PROVIDERS[l.ai]?.color||'#fff'}">${l.ai||'—'}</td></tr>`;
+  }).join('');
+}
+
+function exportStats(){
+  const logs=getLogs();
+  const header='Timestamp,User,Email,Type,Subject,Mode,AI,Grade\n';
+  const rows=logs.map(l=>`"${l.ts}","${l.user}","${l.email}","${l.type}","${l.subject||''}","${l.mode||''}","${l.ai||''}","${l.grade||''}"`).join('\n');
+  const blob=new Blob([header+rows],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`braindrop_stats_${new Date().toISOString().split('T')[0]}.csv`;a.click();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// GOOGLE SIGN-IN + BYPASS WITH NAME CAPTURE
+// ═══════════════════════════════════════════════════════════════
+function initGoogleSignIn(){
+  if(typeof google==='undefined'||!google.accounts){setTimeout(initGoogleSignIn,500);return}
+  const savedUser=localStorage.getItem('bd_user');
+  if(savedUser){try{Z.user=JSON.parse(savedUser);onSignInSuccess();return}catch(e){localStorage.removeItem('bd_user')}}
+  if(CONFIG.GOOGLE_CLIENT_ID&&CONFIG.GOOGLE_CLIENT_ID!=='YOUR_CLIENT_ID.apps.googleusercontent.com'){
+    google.accounts.id.initialize({client_id:CONFIG.GOOGLE_CLIENT_ID,callback:handleGoogleResponse,auto_select:true});
+    google.accounts.id.renderButton(document.getElementById('gSignBtn'),{theme:'outline',size:'large',text:'signin_with',shape:'pill',width:300});
+    google.accounts.id.prompt();
+  } else {
+    document.querySelector('.login-gsign').innerHTML='<div style="color:var(--t3);font-size:.78rem;padding:8px">Google Sign-in available when configured</div>';
   }
 }
 
-async function loadAllPDFs() {
-  const el = document.getElementById('kbs');
-  el.textContent = 'Loading PDFs...';
-  el.className = 'kbcv load';
+function handleGoogleResponse(response){
+  const payload=JSON.parse(atob(response.credential.split('.')[1]));
+  const email=payload.email,name=payload.name||payload.given_name||email.split('@')[0],picture=payload.picture||'';
+  if(CONFIG.ALLOWED_EMAILS.length>0&&!CONFIG.ALLOWED_EMAILS.includes(email)){alert(`Access denied for ${email}.\nAsk Raja to add your email.`);return}
+  Z.user={email,name,picture,method:'google'};
+  localStorage.setItem('bd_user',JSON.stringify(Z.user));
+  logEvent('login',{method:'google',email});
+  onSignInSuccess();
+}
 
-  let loaded = 0, total = 0;
-  const books = BOOKS[Z.g] || {};
+function bypassLogin(){
+  const name=document.getElementById('bypassName').value.trim();
+  if(!name){document.getElementById('bypassName').style.borderColor='var(--nr)';document.getElementById('bypassName').placeholder='Please enter your name first!';return}
+  Z.user={email:'guest',name,picture:'',method:'bypass'};
+  localStorage.setItem('bd_user',JSON.stringify(Z.user));
+  logEvent('login',{method:'bypass',name});
+  onSignInSuccess();
+}
 
-  for (const [sub, path] of Object.entries(books)) {
-    total++;
-    const text = await loadPDF(path);
-    if (text && text.trim().length > 100) {
-      Z.pdfKB[`${Z.g}_${sub}`] = text;
-      loaded++;
+function onSignInSuccess(){
+  document.getElementById('loginGate').classList.add('hidden');
+  document.getElementById('mainApp').style.display='flex';
+  if(!Z.n&&Z.user.name)Z.n=Z.user.name;
+
+  // Apply default keys ONLY for Google sign-in users on the allowlist (never bypass guests)
+  const isAllowedGoogle = Z.user.method==='google' && (CONFIG.ALLOWED_EMAILS.length===0 || CONFIG.ALLOWED_EMAILS.includes(Z.user.email));
+  if(isAllowedGoogle){
+    for(const[prov,info]of Object.entries(AI_PROVIDERS)){
+      if(!Z[info.stateKey]&&CONFIG.DEFAULT_KEYS[prov])Z[info.stateKey]=CONFIG.DEFAULT_KEYS[prov];
     }
   }
 
-  updateKBStat();
-  if (loaded > 0) console.log(`Loaded ${loaded}/${total} PDFs for Grade ${Z.g}`);
+  // Show user badge
+  const badge=document.getElementById('userBadge');badge.style.display='flex';
+  document.getElementById('userName').textContent=Z.user.name.split(' ')[0];
+  if(Z.user.picture){document.getElementById('userAvatar').src=Z.user.picture;document.getElementById('userAvatar').style.display='block';document.getElementById('userInit').style.display='none'}
+  else{document.getElementById('userInit').textContent=Z.user.name.charAt(0).toUpperCase()}
+
+  // Populate settings fields
+  for(const[prov,info]of Object.entries(AI_PROVIDERS)){if(prov!=='ollama')document.getElementById(info.keyField).value=Z[info.stateKey]}
+  document.getElementById('olURL').value=Z.olURL;document.getElementById('olModel').value=Z.olModel;
+  document.getElementById('nI').value=Z.n;
+  document.getElementById('dlI').value=Z.dailyLimit;
+  document.getElementById('prefSel').value=Z.pref;
+  uXP();showW();loadAllPDFs();updateMemBadge();
 }
 
-function getKBForCurrentSubject() {
-  const pdfContent = Z.pdfKB[`${Z.g}_${Z.s}`] || '';
-  const extraContent = Z.kb[Z.s] || '';
-  let combined = '';
-  if (pdfContent) combined += pdfContent.substring(0, 50000);
-  if (extraContent) combined += '\n\nADDITIONAL REFERENCE MATERIAL:\n' + extraContent.substring(0, 15000);
-  return combined;
+function signOut(){
+  if(!confirm('Sign out? Your progress is saved locally.'))return;
+  localStorage.removeItem('bd_user');Z.user=null;
+  if(typeof google!=='undefined'&&google.accounts)google.accounts.id.disableAutoSelect();
+  location.reload();
 }
 
-function updateKBStat() {
-  const el = document.getElementById('kbs');
-  const pdfLoaded = !!Z.pdfKB[`${Z.g}_${Z.s}`];
-  const extraLoaded = !!Z.kb[Z.s];
+// ═══════════════════════════════════════════════════════════════
+// CHAT MEMORY + LEARNING PROFILE
+// ═══════════════════════════════════════════════════════════════
+function getMemoryKey(){return `bd_mem_${Z.g}_${Z.s}`}
+function loadMemory(){try{const r=localStorage.getItem(getMemoryKey());if(r)return JSON.parse(r)}catch(e){}return{history:[],profile:{topicsCovered:[],weakAreas:[],quizScores:[],lastStudied:''}}}
+function saveMemory(mem){try{if(mem.history.length>60)mem.history=mem.history.slice(-60);if(mem.profile.topicsCovered.length>50)mem.profile.topicsCovered=mem.profile.topicsCovered.slice(-50);if(mem.profile.quizScores.length>30)mem.profile.quizScores=mem.profile.quizScores.slice(-30);if(mem.profile.weakAreas.length>20)mem.profile.weakAreas=mem.profile.weakAreas.slice(-20);localStorage.setItem(getMemoryKey(),JSON.stringify(mem))}catch(e){}}
 
-  if (pdfLoaded && extraLoaded) { el.textContent = '✓ NCERT + extras loaded'; el.className = 'kbcv ok'; }
-  else if (pdfLoaded) { el.textContent = '✓ NCERT PDF loaded'; el.className = 'kbcv ok'; }
-  else if (extraLoaded) { el.textContent = '✓ Extra content loaded'; el.className = 'kbcv ok'; }
-  else { el.textContent = 'No content yet — add PDFs to /books/'; el.className = 'kbcv no'; }
+function updateLearningProfile(userMsg,aiReply){
+  const mem=loadMemory();const ts=new Date().toISOString();
+  mem.history.push({role:'user',text:userMsg,ts});mem.history.push({role:'assistant',text:aiReply,ts});
+  const topics=(T[Z.g]&&T[Z.g][Z.s])||[];
+  for(const topic of topics){if(userMsg.toLowerCase().includes(topic.toLowerCase().slice(0,10))||aiReply.toLowerCase().includes(topic.toLowerCase().slice(0,10))){if(!mem.profile.topicsCovered.includes(topic))mem.profile.topicsCovered.push(topic)}}
+  const correctMatch=aiReply.match(/correct|right|well done|great job|perfect/gi);const wrongMatch=aiReply.match(/incorrect|wrong|not quite|try again|almost/gi);
+  if(Z.m==='quiz'&&(correctMatch||wrongMatch)){mem.profile.quizScores.push({date:ts.split('T')[0],correct:correctMatch?correctMatch.length:0,wrong:wrongMatch?wrongMatch.length:0})}
+  const weakPatterns=aiReply.match(/(?:you (?:need to|should|might want to) (?:work on|practice|review|revisit)|(?:weak|struggle|difficulty) (?:in|with))\s+([^.!?\n]+)/gi);
+  if(weakPatterns){for(const p of weakPatterns){const area=p.replace(/^.*?(work on|practice|review|revisit|with|in)\s+/i,'').trim();if(area.length>3&&area.length<60&&!mem.profile.weakAreas.includes(area))mem.profile.weakAreas.push(area)}}
+  mem.profile.lastStudied=new Date().toLocaleDateString('en-IN');saveMemory(mem);updateMemBadge();
 }
 
-// ═══ TOPICS ═══
+function getMemoryContext(){
+  const mem=loadMemory();if(mem.history.length===0&&mem.profile.topicsCovered.length===0)return '';
+  let ctx='\n\nSTUDENT LEARNING MEMORY (from past sessions — use to personalize):';
+  if(mem.profile.topicsCovered.length>0)ctx+=`\nTopics already covered: ${mem.profile.topicsCovered.join(', ')}`;
+  if(mem.profile.weakAreas.length>0)ctx+=`\nAreas needing practice: ${mem.profile.weakAreas.join(', ')}`;
+  if(mem.profile.quizScores.length>0){const recent=mem.profile.quizScores.slice(-5);ctx+=`\nRecent quizzes: ${recent.reduce((s,q)=>s+q.correct,0)} correct, ${recent.reduce((s,q)=>s+q.wrong,0)} incorrect`}
+  if(mem.profile.lastStudied)ctx+=`\nLast studied: ${mem.profile.lastStudied}`;
+  if(mem.history.length>0){ctx+='\n\nRecent conversation:';const recent=mem.history.slice(-12);for(const m of recent){ctx+=`\n${m.role==='user'?'Student':'You'}: ${m.text.length>200?m.text.substring(0,200)+'...':m.text}`}}
+  ctx+='\n\nUse this memory: reference past topics, build on learning, address weak areas, acknowledge progress.';return ctx;
+}
+
+function updateMemBadge(){const el=document.getElementById('memBadge');if(!el)return;const mem=loadMemory();const ex=Math.floor(mem.history.length/2);const tp=mem.profile.topicsCovered.length;el.textContent=ex===0?'🧠 Memory: new session':`🧠 ${ex} chats · ${tp} topics`}
+
+function clearMemory(){const sn={mathematics:'Mathematics',science:'Science',english:'English','social-science':'Social Science',hindi:'Hindi'};if(!confirm(`Clear memory for Grade ${Z.g} ${sn[Z.s]}?`))return;localStorage.removeItem(getMemoryKey());Z.h=[];updateMemBadge();showW();addM('ai','🧹 **Memory cleared** for this subject. Fresh start!\n\n> XP and streak preserved — only chat history was reset.')}
+
+// ═══ PDF PATHS + LOADER ═══
+const BOOKS={10:{mathematics:'books/grade10/maths.pdf',science:'books/grade10/science.pdf',english:'books/grade10/english.pdf','social-science':'books/grade10/social-science.pdf',hindi:'books/grade10/hindi.pdf'},7:{mathematics:'books/grade7/maths.pdf',science:'books/grade7/science.pdf',english:'books/grade7/english.pdf','social-science':'books/grade7/social-science.pdf',hindi:'books/grade7/hindi.pdf'}};
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+async function loadPDF(path){try{const pdf=await pdfjsLib.getDocument(path).promise;let text='';for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i);const content=await page.getTextContent();text+=content.items.map(item=>item.str).join(' ')+'\n\n'}return text}catch(e){return null}}
+async function loadAllPDFs(){const el=document.getElementById('kbs');el.textContent='Loading PDFs...';el.className='kbcv load';let loaded=0,total=0;const books=BOOKS[Z.g]||{};for(const[sub,path]of Object.entries(books)){total++;const text=await loadPDF(path);if(text&&text.trim().length>100){Z.pdfKB[`${Z.g}_${sub}`]=text;loaded++}}updateKBStat();if(loaded>0)console.log(`Loaded ${loaded}/${total} PDFs for Grade ${Z.g}`)}
+function getKBForCurrentSubject(){const p=Z.pdfKB[`${Z.g}_${Z.s}`]||'';const e=Z.kb[Z.s]||'';let c='';if(p)c+=p.substring(0,50000);if(e)c+='\n\nADDITIONAL REFERENCE:\n'+e.substring(0,15000);return c}
+function updateKBStat(){const el=document.getElementById('kbs');const p=!!Z.pdfKB[`${Z.g}_${Z.s}`];const e=!!Z.kb[Z.s];if(p&&e){el.textContent='✓ NCERT + extras';el.className='kbcv ok'}else if(p){el.textContent='✓ NCERT PDF loaded';el.className='kbcv ok'}else if(e){el.textContent='✓ Extra content';el.className='kbcv ok'}else{el.textContent='Add PDFs to /books/';el.className='kbcv no'}}
+
+// ═══ TOPICS + EXAM PATTERNS ═══
 const T={10:{mathematics:["Real Numbers & Euclid's Division","Polynomials — Zeroes","Linear Equations Pair","Quadratic Equations","Arithmetic Progressions","Triangles & Similarity","Coordinate Geometry","Trigonometry","Circles & Tangents","Surface Areas & Volumes","Statistics","Probability"],science:["Chemical Reactions","Acids, Bases & Salts","Metals & Non-metals","Life Processes","Control & Coordination","Heredity & Evolution","Light — Reflection & Refraction","Electricity & Circuits","Magnetic Effects","Our Environment"],english:["Formal Letter Writing","Reading Comprehension","Tenses & Usage","Direct & Indirect Speech","Active & Passive Voice","Report Writing","Poem Analysis","Story Writing","Question Tags","Essay Writing"],"social-science":["Rise of Nationalism — Europe","Nationalism in India","Resources & Development","Agriculture","Power Sharing","Federalism","Development","Sectors of Economy","Money & Credit","Globalisation"],hindi:["पत्र लेखन","अनुच्छेद लेखन","समास","मुहावरे","संधि विच्छेद","पद परिचय","वाक्य रचना","अलंकार","सूचना लेखन","विज्ञापन लेखन"]},7:{mathematics:["Integers","Fractions & Decimals","Data Handling","Simple Equations","Lines & Angles","Triangles","Perimeter & Area","Rational Numbers","Practical Geometry","Symmetry"],science:["Nutrition in Plants","Nutrition in Animals","Heat & Temperature","Acids & Bases","Physical & Chemical Changes","Weather & Climate","Respiration","Soil Types","Motion & Time","Light & Shadows"],english:["Reading Comprehension","Nouns & Pronouns","Adjectives & Adverbs","Simple Tenses","Prepositions","Conjunctions","Sentence Formation","Paragraph Writing","Story Completion","Letter Writing"],"social-science":["Tracing Changes","New Kings & Kingdoms","Environment","Our Changing Earth","Inside Our Earth","Democracy & Equality","Government & Health","Markets","Ads & Democracy","Gender & Equality"],hindi:["संज्ञा और सर्वनाम","विशेषण","क्रिया","वचन","लिंग","विलोम शब्द","पर्यायवाची","अनेकार्थी शब्द","चित्र वर्णन","अपठित गद्यांश"]}};
-
-// ═══ EXAM PATTERNS (Grade 10) ═══
 const EP={mathematics:{hot:[{t:"Quadratic Equations",f:"95%",m:"8-10"},{t:"Arithmetic Progressions",f:"100%",m:"8-12"},{t:"Statistics",f:"100%",m:"8-10"},{t:"Triangles",f:"90%",m:"6-8"},{t:"Trig Identities",f:"92%",m:"6-8"},{t:"Surface Areas & Volumes",f:"88%",m:"6-8"}],tr:["Forgetting extraneous roots in quadratics","Mixing AP nth-term vs sum formula","Sign errors in coordinate geometry","Wrong median class in grouped data","Not showing constructions in proofs"]},science:{hot:[{t:"Chemical Reactions",f:"100%",m:"5-8"},{t:"Life Processes",f:"95%",m:"8-10"},{t:"Electricity",f:"100%",m:"8-10"},{t:"Light — Mirror/Lens",f:"92%",m:"6-8"},{t:"Heredity",f:"88%",m:"5-6"},{t:"Magnetic Effects",f:"85%",m:"5-8"}],tr:["Unbalanced equations","Series vs parallel confusion","Sign convention errors","Incomplete ray diagrams","Mixing arteries & veins"]},english:{hot:[{t:"Letter Writing",f:"100%",m:"5"},{t:"Reading Comprehension",f:"100%",m:"10"},{t:"Grammar",f:"100%",m:"4-5"},{t:"Report Writing",f:"85%",m:"5"}],tr:["Wrong letter format","No textual evidence","Tense inconsistency","Passive voice with modals"]},"social-science":{hot:[{t:"Nationalism in India",f:"95%",m:"5-8"},{t:"Federalism",f:"92%",m:"5-6"},{t:"Development & Sectors",f:"90%",m:"5-8"},{t:"Resources",f:"88%",m:"5-6"}],tr:["Confusing dates","No real-world examples","Missing map work","Vague answers"]},hindi:{hot:[{t:"पत्र लेखन",f:"100%",m:"5"},{t:"अनुच्छेद",f:"95%",m:"5"},{t:"व्याकरण",f:"100%",m:"4-5"}],tr:["गलत प्रारूप","विषय से भटकना","समास/संधि भ्रम"]}};
 
 // ═══ SYSTEM PROMPT ═══
-function sysP() {
-  const nm = Z.n ? ` Student's name: ${Z.n}.` : '';
-  const kbc = getKBForCurrentSubject();
-  const kbi = kbc ? `\n\nKNOWLEDGE BASE (NCERT textbook — use as PRIMARY source. Every answer must align with this content):\n---\n${kbc.substring(0,45000)}\n---` : '';
-  const sn = {mathematics:'Mathematics',science:'Science',english:'English','social-science':'Social Science',hindi:'Hindi'};
-  const ep = EP[Z.s];
-  const epb = (Z.g===10&&ep) ? `\n\nEXAM PATTERNS (2015-2024):\nHigh-freq: ${ep.hot.map(h=>`${h.t} (${h.f}, ${h.m} marks)`).join('; ')}.\nCommon traps: ${ep.tr.join('; ')}.` : '';
-
-  const base = `You are BrainDrop, an expert CBSE ${sn[Z.s]} tutor for Grade ${Z.g}. You speak like a cool, encouraging older sibling.${nm}
-
+function sysP(){
+  const nm=Z.n?` Student's name: ${Z.n}.`:'';const kbc=getKBForCurrentSubject();
+  const kbi=kbc?`\n\nKNOWLEDGE BASE (NCERT — PRIMARY source):\n---\n${kbc.substring(0,45000)}\n---`:'';
+  const sn={mathematics:'Mathematics',science:'Science',english:'English','social-science':'Social Science',hindi:'Hindi'};
+  const ep=EP[Z.s];const epb=(Z.g===10&&ep)?`\n\nEXAM PATTERNS (2015-2024):\nHigh-freq: ${ep.hot.map(h=>`${h.t} (${h.f}, ${h.m} marks)`).join('; ')}.\nTraps: ${ep.tr.join('; ')}.`:'';
+  const memCtx=getMemoryContext();
+  const base=`You are BrainDrop, an expert CBSE ${sn[Z.s]} tutor for Grade ${Z.g}. You speak like a cool, encouraging older sibling.${nm}
 Rules:
-- Patient, fun, never condescending. Use simple language.
-- Indian examples (cricket, Bollywood, food, festivals, daily life)
-- Break complex concepts into small steps
-- Use mnemonics and memory tricks
-- For formulas: explain WHY they work, not just HOW
-- Use emojis naturally but sparingly
-- If student uses Hindi/Hinglish, match their style
+- Patient, fun, never condescending. Simple language.
+- Indian examples (cricket, Bollywood, food, festivals)
+- Break concepts into small steps. Use mnemonics.
+- For formulas: explain WHY, not just HOW
+- Emojis sparingly. Match Hindi/Hinglish if student uses it.
 - For Hindi subject: respond in Devanagari
-- Markdown: **bold** for key terms, bullets, > callouts, \`code\` for formulas
-- ASCII diagrams for geometry, circuits, biological processes where helpful
-- Hype them up when they get things right!
-- IMPORTANT: If NCERT content is provided in the knowledge base, ALWAYS refer to it. Use exact definitions, theorems, and examples from the textbook.${kbi}${epb}`;
-
-  const mp = {
-    explain: base+'\n\nMODE: Explain\n- Clear structured explanations\n- Step-by-step with worked examples\n- Real-world Indian examples\n- ASCII diagrams where helpful\n- Memory tricks at the end\n- End with 1-2 Quick Check questions',
-    socratic: base+'\n\nMODE: Socratic\n- NEVER give direct answers\n- Guide through questions, ONE at a time\n- Start from what they know\n- Gentle hints if stuck\n- Celebrate discoveries\n- "What if..." "Think about..." "Can you connect..."',
-    quiz: base+'\n\nMODE: Quiz\n- One question at a time, 4 options (A-D)\n- Mix: 40% easy, 40% medium, 20% HOTS\n- After answer: explain correct + why others wrong\n- Board exam patterns for Grade 10\n- After 5 Qs: score + areas to improve\n- Include past year style questions',
-    examprep: base+'\n\nMODE: Exam Prep\n- Board exam patterns from last 10 years\n- Which topics appear most, expected marks\n- Cheat sheets, common traps, full-marks format\n- Time management tips\n- HOTS question practice\n- Sample answers as examiners want them',
-    tutor: base+'\n\nMODE: AI Tutor\n- Personal tutor — answer anything\n- Adapt to student level\n- Simplify proactively if confused\n- Suggest what to study next\n- Connect related topics\n- Be encouraging about progress'
-  };
-  return mp[Z.m] || mp.explain;
+- Markdown: **bold** key terms, bullets, > callouts, \`code\` for formulas
+- ASCII diagrams for geometry/circuits/bio where helpful
+- NCERT content is PRIMARY — use exact definitions/theorems
+- If memory provided, reference it naturally. Don't repeat known topics.${kbi}${epb}${memCtx}`;
+  const mp={
+    explain:base+'\n\nMODE: Explain\n- Structured explanations with worked examples\n- Real-world Indian examples\n- Memory tricks at end\n- End with 1-2 Quick Check questions',
+    socratic:base+'\n\nMODE: Socratic\n- NEVER give direct answers\n- Guide through questions ONE at a time\n- "What if..." "Think about..." "Can you connect..."',
+    quiz:base+'\n\nMODE: Quiz\n- One question, 4 options (A-D)\n- 40% easy, 40% medium, 20% HOTS\n- After answer: explain why\n- After 5 Qs: score + areas to improve\n- Target weak areas from memory',
+    examprep:base+'\n\nMODE: Exam Prep\n- Board patterns from last 10 years\n- Cheat sheets, traps, full-marks format\n- Time management + HOTS practice',
+    tutor:base+'\n\nMODE: AI Tutor\n- Answer anything. Adapt to level.\n- Suggest next topics based on memory\n- Connect related concepts'
+  };return mp[Z.m]||mp.explain;
 }
 
-// ═══ DUAL AI ENGINE ═══
-async function callClaude(userMsg) {
-  const messages = Z.h.slice(-16).map(m => ({
-    role: m.role === 'model' ? 'assistant' : 'user',
-    content: m.text
-  }));
-  messages.push({ role: 'user', content: userMsg });
-
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'x-api-key': Z.ck, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 4096,
-      system: sysP(),
-      messages: messages
-    })
-  });
-  const data = await res.json();
-  if (data.error) throw new Error(data.error.message || 'Claude API error');
-  return data.content?.[0]?.text || "Hmm, didn't get a response. Try again?";
-}
-
-async function callGemini(userMsg) {
-  const history = Z.h.slice(-16).map(m => ({ role: m.role === 'model' ? 'model' : 'user', parts: [{ text: m.text }] }));
-  history.push({ role: 'user', parts: [{ text: userMsg }] });
-
-  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${Z.gk}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      system_instruction: { parts: [{ text: sysP() }] },
-      contents: history,
-      generationConfig: { temperature: 0.75, maxOutputTokens: 4096, topP: 0.95 },
-      safetySettings: [
-        { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
-        { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
-        { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
-      ]
-    })
-  });
-  const data = await res.json();
-  if (data.error) throw new Error(data.error.message || 'Gemini API error');
-  return data.candidates?.[0]?.content?.parts?.[0]?.text || "Hmm, didn't get a response. Try again?";
-}
-
-async function callAI(userMsg) {
-  // Check if any keys are available
-  const hasClaude = !!Z.ck;
-  const hasGemini = !!Z.gk;
-
-  if (!hasClaude && !hasGemini) {
-    addM('ai', '⚙️ **Hey!** You need at least one API key to start learning.\n\nClick ⚙ in the top right and add:\n- **Claude key** from [console.anthropic.com](https://console.anthropic.com) (best for teaching)\n- **Gemini key** from [Google AI Studio](https://aistudio.google.com/apikey) (free, no credit card)\n\n> 💡 Tip: Add both for the ultimate combo — Claude teaches, Gemini is your free backup!');
-    return;
-  }
-
-  Z.h.push({ role: 'user', text: userMsg });
-  showT(); Z.busy = true; document.getElementById('sb').disabled = true;
-
-  let reply = '', usedAI = '';
-
-  try {
-    // Determine which AI to use
-    const primary = Z.pref === 'auto' ? (hasClaude ? 'claude' : 'gemini') :
-                    Z.pref === 'claude' ? (hasClaude ? 'claude' : 'gemini') :
-                    (hasGemini ? 'gemini' : 'claude');
-
-    try {
-      if (primary === 'claude') {
-        reply = await callClaude(userMsg); usedAI = 'Claude';
-      } else {
-        reply = await callGemini(userMsg); usedAI = 'Gemini';
-      }
-    } catch (primaryErr) {
-      // Fallback to the other AI
-      console.log(`${primary} failed: ${primaryErr.message}, trying fallback...`);
-      const fallback = primary === 'claude' ? 'gemini' : 'claude';
-      const hasFallback = fallback === 'claude' ? hasClaude : hasGemini;
-
-      if (hasFallback) {
-        if (fallback === 'claude') { reply = await callClaude(userMsg); usedAI = 'Claude (fallback)'; }
-        else { reply = await callGemini(userMsg); usedAI = 'Gemini (fallback)'; }
-      } else {
-        throw primaryErr;
-      }
+// ═══════════════════════════════════════════════════════════════
+// 6-ENGINE AI CALLER
+// ═══════════════════════════════════════════════════════════════
+async function callProvider(provider, userMsg){
+  const msgs=Z.h.slice(-16);
+  switch(provider){
+    case 'claude': {
+      const messages=msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text}));messages.push({role:'user',content:userMsg});
+      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':Z.ck,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:4096,system:sysP(),messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.content?.[0]?.text||'No response';
     }
+    case 'gemini': {
+      const history=msgs.map(m=>({role:m.role==='model'?'model':'user',parts:[{text:m.text}]}));history.push({role:'user',parts:[{text:userMsg}]});
+      const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${Z.gk}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system_instruction:{parts:[{text:sysP()}]},contents:history,generationConfig:{temperature:0.75,maxOutputTokens:4096,topP:0.95},safetySettings:[{category:'HARM_CATEGORY_HARASSMENT',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_HATE_SPEECH',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_SEXUALLY_EXPLICIT',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_DANGEROUS_CONTENT',threshold:'BLOCK_NONE'}]})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.candidates?.[0]?.content?.parts?.[0]?.text||'No response';
+    }
+    case 'openai': {
+      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${Z.ok}`},body:JSON.stringify({model:'gpt-4o-mini',max_tokens:4096,messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
+    }
+    case 'groq': {
+      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${Z.qk}`},body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:4096,messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
+    }
+    case 'deepseek': {
+      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch('https://api.deepseek.com/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${Z.dk}`},body:JSON.stringify({model:'deepseek-chat',max_tokens:4096,messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
+    }
+    case 'mistral': {
+      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch('https://api.mistral.ai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${Z.mk}`},body:JSON.stringify({model:'mistral-small-latest',max_tokens:4096,messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
+    }
+    case 'ollama': {
+      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch(`${Z.olURL}/v1/chat/completions`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:Z.olModel,messages,stream:false})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message||JSON.stringify(data.error));return data.choices?.[0]?.message?.content||'No response';
+    }
+  }
+}
 
-    Z.h.push({ role: 'model', text: reply });
-    hideT();
-    addM('ai', reply, usedAI);
-    gXP(Z.m === 'quiz' ? 15 : 10);
-    Z.qc++;
-    saveZ();
+function getAvailableProviders(){return PROVIDER_ORDER.filter(p=>!!Z[AI_PROVIDERS[p].stateKey])}
 
-  } catch(e) {
-    hideT();
-    let em = `❌ **Oops!** \`${e.message}\`\n\n`;
-    if (e.message.includes('API key') || e.message.includes('401')) em += '> Check your API key(s) in ⚙ Settings.';
-    else if (e.message.includes('429') || e.message.includes('quota') || e.message.includes('rate')) em += '> Rate limit hit. Wait a minute and try again!';
-    else em += '> Try again shortly.';
-    addM('ai', em);
+async function callAI(userMsg){
+  if(Z.usage.date!==new Date().toDateString())Z.usage={claude:0,gemini:0,openai:0,groq:0,deepseek:0,mistral:0,ollama:0,date:new Date().toDateString()};
+  const avail=getAvailableProviders();
+  if(avail.length===0){addM('ai','⚙️ **Hey!** You need at least one AI engine.\n\nClick ⚙ in the top right. Recommended free combo:\n- **Gemini** — free, no credit card\n- **Groq** — free, ultra-fast\n- **Ollama** — 100% free & offline (runs on your computer)\n\n> 💡 Add Claude for best teaching quality (paid). More engines = better fallback!');return}
+
+  Z.h.push({role:'user',text:userMsg});showT();Z.busy=true;document.getElementById('sb').disabled=true;
+  let reply='',usedAI='';
+
+  // Build try-order: preferred first, then fallback chain
+  let tryOrder=[];
+  if(Z.pref!=='auto'&&avail.includes(Z.pref))tryOrder=[Z.pref,...avail.filter(p=>p!==Z.pref)];
+  else tryOrder=[...avail];
+
+  // Skip Claude if over daily limit
+  if(Z.usage.claude>=Z.dailyLimit)tryOrder=tryOrder.filter(p=>p!=='claude').concat(tryOrder.includes('claude')?['claude']:[]);
+  if(Z.usage.claude>=Z.dailyLimit&&tryOrder[0]==='claude'&&tryOrder.length>1)tryOrder.push(tryOrder.shift());
+
+  for(const provider of tryOrder){
+    try{
+      reply=await callProvider(provider,userMsg);
+      usedAI=AI_PROVIDERS[provider].name;Z.lastAI=provider;
+      Z.usage[provider]=(Z.usage[provider]||0)+1;
+      break;
+    }catch(err){console.log(`${provider} failed: ${err.message}`);continue}
   }
 
-  Z.busy = false; document.getElementById('sb').disabled = false;
+  hideT();
+  if(reply){
+    Z.h.push({role:'model',text:reply});addM('ai',reply,usedAI);gXP(Z.m==='quiz'?15:10);Z.qc++;
+    updateLearningProfile(userMsg,reply);
+    logEvent('chat',{subject:Z.s,mode:Z.m,ai:Z.lastAI,grade:Z.g});
+    saveZ();
+  } else {
+    addM('ai','❌ **All AI engines failed.** Check your API keys in ⚙ Settings, or try again shortly.');
+  }
+  Z.busy=false;document.getElementById('sb').disabled=false;
 }
 
 // ═══ RENDERING ═══
-function md(t) {
-  return t
-    .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
-    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/(?<!\*)\*([^*]+?)\*(?!\*)/g, '<em>$1</em>')
-    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
-    .replace(/^---$/gm, '<hr>')
-    .replace(/^[\-\*] (.+)$/gm, '<li>$1</li>')
-    .replace(/((?:<li>.*?<\/li>\s*)+)/gs, '<ul>$1</ul>')
-    .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
-    .replace(/\n{2,}/g, '</p><p>')
-    .replace(/\n/g, '<br>');
+function md(t){return t.replace(/```(\w*)\n([\s\S]*?)```/g,'<pre><code>$2</code></pre>').replace(/`([^`]+)`/g,'<code>$1</code>').replace(/^### (.+)$/gm,'<h3>$1</h3>').replace(/^## (.+)$/gm,'<h2>$1</h2>').replace(/^# (.+)$/gm,'<h1>$1</h1>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/(?<!\*)\*([^*]+?)\*(?!\*)/g,'<em>$1</em>').replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>').replace(/^---$/gm,'<hr>').replace(/^[\-\*] (.+)$/gm,'<li>$1</li>').replace(/((?:<li>.*?<\/li>\s*)+)/gs,'<ul>$1</ul>').replace(/^\d+\. (.+)$/gm,'<li>$1</li>').replace(/\n{2,}/g,'</p><p>').replace(/\n/g,'<br>')}
+
+function showW(){
+  const topics=(T[Z.g]&&T[Z.g][Z.s])||[];
+  const md_={explain:{i:'📖',t:'Ready to learn?',s:"Pick a topic — I'll break it down with examples & memory hacks!"},socratic:{i:'🧠',t:"Let's think together!",s:"I won't give answers — I'll guide you to discover them!"},quiz:{i:'🎮',t:'Game on!',s:'Board-exam style Qs. Earn XP and level up!'},examprep:{i:'🎯',t:'Exam mode: ON',s:"10 years of boards, common traps & cheat sheets."},tutor:{i:'🤖',t:'Your AI tutor is here!',s:'Ask anything. No judgement, just knowledge.'}};
+  const m=md_[Z.m]||md_.explain;
+  const pdfLoaded=!!Z.pdfKB[`${Z.g}_${Z.s}`];
+  const pdfNote=pdfLoaded?`<div class="pdfstat">📚 NCERT loaded (${Math.round(Z.pdfKB[Z.g+'_'+Z.s].length/1000)}K chars) · Textbook-grounded answers</div>`:`<div class="pdfstat">💡 Add NCERT PDFs to <code>/books/</code> for textbook-accurate answers</div>`;
+  const mem=loadMemory();const memEx=Math.floor(mem.history.length/2);
+  const memNote=memEx>0?`<div class="memstat">🧠 I remember ${memEx} past chats · ${mem.profile.topicsCovered.length} topics covered${mem.profile.weakAreas.length>0?' · Focus: '+mem.profile.weakAreas.slice(-3).join(', '):''}</div>`:`<div class="memstat">🧠 New session — I'll start remembering your progress!</div>`;
+  const avail=getAvailableProviders();const aiNote=avail.length>0?`<div style="margin-top:8px;font-size:.7rem;color:var(--t3)">Active: ${avail.map(p=>`<span style="color:${AI_PROVIDERS[p].color}">${AI_PROVIDERS[p].name}</span>`).join(' · ')}</div>`:'';
+  document.getElementById('ch').innerHTML=`<div class="hero"><div class="hchar">${m.i}</div><div class="htit">${m.t}</div><div class="hsub">${m.s}</div><div class="chips">${topics.slice(0,8).map(t=>`<button class="chip" onclick="ask(this.textContent)">${t}</button>`).join('')}</div>${pdfNote}${memNote}${aiNote}</div>`;
+  updateMemBadge();
 }
 
-function showW() {
-  const topics = (T[Z.g] && T[Z.g][Z.s]) || [];
-  const md_ = {
-    explain:{i:'📖',t:'Ready to learn?',s:"Pick a topic — I'll break it down with NCERT examples, diagrams & memory hacks!"},
-    socratic:{i:'🧠',t:"Let's think together!",s:"I won't give answers — I'll guide you to discover them yourself!"},
-    quiz:{i:'🎮',t:'Game on!',s:'Board-exam style Qs. Earn XP and level up!'},
-    examprep:{i:'🎯',t:'Exam mode: ON',s:"Top topics from last 10 years of boards, common traps & cheat sheets."},
-    tutor:{i:'🤖',t:'Your AI tutor is here!',s:'Ask literally anything. No judgement, just knowledge drops.'}
-  };
-  const m = md_[Z.m] || md_.explain;
-  const pdfLoaded = !!Z.pdfKB[`${Z.g}_${Z.s}`];
-  const pdfNote = pdfLoaded
-    ? `<div class="pdfstat">📚 NCERT textbook loaded (${Math.round(Z.pdfKB[Z.g+'_'+Z.s].length/1000)}K chars) · Answers grounded in your textbook</div>`
-    : `<div class="pdfstat">💡 Add NCERT PDFs to <code>/books/</code> folder for textbook-accurate answers</div>`;
-
-  document.getElementById('ch').innerHTML = `<div class="hero"><div class="hchar">${m.i}</div><div class="htit">${m.t}</div><div class="hsub">${m.s}</div><div class="chips">${topics.slice(0,8).map(t=>`<button class="chip" onclick="ask(this.textContent)">${t}</button>`).join('')}</div>${pdfNote}</div>`;
+function addM(role,text,aiLabel){
+  const c=document.getElementById('ch');const h=c.querySelector('.hero');if(h)h.remove();
+  const d=document.createElement('div');d.className=`msg ${role==='user'?'u':'a'}`;
+  const aiColor=Z.lastAI?AI_PROVIDERS[Z.lastAI]?.color:'#b44aff';
+  const badge=(role!=='user'&&aiLabel)?`<div style="font-size:.6rem;color:${aiColor};margin-top:6px;font-family:'Space Mono',monospace">— ${aiLabel}</div>`:'';
+  d.innerHTML=`<div class="av ${role==='user'?'uu':'a'}">${role==='user'?'✦':'⚡'}</div><div class="bb">${role==='user'?text:md(text)}${badge}</div>`;
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
 }
 
-function addM(role, text, aiLabel) {
-  const c = document.getElementById('ch');
-  const h = c.querySelector('.hero'); if (h) h.remove();
-  const d = document.createElement('div');
-  d.className = `msg ${role==='user'?'u':'a'}`;
-  const badge = (role !== 'user' && aiLabel) ? `<div style="font-size:.6rem;color:var(--t3);margin-top:6px;font-family:'Space Mono',monospace">— ${aiLabel}</div>` : '';
-  d.innerHTML = `<div class="av ${role==='user'?'uu':'a'}">${role==='user'?'✦':'⚡'}</div><div class="bb">${role==='user'?text:md(text)}${badge}</div>`;
-  c.appendChild(d); c.scrollTop = c.scrollHeight;
-}
-
-function showT() {
-  const c = document.getElementById('ch');
-  const d = document.createElement('div'); d.className = 'msg a'; d.id = 'ty';
-  d.innerHTML = '<div class="av a">⚡</div><div class="bb typ"><div class="dt"></div><div class="dt"></div><div class="dt"></div></div>';
-  c.appendChild(d); c.scrollTop = c.scrollHeight;
-}
-function hideT() { const t = document.getElementById('ty'); if(t) t.remove(); }
+function showT(){const c=document.getElementById('ch');const d=document.createElement('div');d.className='msg a';d.id='ty';d.innerHTML='<div class="av a">⚡</div><div class="bb typ"><div class="dt"></div><div class="dt"></div><div class="dt"></div></div>';c.appendChild(d);c.scrollTop=c.scrollHeight}
+function hideT(){const t=document.getElementById('ty');if(t)t.remove()}
 
 // ═══ XP ═══
 function gXP(a){Z.xp+=a;Z.str++;uXP()}
 function uXP(){
   document.getElementById('xpv').textContent=Z.xp;document.getElementById('stk').textContent=Z.str;document.getElementById('qc').textContent=Z.qc;
+  document.getElementById('aiUsed').textContent=Z.lastAI?AI_PROVIDERS[Z.lastAI]?.name:'—';
   const lv=[{x:0,n:'Newbie',l:1},{x:50,n:'Curious Mind',l:2},{x:150,n:'Knowledge Seeker',l:3},{x:300,n:'Brain Warrior',l:4},{x:500,n:'Quiz Master',l:5},{x:800,n:'Scholar',l:6},{x:1200,n:'Genius',l:7},{x:2000,n:'Legend',l:8}];
   let c=lv[0],nx=lv[1];for(let i=lv.length-1;i>=0;i--){if(Z.xp>=lv[i].x){c=lv[i];nx=lv[i+1]||{x:c.x+500};break}}
-  document.getElementById('lvl').textContent=`Lvl ${c.l} — ${c.n}`;
-  document.getElementById('xpb').style.width=Math.min(((Z.xp-c.x)/(nx.x-c.x))*100,100)+'%';
+  document.getElementById('lvl').textContent=`Lvl ${c.l} — ${c.n}`;document.getElementById('xpb').style.width=Math.min(((Z.xp-c.x)/(nx.x-c.x))*100,100)+'%';
 }
-function saveZ(){try{localStorage.setItem('bd2',JSON.stringify({ck:Z.ck,gk:Z.gk,n:Z.n,pref:Z.pref,xp:Z.xp,str:Z.str,qc:Z.qc}))}catch(e){}}
+function saveZ(){try{localStorage.setItem('bd2',JSON.stringify({ck:Z.ck,gk:Z.gk,ok:Z.ok,qk:Z.qk,dk:Z.dk,mk:Z.mk,ol:Z.ol,olURL:Z.olURL,olModel:Z.olModel,n:Z.n,pref:Z.pref,xp:Z.xp,str:Z.str,qc:Z.qc,usage:Z.usage,dailyLimit:Z.dailyLimit}))}catch(e){}}
 
 // ═══ ACTIONS ═══
 function go(){if(Z.busy)return;const i=document.getElementById('inp');const m=i.value.trim();if(!m)return;i.value='';i.style.height='auto';addM('user',m);callAI(m)}
-function ask(topic){const pf={explain:'Explain this clearly with NCERT examples: ',socratic:"Let's explore together: ",quiz:'Quiz me on: ',examprep:'Complete exam prep for: ',tutor:'I want to learn about: '};const msg=(pf[Z.m]||'Explain: ')+topic;addM('user',msg);callAI(msg)}
-
+function ask(topic){const pf={explain:'Explain this clearly with NCERT examples: ',socratic:"Let's explore together: ",quiz:'Quiz me on: ',examprep:'Complete exam prep for: ',tutor:'I want to learn about: '};addM('user',(pf[Z.m]||'Explain: ')+topic);callAI((pf[Z.m]||'Explain: ')+topic)}
 function setG(g){Z.g=g;document.querySelectorAll('.gp').forEach(b=>b.classList.toggle('on',(b.textContent==='X'?10:7)===g));Z.h=[];loadAllPDFs();showW()}
 function setS(b){Z.s=b.dataset.s;document.querySelectorAll('.sbb').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('.mb').forEach(x=>x.classList.toggle('on',x.dataset.s===Z.s));Z.h=[];updateKBStat();showW()}
 function mN(b){Z.s=b.dataset.s;document.querySelectorAll('.mb').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('.sbb').forEach(x=>x.classList.toggle('on',x.dataset.s===Z.s));Z.h=[];updateKBStat();showW()}
 function setMd(b){Z.m=b.dataset.m;document.querySelectorAll('.mt').forEach(x=>x.classList.remove('on'));b.classList.add('on');Z.h=[];showW()}
 
-function openM(id){document.getElementById(id==='set'?'setO':'kbO').classList.add('sh')}
-function closeM(id){document.getElementById(id==='set'?'setO':'kbO').classList.remove('sh')}
-
-function setAIPref(pref, btn){Z.pref=pref;document.querySelectorAll('.aisw-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on')}
+function openM(id){
+  if(id==='stats'){renderStats();document.getElementById('statsO').classList.add('sh')}
+  else document.getElementById(id==='set'?'setO':'kbO').classList.add('sh');
+}
+function closeM(id){document.getElementById(id==='set'?'setO':id==='stats'?'statsO':'kbO').classList.remove('sh')}
 
 function saveC(){
-  Z.ck=document.getElementById('ckI').value.trim();
-  Z.gk=document.getElementById('gkI').value.trim();
-  Z.n=document.getElementById('nI').value.trim();
+  for(const[prov,info]of Object.entries(AI_PROVIDERS)){if(prov!=='ollama')Z[info.stateKey]=document.getElementById(info.keyField).value.trim()}
+  Z.olURL=document.getElementById('olURL').value.trim()||'http://localhost:11434';Z.olModel=document.getElementById('olModel').value.trim()||'llama3.2';
+  Z.n=document.getElementById('nI').value.trim();Z.pref=document.getElementById('prefSel').value;Z.dailyLimit=parseInt(document.getElementById('dlI').value)||50;
   saveZ();closeM('set');
-  const keys=[];if(Z.ck)keys.push('Claude');if(Z.gk)keys.push('Gemini');
-  if(keys.length) addM('ai',`✨ **All set${Z.n?', '+Z.n:''}!** Connected to: **${keys.join(' + ')}**\n\n> Pick a topic above or type your question. Let's crush it! 🔥`);
+  const active=getAvailableProviders();
+  if(active.length)addM('ai',`✨ **All set${Z.n?', '+Z.n:''}!** Connected to: **${active.map(p=>AI_PROVIDERS[p].name).join(' + ')}**\n\nPrimary: **${Z.pref==='auto'?'Auto (smart fallback)':AI_PROVIDERS[Z.pref]?.name||Z.pref}** · Claude limit: **${Z.dailyLimit}/day**\n\n> Pick a topic or type your question. Let's go! 🔥`);
+  uXP();
 }
 
-function lKB(){const sub=document.getElementById('kSel').value;const txt=document.getElementById('kTx').value.trim();if(!txt)return;Z.kb[sub]=txt;closeM('kb');updateKBStat();addM('ai',`📚 **Extra content loaded for ${sub}!** (${Math.round(txt.length/1000)}K chars)\n\nThis supplements the NCERT textbook. Ask me anything! 🧠`)}
+async function testOllama(){
+  const url=document.getElementById('olURL').value.trim()||'http://localhost:11434';
+  const model=document.getElementById('olModel').value.trim()||'llama3.2';
+  const stat=document.getElementById('olStat');stat.textContent='Testing...';stat.style.color='var(--nb)';
+  try{
+    const res=await fetch(`${url}/v1/chat/completions`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model,messages:[{role:'user',content:'Say "hello" in one word'}],stream:false})});
+    const data=await res.json();
+    if(data.choices?.[0]?.message?.content){stat.textContent='✓ Connected! Model: '+model;stat.style.color='var(--ng)';Z.ol='active';Z.olURL=url;Z.olModel=model;saveZ()}
+    else throw new Error('No response');
+  }catch(e){stat.textContent='✗ Failed — is Ollama running? (ollama serve)';stat.style.color='var(--nr)';Z.ol=''}
+}
+function lKB(){const sub=document.getElementById('kSel').value;const txt=document.getElementById('kTx').value.trim();if(!txt)return;Z.kb[sub]=txt;closeM('kb');updateKBStat();addM('ai',`📚 **Extra content loaded for ${sub}!** (${Math.round(txt.length/1000)}K chars)\n\nAsk me anything! 🧠`)}
 
 // ═══ INIT ═══
-document.getElementById('ckI').value = Z.ck;
-document.getElementById('gkI').value = Z.gk;
-document.getElementById('nI').value = Z.n;
-document.querySelectorAll('.aisw-btn').forEach(b => {
-  const prefs = ['claude','gemini','auto'];
-  const idx = [...b.parentElement.children].indexOf(b);
-  b.classList.toggle('on', prefs[idx] === Z.pref);
-});
-uXP(); showW(); loadAllPDFs();
-document.querySelectorAll('.ov').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('sh')})});
+initGoogleSignIn();
 </script>
 </body>
 </html>
