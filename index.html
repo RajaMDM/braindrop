@@ -163,7 +163,7 @@
 </div>
 <div class="ft">
   <div class="ded">"Built by a father who believes his daughters can conquer anything — and so can you." — For Alishba & Inaayah ✦</div>
-  © 2025 <a href="mailto:raja.cloudmdm@gmail.com">Raja Shahnawaz Soni</a> · <a href="mailto:raja.cloudmdm@gmail.com">raja.cloudmdm@gmail.com</a> · <a href="https://www.linkedin.com/in/raja-shahnawaz/" target="_blank">LinkedIn</a> · <a href="https://github.com/RajaMDM" target="_blank">GitHub</a> · BrainDrop — Multiple AI Engines
+  © 2026 <a href="mailto:raja.cloudmdm@gmail.com">Raja Shahnawaz Soni</a> · <a href="mailto:raja.cloudmdm@gmail.com">raja.cloudmdm@gmail.com</a> · <a href="https://www.linkedin.com/in/raja-shahnawaz/" target="_blank">LinkedIn</a> · <a href="https://github.com/RajaMDM" target="_blank">GitHub</a> · BrainDrop — Multiple AI Engines
 </div>
 </div>
 
@@ -407,8 +407,22 @@ try {
 async function loadPDF(path){try{const pdf=await pdfjsLib.getDocument(path).promise;let text='';for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i);const content=await page.getTextContent();text+=content.items.map(item=>item.str).join(' ')+'\n\n'}return text}catch(e){return null}}
 async function loadAllPDFs(){const el=document.getElementById('kbs');el.textContent='Loading PDFs...';el.className='kbcv load';let loaded=0,total=0;const books=BOOKS[Z.g]||{};for(const[sub,path]of Object.entries(books)){total++;const text=await loadPDF(path);if(text&&text.trim().length>100){Z.pdfKB[`${Z.g}_${sub}`]=text;loaded++}}updateKBStat();if(loaded>0)console.log(`Loaded ${loaded}/${total} PDFs`)}
 function getKBForCurrentSubject(){const p=Z.pdfKB[`${Z.g}_${Z.s}`]||'';const e=Z.kb[Z.s]||'';let c='';if(p)c+=p.substring(0,50000);if(e)c+='\n\nADDITIONAL REFERENCE:\n'+e.substring(0,15000);return c}
-function updateKBStat(){const el=document.getElementById('kbs');const p=!!Z.pdfKB[`${Z.g}_${Z.s}`];const e=!!Z.kb[Z.s];if(p&&e){el.textContent='✓ NCERT + extras';el.className='kbcv ok'}else if(p){el.textContent='✓ NCERT PDF loaded';el.className='kbcv ok'}else if(e){el.textContent='✓ Extra content';el.className='kbcv ok'}else{el.textContent='Add PDFs to /books/';el.className='kbcv no'}}
-
+function updateKBStat(){
+  const el=document.getElementById('kbs');
+  // Logic: If R2_URL exists and is a cloud link, it's active
+  const isCloudActive = typeof R2_URL !== 'undefined' && R2_URL.includes('r2.dev');
+  
+  if(isCloudActive){
+    el.textContent = '✓ Cloud Library Active';
+    el.className = 'kbcv ok';
+    // Remove the "Add PDFs to /books/" prompt from the UI
+    const promptBox = document.querySelector('.pdfstat');
+    if(promptBox) promptBox.style.display = 'none';
+  } else {
+    el.textContent = 'Library Offline';
+    el.className = 'kbcv no';
+  }
+}
 const T={10:{mathematics:["Real Numbers & Euclid's Division","Polynomials — Zeroes","Linear Equations Pair","Quadratic Equations","Arithmetic Progressions","Triangles & Similarity","Coordinate Geometry","Trigonometry","Circles & Tangents","Surface Areas & Volumes","Statistics","Probability"],science:["Chemical Reactions","Acids, Bases & Salts","Metals & Non-metals","Life Processes","Control & Coordination","Heredity & Evolution","Light — Reflection & Refraction","Electricity & Circuits","Magnetic Effects","Our Environment"],english:["Formal Letter Writing","Reading Comprehension","Tenses & Usage","Direct & Indirect Speech","Active & Passive Voice","Report Writing","Poem Analysis","Story Writing","Question Tags","Essay Writing"],"social-science":["Rise of Nationalism — Europe","Nationalism in India","Resources & Development","Agriculture","Power Sharing","Federalism","Development","Sectors of Economy","Money & Credit","Globalisation"],hindi:["पत्र लेखन","अनुच्छेद लेखन","समास","मुहावरे","संधि विच्छेद","पद परिचय","वाक्य रचना","अलंकार","सूचना लेखन","विज्ञापन लेखन"]},7:{mathematics:["Integers","Fractions & Decimals","Data Handling","Simple Equations","Lines & Angles","Triangles","Perimeter & Area","Rational Numbers","Practical Geometry","Symmetry"],science:["Nutrition in Plants","Nutrition in Animals","Heat & Temperature","Acids & Bases","Physical & Chemical Changes","Weather & Climate","Respiration","Soil Types","Motion & Time","Light & Shadows"],english:["Reading Comprehension","Nouns & Pronouns","Adjectives & Adverbs","Simple Tenses","Prepositions","Conjunctions","Sentence Formation","Paragraph Writing","Story Completion","Letter Writing"],"social-science":["Tracing Changes","New Kings & Kingdoms","Environment","Our Changing Earth","Inside Our Earth","Democracy & Equality","Government & Health","Markets","Ads & Democracy","Gender & Equality"],hindi:["संज्ञा और सर्वनाम","विशेषण","क्रिया","वचन","लिंग","विलोम शब्द","पर्यायवाची","अनेकार्थी शब्द","चित्र वर्णन","अपठित गद्यांश"]}};
 const EP={mathematics:{hot:[{t:"Quadratic Equations",f:"95%",m:"8-10"},{t:"Arithmetic Progressions",f:"100%",m:"8-12"},{t:"Statistics",f:"100%",m:"8-10"},{t:"Triangles",f:"90%",m:"6-8"},{t:"Trig Identities",f:"92%",m:"6-8"},{t:"Surface Areas & Volumes",f:"88%",m:"6-8"}],tr:["Forgetting extraneous roots in quadratics","Mixing AP nth-term vs sum formula","Sign errors in coordinate geometry","Wrong median class in grouped data","Not showing constructions in proofs"]},science:{hot:[{t:"Chemical Reactions",f:"100%",m:"5-8"},{t:"Life Processes",f:"95%",m:"8-10"},{t:"Electricity",f:"100%",m:"8-10"},{t:"Light — Mirror/Lens",f:"92%",m:"6-8"},{t:"Heredity",f:"88%",m:"5-6"},{t:"Magnetic Effects",f:"85%",m:"5-8"}],tr:["Unbalanced equations","Series vs parallel confusion","Sign convention errors","Incomplete ray diagrams","Mixing arteries & veins"]},english:{hot:[{t:"Letter Writing",f:"100%",m:"5"},{t:"Reading Comprehension",f:"100%",m:"10"},{t:"Grammar",f:"100%",m:"4-5"},{t:"Report Writing",f:"85%",m:"5"}],tr:["Wrong letter format","No textual evidence","Tense inconsistency","Passive voice with modals"]},"social-science":{hot:[{t:"Nationalism in India",f:"95%",m:"5-8"},{t:"Federalism",f:"92%",m:"5-6"},{t:"Development & Sectors",f:"90%",m:"5-8"},{t:"Resources",f:"88%",m:"5-6"}],tr:["Confusing dates","No real-world examples","Missing map work","Vague answers"]},hindi:{hot:[{t:"पत्र लेखन",f:"100%",m:"5"},{t:"अनुच्छेद",f:"95%",m:"5"},{t:"व्याकरण",f:"100%",m:"4-5"}],tr:["गलत प्रारूप","विषय से भटकना","समास/संधि भ्रम"]}};
 
