@@ -244,17 +244,10 @@
 
 const CONFIG = {
   GOOGLE_CLIENT_ID: '342934078544-l6d5a8okr7853alv8fhrpi64f7vvd3lr.apps.googleusercontent.com',
-  ALLOWED_EMAILS: ['raja.cloudmdm@gmail.com','alishba.soni10@gmail.com','inaayah.soni@globalschoolsalumni.org'], // empty = allow all. Add emails to restrict.
-  // Pre-fill API keys so users don't need to enter them (loaded after auth)
-  DEFAULT_KEYS: {
-    claude: '',
-    gemini: '',
-    groq: '',
-    ollama: ''     // 'active' if Ollama is running locally
-  }
+  ALLOWED_EMAILS: ['raja.cloudmdm@gmail.com','alishba.soni10@gmail.com','inaayah.soni@globalschoolsalumni.org'],
+  DEFAULT_KEYS: { claude: '', gemini: '', groq: '', ollama: '' }
 };
 
-// ═══ AI PROVIDER REGISTRY ═══
 const AI_PROVIDERS = {
   claude:   { name:'Claude',   color:'#b44aff', model:'claude-haiku-4-5-20251001', keyField:'ckI', stateKey:'ck' },
   gemini:   { name:'Gemini',   color:'#00f5d4', model:'gemini-2.5-flash',          keyField:'gkI', stateKey:'gk' },
@@ -266,54 +259,40 @@ const AI_PROVIDERS = {
 };
 const PROVIDER_ORDER = ['claude','gemini','openai','groq','deepseek','mistral','ollama'];
 
-// ═══ STATE ═══
 const Z = {
   g:10, s:'mathematics', m:'explain',
-  ck:'PROXY', gk:'PROXY', ok:'', qk:'PROXY', dk:'', mk:'', // API keys hardcoded for proxy
-  ol:'', olURL:'http://localhost:11434', olModel:'llama3.2', // Ollama
-  n:'', pref:'auto',
-  h:[], kb:{}, pdfKB:{},
-  busy:false, xp:0, str:0, qc:0,
+  ck:'PROXY', gk:'PROXY', ok:'', qk:'PROXY', dk:'', mk:'', ol:'', olURL:'http://localhost:11434', olModel:'llama3.2',
+  n:'', pref:'auto', h:[], kb:{}, pdfKB:{}, busy:false, xp:0, str:0, qc:0,
   usage:{ claude:0, gemini:0, openai:0, groq:0, deepseek:0, mistral:0, ollama:0, date:new Date().toDateString() },
-  dailyLimit:50,
-  user:null, lastAI:''
+  dailyLimit:50, user:null, lastAI:''
 };
+
 try {
   const sv = JSON.parse(localStorage.getItem('bd2')||'{}');
   Object.assign(Z,{ck:sv.ck||'PROXY',gk:sv.gk||'PROXY',ok:sv.ok||'',qk:sv.qk||'PROXY',dk:sv.dk||'',mk:sv.mk||'',ol:sv.ol||'',olURL:sv.olURL||'http://localhost:11434',olModel:sv.olModel||'llama3.2',n:sv.n||'',pref:sv.pref||'auto',xp:sv.xp||0,str:sv.str||0,qc:sv.qc||0,dailyLimit:sv.dailyLimit||50});
   if(sv.usage){if(sv.usage.date===new Date().toDateString())Z.usage=sv.usage;else Z.usage={claude:0,gemini:0,openai:0,groq:0,deepseek:0,mistral:0,date:new Date().toDateString()};}
 } catch(e){}
 
-// ═══════════════════════════════════════════════════════════════
-// LOGGING & STATS ENGINE
-// ═══════════════════════════════════════════════════════════════
 function logEvent(type, data) {
   try {
     const logs = JSON.parse(localStorage.getItem('bd_logs')||'[]');
     logs.push({ ts:new Date().toISOString(), user:Z.user?.name||Z.n||'Unknown', email:Z.user?.email||'guest', type, ...data });
-    // Keep last 500 entries
     if(logs.length>500) logs.splice(0,logs.length-500);
     localStorage.setItem('bd_logs',JSON.stringify(logs));
   } catch(e){}
 }
-
 function getLogs(){ try{return JSON.parse(localStorage.getItem('bd_logs')||'[]')}catch(e){return []} }
 
 function renderStats(){
-  const logs=getLogs();
-  const chats=logs.filter(l=>l.type==='chat');
-  const users=[...new Set(logs.map(l=>l.user))];
-  const today=new Date().toDateString();
-  const todayChats=chats.filter(l=>new Date(l.ts).toDateString()===today);
+  const logs=getLogs(); const chats=logs.filter(l=>l.type==='chat'); const users=[...new Set(logs.map(l=>l.user))];
+  const today=new Date().toDateString(); const todayChats=chats.filter(l=>new Date(l.ts).toDateString()===today);
   const aiCounts={};chats.forEach(l=>{aiCounts[l.ai]=(aiCounts[l.ai]||0)+1});
   const topAI=Object.entries(aiCounts).sort((a,b)=>b[1]-a[1])[0];
-
   document.getElementById('statGrid').innerHTML=`
     <div class="stat-card"><div class="sv" style="color:var(--np)">${chats.length}</div><div class="sl">Total Questions</div></div>
     <div class="stat-card"><div class="sv" style="color:var(--nc)">${users.length}</div><div class="sl">Unique Users</div></div>
     <div class="stat-card"><div class="sv" style="color:var(--ny)">${todayChats.length}</div><div class="sl">Today's Questions</div></div>
     <div class="stat-card"><div class="sv" style="color:var(--nk)">${topAI?topAI[0]:'—'}</div><div class="sl">Most Used AI${topAI?' ('+topAI[1]+')':''}</div></div>`;
-
   const recent=chats.slice(-30).reverse();
   document.getElementById('logBody').innerHTML=recent.map(l=>{
     const t=new Date(l.ts);
@@ -322,16 +301,12 @@ function renderStats(){
 }
 
 function exportStats(){
-  const logs=getLogs();
-  const header='Timestamp,User,Email,Type,Subject,Mode,AI,Grade\n';
+  const logs=getLogs(); const header='Timestamp,User,Email,Type,Subject,Mode,AI,Grade\n';
   const rows=logs.map(l=>`"${l.ts}","${l.user}","${l.email}","${l.type}","${l.subject||''}","${l.mode||''}","${l.ai||''}","${l.grade||''}"`).join('\n');
   const blob=new Blob([header+rows],{type:'text/csv'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`braindrop_stats_${new Date().toISOString().split('T')[0]}.csv`;a.click();
 }
 
-// ═══════════════════════════════════════════════════════════════
-// GOOGLE SIGN-IN + BYPASS WITH NAME CAPTURE
-// ═══════════════════════════════════════════════════════════════
 function initGoogleSignIn(){
   if(typeof google==='undefined'||!google.accounts){setTimeout(initGoogleSignIn,500);return}
   const savedUser=localStorage.getItem('bd_user');
@@ -349,46 +324,30 @@ function handleGoogleResponse(response){
   const payload=JSON.parse(atob(response.credential.split('.')[1]));
   const email=payload.email,name=payload.name||payload.given_name||email.split('@')[0],picture=payload.picture||'';
   if(CONFIG.ALLOWED_EMAILS.length>0&&!CONFIG.ALLOWED_EMAILS.includes(email)){alert(`Access denied for ${email}.\nAsk Raja to add your email.`);return}
-  Z.user={email,name,picture,method:'google'};
-  localStorage.setItem('bd_user',JSON.stringify(Z.user));
-  logEvent('login',{method:'google',email});
-  onSignInSuccess();
+  Z.user={email,name,picture,method:'google'}; localStorage.setItem('bd_user',JSON.stringify(Z.user));
+  logEvent('login',{method:'google',email}); onSignInSuccess();
 }
 
 function bypassLogin(){
   const name=document.getElementById('bypassName').value.trim();
   if(!name){document.getElementById('bypassName').style.borderColor='var(--nr)';document.getElementById('bypassName').placeholder='Please enter your name first!';return}
-  Z.user={email:'guest',name,picture:'',method:'bypass'};
-  localStorage.setItem('bd_user',JSON.stringify(Z.user));
-  logEvent('login',{method:'bypass',name});
-  onSignInSuccess();
+  Z.user={email:'guest',name,picture:'',method:'bypass'}; localStorage.setItem('bd_user',JSON.stringify(Z.user));
+  logEvent('login',{method:'bypass',name}); onSignInSuccess();
 }
 
 function onSignInSuccess(){
   document.getElementById('loginGate').classList.add('hidden');
   document.getElementById('mainApp').style.display='flex';
   if(!Z.n&&Z.user.name)Z.n=Z.user.name;
-
-  // Apply default keys ONLY for Google sign-in users on the allowlist (never bypass guests)
   const isAllowedGoogle = Z.user.method==='google' && (CONFIG.ALLOWED_EMAILS.length===0 || CONFIG.ALLOWED_EMAILS.includes(Z.user.email));
-  if(isAllowedGoogle){
-    for(const[prov,info]of Object.entries(AI_PROVIDERS)){
-      if(!Z[info.stateKey]&&CONFIG.DEFAULT_KEYS[prov])Z[info.stateKey]=CONFIG.DEFAULT_KEYS[prov];
-    }
-  }
-
-  // Show user badge
+  if(isAllowedGoogle){for(const[prov,info]of Object.entries(AI_PROVIDERS)){if(!Z[info.stateKey]&&CONFIG.DEFAULT_KEYS[prov])Z[info.stateKey]=CONFIG.DEFAULT_KEYS[prov];}}
   const badge=document.getElementById('userBadge');badge.style.display='flex';
   document.getElementById('userName').textContent=Z.user.name.split(' ')[0];
   if(Z.user.picture){document.getElementById('userAvatar').src=Z.user.picture;document.getElementById('userAvatar').style.display='block';document.getElementById('userInit').style.display='none'}
   else{document.getElementById('userInit').textContent=Z.user.name.charAt(0).toUpperCase()}
-
-  // Populate settings fields
   for(const[prov,info]of Object.entries(AI_PROVIDERS)){if(prov!=='ollama')document.getElementById(info.keyField).value=Z[info.stateKey]}
   document.getElementById('olURL').value=Z.olURL;document.getElementById('olModel').value=Z.olModel;
-  document.getElementById('nI').value=Z.n;
-  document.getElementById('dlI').value=Z.dailyLimit;
-  document.getElementById('prefSel').value=Z.pref;
+  document.getElementById('nI').value=Z.n; document.getElementById('dlI').value=Z.dailyLimit; document.getElementById('prefSel').value=Z.pref;
   uXP();showW();loadAllPDFs();updateMemBadge();
 }
 
@@ -399,9 +358,6 @@ function signOut(){
   location.reload();
 }
 
-// ═══════════════════════════════════════════════════════════════
-// CHAT MEMORY + LEARNING PROFILE
-// ═══════════════════════════════════════════════════════════════
 function getMemoryKey(){return `bd_mem_${Z.g}_${Z.s}`}
 function loadMemory(){try{const r=localStorage.getItem(getMemoryKey());if(r)return JSON.parse(r)}catch(e){}return{history:[],profile:{topicsCovered:[],weakAreas:[],quizScores:[],lastStudied:''}}}
 function saveMemory(mem){try{if(mem.history.length>60)mem.history=mem.history.slice(-60);if(mem.profile.topicsCovered.length>50)mem.profile.topicsCovered=mem.profile.topicsCovered.slice(-50);if(mem.profile.quizScores.length>30)mem.profile.quizScores=mem.profile.quizScores.slice(-30);if(mem.profile.weakAreas.length>20)mem.profile.weakAreas=mem.profile.weakAreas.slice(-20);localStorage.setItem(getMemoryKey(),JSON.stringify(mem))}catch(e){}}
@@ -430,23 +386,24 @@ function getMemoryContext(){
 }
 
 function updateMemBadge(){const el=document.getElementById('memBadge');if(!el)return;const mem=loadMemory();const ex=Math.floor(mem.history.length/2);const tp=mem.profile.topicsCovered.length;el.textContent=ex===0?'🧠 Memory: new session':`🧠 ${ex} chats · ${tp} topics`}
-
 function clearMemory(){const sn={mathematics:'Mathematics',science:'Science',english:'English','social-science':'Social Science',hindi:'Hindi'};if(!confirm(`Clear memory for Grade ${Z.g} ${sn[Z.s]}?`))return;localStorage.removeItem(getMemoryKey());Z.h=[];updateMemBadge();showW();addM('ai','🧹 **Memory cleared** for this subject. Fresh start!\n\n> XP and streak preserved — only chat history was reset.')}
 
-// ═══ PDF PATHS + LOADER ═══
 const BOOKS={10:{mathematics:'books/grade10/maths.pdf',science:'books/grade10/science.pdf',english:'books/grade10/english.pdf','social-science':'books/grade10/social-science.pdf',hindi:'books/grade10/hindi.pdf'},7:{mathematics:'books/grade7/maths.pdf',science:'books/grade7/science.pdf',english:'books/grade7/english.pdf','social-science':'books/grade7/social-science.pdf',hindi:'books/grade7/hindi.pdf'}};
-pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+try {
+  if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+} catch(err) { console.log('PDF loader unavailable'); }
 
 async function loadPDF(path){try{const pdf=await pdfjsLib.getDocument(path).promise;let text='';for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i);const content=await page.getTextContent();text+=content.items.map(item=>item.str).join(' ')+'\n\n'}return text}catch(e){return null}}
-async function loadAllPDFs(){const el=document.getElementById('kbs');el.textContent='Loading PDFs...';el.className='kbcv load';let loaded=0,total=0;const books=BOOKS[Z.g]||{};for(const[sub,path]of Object.entries(books)){total++;const text=await loadPDF(path);if(text&&text.trim().length>100){Z.pdfKB[`${Z.g}_${sub}`]=text;loaded++}}updateKBStat();if(loaded>0)console.log(`Loaded ${loaded}/${total} PDFs for Grade ${Z.g}`)}
+async function loadAllPDFs(){const el=document.getElementById('kbs');el.textContent='Loading PDFs...';el.className='kbcv load';let loaded=0,total=0;const books=BOOKS[Z.g]||{};for(const[sub,path]of Object.entries(books)){total++;const text=await loadPDF(path);if(text&&text.trim().length>100){Z.pdfKB[`${Z.g}_${sub}`]=text;loaded++}}updateKBStat();if(loaded>0)console.log(`Loaded ${loaded}/${total} PDFs`)}
 function getKBForCurrentSubject(){const p=Z.pdfKB[`${Z.g}_${Z.s}`]||'';const e=Z.kb[Z.s]||'';let c='';if(p)c+=p.substring(0,50000);if(e)c+='\n\nADDITIONAL REFERENCE:\n'+e.substring(0,15000);return c}
 function updateKBStat(){const el=document.getElementById('kbs');const p=!!Z.pdfKB[`${Z.g}_${Z.s}`];const e=!!Z.kb[Z.s];if(p&&e){el.textContent='✓ NCERT + extras';el.className='kbcv ok'}else if(p){el.textContent='✓ NCERT PDF loaded';el.className='kbcv ok'}else if(e){el.textContent='✓ Extra content';el.className='kbcv ok'}else{el.textContent='Add PDFs to /books/';el.className='kbcv no'}}
 
-// ═══ TOPICS + EXAM PATTERNS ═══
 const T={10:{mathematics:["Real Numbers & Euclid's Division","Polynomials — Zeroes","Linear Equations Pair","Quadratic Equations","Arithmetic Progressions","Triangles & Similarity","Coordinate Geometry","Trigonometry","Circles & Tangents","Surface Areas & Volumes","Statistics","Probability"],science:["Chemical Reactions","Acids, Bases & Salts","Metals & Non-metals","Life Processes","Control & Coordination","Heredity & Evolution","Light — Reflection & Refraction","Electricity & Circuits","Magnetic Effects","Our Environment"],english:["Formal Letter Writing","Reading Comprehension","Tenses & Usage","Direct & Indirect Speech","Active & Passive Voice","Report Writing","Poem Analysis","Story Writing","Question Tags","Essay Writing"],"social-science":["Rise of Nationalism — Europe","Nationalism in India","Resources & Development","Agriculture","Power Sharing","Federalism","Development","Sectors of Economy","Money & Credit","Globalisation"],hindi:["पत्र लेखन","अनुच्छेद लेखन","समास","मुहावरे","संधि विच्छेद","पद परिचय","वाक्य रचना","अलंकार","सूचना लेखन","विज्ञापन लेखन"]},7:{mathematics:["Integers","Fractions & Decimals","Data Handling","Simple Equations","Lines & Angles","Triangles","Perimeter & Area","Rational Numbers","Practical Geometry","Symmetry"],science:["Nutrition in Plants","Nutrition in Animals","Heat & Temperature","Acids & Bases","Physical & Chemical Changes","Weather & Climate","Respiration","Soil Types","Motion & Time","Light & Shadows"],english:["Reading Comprehension","Nouns & Pronouns","Adjectives & Adverbs","Simple Tenses","Prepositions","Conjunctions","Sentence Formation","Paragraph Writing","Story Completion","Letter Writing"],"social-science":["Tracing Changes","New Kings & Kingdoms","Environment","Our Changing Earth","Inside Our Earth","Democracy & Equality","Government & Health","Markets","Ads & Democracy","Gender & Equality"],hindi:["संज्ञा और सर्वनाम","विशेषण","क्रिया","वचन","लिंग","विलोम शब्द","पर्यायवाची","अनेकार्थी शब्द","चित्र वर्णन","अपठित गद्यांश"]}};
 const EP={mathematics:{hot:[{t:"Quadratic Equations",f:"95%",m:"8-10"},{t:"Arithmetic Progressions",f:"100%",m:"8-12"},{t:"Statistics",f:"100%",m:"8-10"},{t:"Triangles",f:"90%",m:"6-8"},{t:"Trig Identities",f:"92%",m:"6-8"},{t:"Surface Areas & Volumes",f:"88%",m:"6-8"}],tr:["Forgetting extraneous roots in quadratics","Mixing AP nth-term vs sum formula","Sign errors in coordinate geometry","Wrong median class in grouped data","Not showing constructions in proofs"]},science:{hot:[{t:"Chemical Reactions",f:"100%",m:"5-8"},{t:"Life Processes",f:"95%",m:"8-10"},{t:"Electricity",f:"100%",m:"8-10"},{t:"Light — Mirror/Lens",f:"92%",m:"6-8"},{t:"Heredity",f:"88%",m:"5-6"},{t:"Magnetic Effects",f:"85%",m:"5-8"}],tr:["Unbalanced equations","Series vs parallel confusion","Sign convention errors","Incomplete ray diagrams","Mixing arteries & veins"]},english:{hot:[{t:"Letter Writing",f:"100%",m:"5"},{t:"Reading Comprehension",f:"100%",m:"10"},{t:"Grammar",f:"100%",m:"4-5"},{t:"Report Writing",f:"85%",m:"5"}],tr:["Wrong letter format","No textual evidence","Tense inconsistency","Passive voice with modals"]},"social-science":{hot:[{t:"Nationalism in India",f:"95%",m:"5-8"},{t:"Federalism",f:"92%",m:"5-6"},{t:"Development & Sectors",f:"90%",m:"5-8"},{t:"Resources",f:"88%",m:"5-6"}],tr:["Confusing dates","No real-world examples","Missing map work","Vague answers"]},hindi:{hot:[{t:"पत्र लेखन",f:"100%",m:"5"},{t:"अनुच्छेद",f:"95%",m:"5"},{t:"व्याकरण",f:"100%",m:"4-5"}],tr:["गलत प्रारूप","विषय से भटकना","समास/संधि भ्रम"]}};
 
-// ═══ SYSTEM PROMPT ═══
 function sysP(){
   const nm=Z.n?` Student's name: ${Z.n}.`:'';const kbc=getKBForCurrentSubject();
   const kbi=kbc?`\n\nKNOWLEDGE BASE (NCERT — PRIMARY source):\n---\n${kbc.substring(0,45000)}\n---`:'';
@@ -474,9 +431,6 @@ Rules:
   };return mp[Z.m]||mp.explain;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// 6-ENGINE AI CALLER
-// ═══════════════════════════════════════════════════════════════
 async function callProvider(provider, userMsg){
   const msgs=Z.h.slice(-16);
   switch(provider){
@@ -527,13 +481,10 @@ async function callAI(userMsg){
 
   Z.h.push({role:'user',text:userMsg});showT();Z.busy=true;document.getElementById('sb').disabled=true;
   let reply='',usedAI='';
-
-  // Build try-order: preferred first, then fallback chain
   let tryOrder=[];
   if(Z.pref!=='auto'&&avail.includes(Z.pref))tryOrder=[Z.pref,...avail.filter(p=>p!==Z.pref)];
   else tryOrder=[...avail];
 
-  // Skip Claude if over daily limit
   if(Z.usage.claude>=Z.dailyLimit)tryOrder=tryOrder.filter(p=>p!=='claude').concat(tryOrder.includes('claude')?['claude']:[]);
   if(Z.usage.claude>=Z.dailyLimit&&tryOrder[0]==='claude'&&tryOrder.length>1)tryOrder.push(tryOrder.shift());
 
@@ -545,7 +496,6 @@ async function callAI(userMsg){
       break;
     }catch(err){console.log(`${provider} failed: ${err.message}`);continue}
   }
-
   hideT();
   if(reply){
     Z.h.push({role:'model',text:reply});addM('ai',reply,usedAI);gXP(Z.m==='quiz'?15:10);Z.qc++;
@@ -558,6 +508,112 @@ async function callAI(userMsg){
   Z.busy=false;document.getElementById('sb').disabled=false;
 }
 
-// ═══ RENDERING ═══
-function md(t){return t.replace(/
-http://googleusercontent.com/immersive_entry_chip/0
+function md(t){
+  return t.replace(/```(\w*)\n([\s\S]*?)```/g,'<pre><code>$2</code></pre>')
+          .replace(/`([^`]+)`/g,'<code>$1</code>')
+          .replace(/^### (.+)$/gm,'<h3>$1</h3>')
+          .replace(/^## (.+)$/gm,'<h2>$1</h2>')
+          .replace(/^# (.+)$/gm,'<h1>$1</h1>')
+          .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+          .replace(/(^|[^*])\*([^*]+)\*(?!\*)/g, '$1<em>$2</em>')
+          .replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>')
+          .replace(/^---$/gm,'<hr>')
+          .replace(/^[\-\*] (.+)$/gm,'<li>$1</li>')
+          .replace(/((?:<li>.*?<\/li>\s*)+)/gs,'<ul>$1</ul>')
+          .replace(/^\d+\. (.+)$/gm,'<li>$1</li>')
+          .replace(/\n{2,}/g,'</p><p>')
+          .replace(/\n/g,'<br>');
+}
+
+function showW(){
+  const topics=(T[Z.g]&&T[Z.g][Z.s])||[];
+  const md_={explain:{i:'📖',t:'Ready to learn?',s:"Pick a topic — I'll break it down with examples & memory hacks!"},socratic:{i:'🧠',t:"Let's think together!",s:"I won't give answers — I'll guide you to discover them!"},quiz:{i:'🎮',t:'Game on!',s:'Board-exam style Qs. Earn XP and level up!'},examprep:{i:'🎯',t:'Exam mode: ON',s:"10 years of boards, common traps & cheat sheets."},tutor:{i:'🤖',t:'Your AI tutor is here!',s:'Ask anything. No judgement, just knowledge.'}};
+  const m=md_[Z.m]||md_.explain;
+  const pdfLoaded=!!Z.pdfKB[`${Z.g}_${Z.s}`];
+  const pdfNote=pdfLoaded?`<div class="pdfstat">📚 NCERT loaded (${Math.round(Z.pdfKB[Z.g+'_'+Z.s].length/1000)}K chars) · Textbook-grounded answers</div>`:`<div class="pdfstat">💡 Add NCERT PDFs to <code>/books/</code> for textbook-accurate answers</div>`;
+  const mem=loadMemory();const memEx=Math.floor(mem.history.length/2);
+  const memNote=memEx>0?`<div class="memstat">🧠 I remember ${memEx} past chats · ${mem.profile.topicsCovered.length} topics covered${mem.profile.weakAreas.length>0?' · Focus: '+mem.profile.weakAreas.slice(-3).join(', '):''}</div>`:`<div class="memstat">🧠 New session — I'll start remembering your progress!</div>`;
+  const avail=getAvailableProviders();const aiNote=avail.length>0?`<div style="margin-top:8px;font-size:.7rem;color:var(--t3)">Active: ${avail.map(p=>`<span style="color:${AI_PROVIDERS[p].color}">${AI_PROVIDERS[p].name}</span>`).join(' · ')}</div>`:'';
+  document.getElementById('ch').innerHTML=`<div class="hero"><div class="hchar">${m.i}</div><div class="htit">${m.t}</div><div class="hsub">${m.s}</div><div class="chips">${topics.slice(0,8).map(t=>`<button class="chip" onclick="ask(this.textContent)">${t}</button>`).join('')}</div>${pdfNote}${memNote}${aiNote}</div>`;
+  updateMemBadge();
+}
+
+function addM(role,text,aiLabel){
+  const c=document.getElementById('ch');const h=c.querySelector('.hero');if(h)h.remove();
+  const d=document.createElement('div');d.className=`msg ${role==='user'?'u':'a'}`;
+  const aiColor=Z.lastAI?AI_PROVIDERS[Z.lastAI]?.color:'#b44aff';
+  const badge=(role!=='user'&&aiLabel)?`<div style="font-size:.6rem;color:${aiColor};margin-top:6px;font-family:'Space Mono',monospace">— ${aiLabel}</div>`:'';
+  d.innerHTML=`<div class="av ${role==='user'?'uu':'a'}">${role==='user'?'✦':'⚡'}</div><div class="bb">${role==='user'?text:md(text)}${badge}</div>`;
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+
+function showT(){const c=document.getElementById('ch');const d=document.createElement('div');d.className='msg a';d.id='ty';d.innerHTML='<div class="av a">⚡</div><div class="bb typ"><div class="dt"></div><div class="dt"></div><div class="dt"></div></div>';c.appendChild(d);c.scrollTop=c.scrollHeight}
+function hideT(){const t=document.getElementById('ty');if(t)t.remove()}
+
+function gXP(a){Z.xp+=a;Z.str++;uXP()}
+function uXP(){
+  document.getElementById('xpv').textContent=Z.xp;document.getElementById('stk').textContent=Z.str;document.getElementById('qc').textContent=Z.qc;
+  document.getElementById('aiUsed').textContent=Z.lastAI?AI_PROVIDERS[Z.lastAI]?.name:'—';
+  const lv=[{x:0,n:'Newbie',l:1},{x:50,n:'Curious Mind',l:2},{x:150,n:'Knowledge Seeker',l:3},{x:300,n:'Brain Warrior',l:4},{x:500,n:'Quiz Master',l:5},{x:800,n:'Scholar',l:6},{x:1200,n:'Genius',l:7},{x:2000,n:'Legend',l:8}];
+  let c=lv[0],nx=lv[1];for(let i=lv.length-1;i>=0;i--){if(Z.xp>=lv[i].x){c=lv[i];nx=lv[i+1]||{x:c.x+500};break}}
+  document.getElementById('lvl').textContent=`Lvl ${c.l} — ${c.n}`;document.getElementById('xpb').style.width=Math.min(((Z.xp-c.x)/(nx.x-c.x))*100,100)+'%';
+}
+function saveZ(){try{localStorage.setItem('bd2',JSON.stringify({ck:Z.ck,gk:Z.gk,ok:Z.ok,qk:Z.qk,dk:Z.dk,mk:Z.mk,ol:Z.ol,olURL:Z.olURL,olModel:Z.olModel,n:Z.n,pref:Z.pref,xp:Z.xp,str:Z.str,qc:Z.qc,usage:Z.usage,dailyLimit:Z.dailyLimit}))}catch(e){}}
+
+function go(){if(Z.busy)return;const i=document.getElementById('inp');const m=i.value.trim();if(!m)return;i.value='';i.style.height='auto';addM('user',m);callAI(m)}
+function ask(topic){const pf={explain:'Explain this clearly with NCERT examples: ',socratic:"Let's explore together: ",quiz:'Quiz me on: ',examprep:'Complete exam prep for: ',tutor:'I want to learn about: '};addM('user',(pf[Z.m]||'Explain: ')+topic);callAI((pf[Z.m]||'Explain: ')+topic)}
+function setG(g){Z.g=g;document.querySelectorAll('.gp').forEach(b=>b.classList.toggle('on',(b.textContent==='X'?10:7)===g));Z.h=[];loadAllPDFs();showW()}
+function setS(b){Z.s=b.dataset.s;document.querySelectorAll('.sbb').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('.mb').forEach(x=>x.classList.toggle('on',x.dataset.s===Z.s));Z.h=[];updateKBStat();showW()}
+function mN(b){Z.s=b.dataset.s;document.querySelectorAll('.mb').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('.sbb').forEach(x=>x.classList.toggle('on',x.dataset.s===Z.s));Z.h=[];updateKBStat();showW()}
+function setMd(b){Z.m=b.dataset.m;document.querySelectorAll('.mt').forEach(x=>x.classList.remove('on'));b.classList.add('on');Z.h=[];showW()}
+
+function openM(id){
+  if(id==='stats'){renderStats();document.getElementById('statsO').classList.add('sh')}
+  else document.getElementById(id==='set'?'setO':'kbO').classList.add('sh');
+}
+function closeM(id){document.getElementById(id==='set'?'setO':id==='stats'?'statsO':'kbO').classList.remove('sh')}
+
+function saveC(){
+  for(const[prov,info]of Object.entries(AI_PROVIDERS)){if(prov!=='ollama')Z[info.stateKey]=document.getElementById(info.keyField).value.trim()}
+  Z.olURL=document.getElementById('olURL').value.trim()||'http://localhost:11434';Z.olModel=document.getElementById('olModel').value.trim()||'llama3.2';
+  Z.n=document.getElementById('nI').value.trim();Z.pref=document.getElementById('prefSel').value;Z.dailyLimit=parseInt(document.getElementById('dlI').value)||50;
+  saveZ();closeM('set');
+  const active=getAvailableProviders();
+  if(active.length)addM('ai',`✨ **All set${Z.n?', '+Z.n:''}!** Connected to: **${active.map(p=>AI_PROVIDERS[p].name).join(' + ')}**\n\nPrimary: **${Z.pref==='auto'?'Auto (smart fallback)':AI_PROVIDERS[Z.pref]?.name||Z.pref}** · Claude limit: **${Z.dailyLimit}/day**\n\n> Pick a topic or type your question. Let's go! 🔥`);
+  uXP();
+}
+
+async function testOllama(){
+  const url=document.getElementById('olURL').value.trim()||'http://localhost:11434';
+  const model=document.getElementById('olModel').value.trim()||'llama3.2';
+  const stat=document.getElementById('olStat');stat.textContent='Testing...';stat.style.color='var(--nb)';
+  try{
+    const res=await fetch(`${url}/v1/chat/completions`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model,messages:[{role:'user',content:'Say "hello" in one word'}],stream:false})});
+    const data=await res.json();
+    if(data.choices?.[0]?.message?.content){stat.textContent='✓ Connected! Model: '+model;stat.style.color='var(--ng)';Z.ol='active';Z.olURL=url;Z.olModel=model;saveZ()}
+    else throw new Error('No response');
+  }catch(e){stat.textContent='✗ Failed — is Ollama running? (ollama serve)';stat.style.color='var(--nr)';Z.ol=''}
+}
+function lKB(){const sub=document.getElementById('kSel').value;const txt=document.getElementById('kTx').value.trim();if(!txt)return;Z.kb[sub]=txt;closeM('kb');updateKBStat();addM('ai',`📚 **Extra content loaded for ${sub}!** (${Math.round(txt.length/1000)}K chars)\n\nAsk me anything! 🧠`)}
+
+// Bind explicitly to window to ensure global availability
+window.bypassLogin = bypassLogin;
+window.setG = setG;
+window.setS = setS;
+window.mN = mN;
+window.setMd = setMd;
+window.openM = openM;
+window.closeM = closeM;
+window.saveC = saveC;
+window.testOllama = testOllama;
+window.lKB = lKB;
+window.exportStats = exportStats;
+window.clearMemory = clearMemory;
+window.go = go;
+window.ask = ask;
+window.signOut = signOut;
+
+initGoogleSignIn();
+</script>
+</body>
+</html>
