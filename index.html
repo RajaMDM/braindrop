@@ -388,8 +388,16 @@ function getMemoryContext(){
 function updateMemBadge(){const el=document.getElementById('memBadge');if(!el)return;const mem=loadMemory();const ex=Math.floor(mem.history.length/2);const tp=mem.profile.topicsCovered.length;el.textContent=ex===0?'🧠 Memory: new session':`🧠 ${ex} chats · ${tp} topics`}
 function clearMemory(){const sn={mathematics:'Mathematics',science:'Science',english:'English','social-science':'Social Science',hindi:'Hindi'};if(!confirm(`Clear memory for Grade ${Z.g} ${sn[Z.s]}?`))return;localStorage.removeItem(getMemoryKey());Z.h=[];updateMemBadge();showW();addM('ai','🧹 **Memory cleared** for this subject. Fresh start!\n\n> XP and streak preserved — only chat history was reset.')}
 
-const BOOKS={10:{mathematics:'books/grade10/maths.pdf',science:'books/grade10/science.pdf',english:'books/grade10/english.pdf','social-science':'books/grade10/social-science.pdf',hindi:'books/grade10/hindi.pdf'},7:{mathematics:'books/grade7/maths.pdf',science:'books/grade7/science.pdf',english:'books/grade7/english.pdf','social-science':'books/grade7/social-science.pdf',hindi:'books/grade7/hindi.pdf'}};
+const R2_URL = 'https://pub-43d99302f45b4dc39117bd0f283acb00.r2.dev'; // PASTE YOUR URL HERE
 
+const BOOKS = {
+  10: {
+    mathematics: `${R2_URL}/grade10/maths.pdf`,
+    science: `${R2_URL}/grade10/science.pdf`,
+    english: `${R2_URL}/grade10/english.pdf`,
+    'social-science': `${R2_URL}/grade10/socialscience.pdf`
+  }
+};
 try {
   if (typeof pdfjsLib !== 'undefined') {
     pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
