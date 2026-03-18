@@ -241,7 +241,17 @@
    Dedicated to Alishba & Inaayah
    © Raja Shahnawaz Soni | raja.cloudmdm@gmail.com
    ═══════════════════════════════════════════════════════════════ */
-
+// --- Identity Gate ---
+if (!localStorage.getItem('userEmail')) {
+    const email = prompt("Welcome to BrainDrop! Enter your registered email to start studying:");
+    if (email && email.includes('@')) {
+        localStorage.setItem('userEmail', email.toLowerCase().trim());
+        location.reload(); 
+    } else {
+        alert("Access Denied: A valid email is required.");
+        location.reload();
+    }
+}
 const CONFIG = {
   GOOGLE_CLIENT_ID: '342934078544-l6d5a8okr7853alv8fhrpi64f7vvd3lr.apps.googleusercontent.com',
   ALLOWED_EMAILS: ['raja.cloudmdm@gmail.com','alishba.soni10@gmail.com','inaayah.soni@globalschoolsalumni.org'],
@@ -458,12 +468,12 @@ async function callProvider(provider, userMsg){
   switch(provider){
     case 'claude': {
       const messages=msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text}));messages.push({role:'user',content:userMsg});
-      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:4096,system:sysP(),messages})});
+      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/claude',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:4096,system:sysP(),messages})});
       const data=await res.json();if(data.error)throw new Error(data.error.message);return data.content?.[0]?.text||'No response';
     }
     case 'gemini': {
       const history=msgs.map(m=>({role:m.role==='model'?'model':'user',parts:[{text:m.text}]}));history.push({role:'user',parts:[{text:userMsg}]});
-      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system_instruction:{parts:[{text:sysP()}]},contents:history,generationConfig:{temperature:0.75,maxOutputTokens:4096,topP:0.95},safetySettings:[{category:'HARM_CATEGORY_HARASSMENT',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_HATE_SPEECH',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_SEXUALLY_EXPLICIT',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_DANGEROUS_CONTENT',threshold:'BLOCK_NONE'}]})});
+      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/gemini',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({system_instruction:{parts:[{text:sysP()}]},contents:history,generationConfig:{temperature:0.75,maxOutputTokens:4096,topP:0.95},safetySettings:[{category:'HARM_CATEGORY_HARASSMENT',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_HATE_SPEECH',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_SEXUALLY_EXPLICIT',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_DANGEROUS_CONTENT',threshold:'BLOCK_NONE'}]})});
       const data=await res.json();if(data.error)throw new Error(data.error.message);return data.candidates?.[0]?.content?.parts?.[0]?.text||'No response';
     }
     case 'openai': {
@@ -473,7 +483,7 @@ async function callProvider(provider, userMsg){
     }
     case 'groq': {
       const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
-      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/groq',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:4096,messages})});
+      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/groq',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:4096,messages})});
       const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
     }
     case 'deepseek': {
