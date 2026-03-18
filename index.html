@@ -79,324 +79,330 @@
 <body>
 <div class="bgfx"></div><div class="pgrid"></div>
 
+<!-- ═══ LOGIN GATE ═══ -->
 <div class="login-gate" id="loginGate">
-  <div class="bgfx"></div><div class="pgrid"></div>
-  <div class="login-box">
-    <div class="login-logo">⚡</div>
-    <div class="login-title">BrainDrop</div>
-    <div class="login-ded">Dedicated to Alishba & Inaayah ✦ Open for every student everywhere</div>
-    <div class="login-quote">"Built by a father who believes his daughters can conquer anything — and so can you."<br><span style="font-size:.68rem;color:var(--t3);font-style:normal">— Raja Shahnawaz Soni</span></div>
-    <div class="login-sub">Multiple AI engines. Every CBSE subject. One mission — your success.</div>
-    <div class="login-gsign" id="gSignBtn"></div>
-    <div class="login-divider">or continue as guest</div>
-    <div class="login-bypass-form">
-      <label>What's your name? *</label>
-      <input id="bypassName" placeholder="Enter your name to continue..." autocomplete="name">
-      <button onclick="bypassLogin()">Start Learning →</button>
-    </div>
-    <div class="login-note">
-      Crafted with ❤ by <strong style="color:var(--np)">Raja Shahnawaz Soni</strong><br>
-      <a href="mailto:raja.cloudmdm@gmail.com" style="color:var(--nc)">raja.cloudmdm@gmail.com</a> ·
-      <a href="https://www.linkedin.com/in/raja-shahnawaz/" target="_blank" style="color:var(--nb)">LinkedIn</a> ·
-      <a href="https://github.com/RajaMDM" target="_blank" style="color:var(--ng)">GitHub</a><br>
-      <span style="font-size:.6rem">Powered by Claude · Gemini · GPT · Groq · DeepSeek · Mistral · Ollama</span>
-    </div>
-  </div>
+  <div class="bgfx"></div><div class="pgrid"></div>
+  <div class="login-box">
+    <div class="login-logo">⚡</div>
+    <div class="login-title">BrainDrop</div>
+    <div class="login-ded">Dedicated to Alishba & Inaayah ✦ Open for every student everywhere</div>
+    <div class="login-quote">"Built by a father who believes his daughters can conquer anything — and so can you."<br><span style="font-size:.68rem;color:var(--t3);font-style:normal">— Raja Shahnawaz Soni</span></div>
+    <div class="login-sub">Multiple AI engines. Every CBSE subject. One mission — your success.</div>
+    <div class="login-gsign" id="gSignBtn"></div>
+    <div class="login-divider">or continue as guest</div>
+    <div class="login-bypass-form">
+      <label>What's your name? *</label>
+      <input id="bypassName" placeholder="Enter your name to continue..." autocomplete="name">
+      <button onclick="bypassLogin()">Start Learning →</button>
+    </div>
+    <div class="login-note">
+      Crafted with ❤ by <strong style="color:var(--np)">Raja Shahnawaz Soni</strong><br>
+      <a href="mailto:raja.cloudmdm@gmail.com" style="color:var(--nc)">raja.cloudmdm@gmail.com</a> ·
+      <a href="https://www.linkedin.com/in/raja-shahnawaz/" target="_blank" style="color:var(--nb)">LinkedIn</a> ·
+      <a href="https://github.com/RajaMDM" target="_blank" style="color:var(--ng)">GitHub</a><br>
+      <span style="font-size:.6rem">Powered by Claude · Gemini · GPT · Groq · DeepSeek · Mistral · Ollama</span>
+    </div>
+  </div>
 </div>
 
+<!-- ═══ MAIN APP ═══ -->
 <div class="app" id="mainApp" style="display:none">
 <header class="top">
-  <div class="brand"><div class="bico">⚡</div><div><div class="bname">BrainDrop</div><div class="btag">For Alishba & Inaayah · Multiple AI Engines</div></div></div>
-  <div class="topc">
-    <div class="gps"><button class="gp on" onclick="setG(10)">X</button><button class="gp" onclick="setG(7)">VII</button></div>
-    <button class="ib" onclick="openM('set')" title="Settings & API Keys">⚙</button>
-    <button class="ib" onclick="openM('kb')" title="Load Extra Content">📚</button>
-    <button class="ib" onclick="openM('stats')" title="Usage Stats">📊</button>
-    <button class="ib" onclick="clearMemory()" title="Clear Memory">🧹</button>
-    <div class="ubadge" id="userBadge" onclick="signOut()" title="Click to sign out" style="display:none">
-      <img id="userAvatar" src="" alt="" style="display:none">
-      <span class="uinit" id="userInit"></span>
-      <span id="userName"></span>
-    </div>
-  </div>
+  <div class="brand"><div class="bico">⚡</div><div><div class="bname">BrainDrop</div><div class="btag">For Alishba & Inaayah · Multiple AI Engines</div></div></div>
+  <div class="topc">
+    <div class="gps"><button class="gp on" onclick="setG(10)">X</button><button class="gp" onclick="setG(7)">VII</button></div>
+    <button class="ib" onclick="openM('set')" title="Settings & API Keys">⚙</button>
+    <button class="ib" onclick="openM('kb')" title="Load Extra Content">📚</button>
+    <button class="ib" onclick="openM('stats')" title="Usage Stats">📊</button>
+    <button class="ib" onclick="clearMemory()" title="Clear Memory">🧹</button>
+    <div class="ubadge" id="userBadge" onclick="signOut()" title="Click to sign out" style="display:none">
+      <img id="userAvatar" src="" alt="" style="display:none">
+      <span class="uinit" id="userInit"></span>
+      <span id="userName"></span>
+    </div>
+  </div>
 </header>
 <div class="xps">
-  <div class="xpi">🔥 <span class="v" id="stk">0</span></div>
-  <div class="xpi">⚡ <span class="v" id="xpv">0</span> XP</div>
-  <div class="xbw"><div class="xbf" id="xpb"></div></div>
-  <div class="xl" id="lvl">Lvl 1 — Newbie</div>
-  <div class="xpi" style="margin-left:auto">📊 <span class="v" id="qc">0</span> Qs</div>
-  <div class="xpi">🤖 <span class="v" id="aiUsed">—</span></div>
+  <div class="xpi">🔥 <span class="v" id="stk">0</span></div>
+  <div class="xpi">⚡ <span class="v" id="xpv">0</span> XP</div>
+  <div class="xbw"><div class="xbf" id="xpb"></div></div>
+  <div class="xl" id="lvl">Lvl 1 — Newbie</div>
+  <div class="xpi" style="margin-left:auto">📊 <span class="v" id="qc">0</span> Qs</div>
+  <div class="xpi">🤖 <span class="v" id="aiUsed">—</span></div>
 </div>
 <div class="mn">
 <aside class="sb">
-  <div class="sbl">Subjects</div>
-  <button class="sbb on" data-s="mathematics" onclick="setS(this)"><span class="sbi" style="background:rgba(180,74,255,.15);color:#b44aff">∑</span>Mathematics</button>
-  <button class="sbb" data-s="science" onclick="setS(this)"><span class="sbi" style="background:rgba(0,245,212,.12);color:#00f5d4">⚗</span>Science</button>
-  <button class="sbb" data-s="english" onclick="setS(this)"><span class="sbi" style="background:rgba(254,228,64,.12);color:#fee440">✎</span>English</button>
-  <button class="sbb" data-s="social-science" onclick="setS(this)"><span class="sbi" style="background:rgba(255,107,157,.12);color:#ff6b9d">🌏</span>Social Science</button>
-  <button class="sbb" data-s="hindi" onclick="setS(this)"><span class="sbi" style="background:rgba(76,201,240,.12);color:#4cc9f0">अ</span>Hindi</button>
-  <div class="sdv"></div>
-  <div class="kbc">
-    <div class="kbct">Knowledge Base</div>
-    <div class="kbcv no" id="kbs">Loading PDFs...</div>
-    <div class="aibadge">
-      <span class="aib cl">Claude</span><span class="aib gm">Gemini</span><span class="aib gpt">GPT</span><span class="aib gq">Groq</span><span class="aib ds">DeepSeek</span><span class="aib ms">Mistral</span><span class="aib" style="background:rgba(139,92,246,.12);color:#8b5cf6">Ollama</span>
-    </div>
-    <div class="membadge" id="memBadge">🧠 Memory: loading...</div>
-  </div>
+  <div class="sbl">Subjects</div>
+  <button class="sbb on" data-s="mathematics" onclick="setS(this)"><span class="sbi" style="background:rgba(180,74,255,.15);color:#b44aff">∑</span>Mathematics</button>
+  <button class="sbb" data-s="science" onclick="setS(this)"><span class="sbi" style="background:rgba(0,245,212,.12);color:#00f5d4">⚗</span>Science</button>
+  <button class="sbb" data-s="english" onclick="setS(this)"><span class="sbi" style="background:rgba(254,228,64,.12);color:#fee440">✎</span>English</button>
+  <button class="sbb" data-s="social-science" onclick="setS(this)"><span class="sbi" style="background:rgba(255,107,157,.12);color:#ff6b9d">🌏</span>Social Science</button>
+  <button class="sbb" data-s="hindi" onclick="setS(this)"><span class="sbi" style="background:rgba(76,201,240,.12);color:#4cc9f0">अ</span>Hindi</button>
+  <div class="sdv"></div>
+  <div class="kbc">
+    <div class="kbct">Knowledge Base</div>
+    <div class="kbcv no" id="kbs">Loading PDFs...</div>
+    <div class="aibadge">
+      <span class="aib cl">Claude</span><span class="aib gm">Gemini</span><span class="aib gpt">GPT</span><span class="aib gq">Groq</span><span class="aib ds">DeepSeek</span><span class="aib ms">Mistral</span><span class="aib" style="background:rgba(139,92,246,.12);color:#8b5cf6">Ollama</span>
+    </div>
+    <div class="membadge" id="memBadge">🧠 Memory: loading...</div>
+  </div>
 </aside>
 <main class="ct">
-  <div class="mds">
-    <button class="mt on" data-m="explain" onclick="setMd(this)"><span class="em">📖</span> Explain</button>
-    <button class="mt" data-m="socratic" onclick="setMd(this)"><span class="em">🧠</span> Socratic</button>
-    <button class="mt" data-m="quiz" onclick="setMd(this)"><span class="em">🎮</span> Quiz Me</button>
-    <button class="mt" data-m="examprep" onclick="setMd(this)"><span class="em">🎯</span> Exam Prep</button>
-    <button class="mt" data-m="tutor" onclick="setMd(this)"><span class="em">🤖</span> AI Tutor</button>
-  </div>
-  <div class="ch" id="ch"></div>
-  <div class="iz"><div class="ir">
-    <textarea class="tx" id="inp" rows="1" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();go()}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,140)+'px'"></textarea>
-    <button class="sn" id="sb" onclick="go()">➤</button>
-  </div></div>
+  <div class="mds">
+    <button class="mt on" data-m="explain" onclick="setMd(this)"><span class="em">📖</span> Explain</button>
+    <button class="mt" data-m="socratic" onclick="setMd(this)"><span class="em">🧠</span> Socratic</button>
+    <button class="mt" data-m="quiz" onclick="setMd(this)"><span class="em">🎮</span> Quiz Me</button>
+    <button class="mt" data-m="examprep" onclick="setMd(this)"><span class="em">🎯</span> Exam Prep</button>
+    <button class="mt" data-m="tutor" onclick="setMd(this)"><span class="em">🤖</span> AI Tutor</button>
+  </div>
+  <div class="ch" id="ch"></div>
+  <div class="iz"><div class="ir">
+    <textarea class="tx" id="inp" rows="1" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();go()}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,140)+'px'"></textarea>
+    <button class="sn" id="sb" onclick="go()">➤</button>
+  </div></div>
 </main>
 </div>
 <div class="ft">
-  <div class="ded">"Built by a father who believes his daughters can conquer anything — and so can you." — For Alishba & Inaayah ✦</div>
-  © 2025 <a href="mailto:raja.cloudmdm@gmail.com">Raja Shahnawaz Soni</a> · <a href="mailto:raja.cloudmdm@gmail.com">raja.cloudmdm@gmail.com</a> · <a href="https://www.linkedin.com/in/raja-shahnawaz/" target="_blank">LinkedIn</a> · <a href="https://github.com/RajaMDM" target="_blank">GitHub</a> · BrainDrop — Multiple AI Engines
+  <div class="ded">"Built by a father who believes his daughters can conquer anything — and so can you." — For Alishba & Inaayah ✦</div>
+  © 2025 <a href="mailto:raja.cloudmdm@gmail.com">Raja Shahnawaz Soni</a> · <a href="mailto:raja.cloudmdm@gmail.com">raja.cloudmdm@gmail.com</a> · <a href="https://www.linkedin.com/in/raja-shahnawaz/" target="_blank">LinkedIn</a> · <a href="https://github.com/RajaMDM" target="_blank">GitHub</a> · BrainDrop — Multiple AI Engines
 </div>
 </div>
 
+<!-- Mobile nav -->
 <nav class="mnv">
-  <button class="mb on" data-s="mathematics" onclick="mN(this)"><span class="mi">∑</span>Maths</button>
-  <button class="mb" data-s="science" onclick="mN(this)"><span class="mi">⚗</span>Science</button>
-  <button class="mb" data-s="english" onclick="mN(this)"><span class="mi">✎</span>English</button>
-  <button class="mb" data-s="social-science" onclick="mN(this)"><span class="mi">🌏</span>SST</button>
-  <button class="mb" data-s="hindi" onclick="mN(this)"><span class="mi">अ</span>Hindi</button>
+  <button class="mb on" data-s="mathematics" onclick="mN(this)"><span class="mi">∑</span>Maths</button>
+  <button class="mb" data-s="science" onclick="mN(this)"><span class="mi">⚗</span>Science</button>
+  <button class="mb" data-s="english" onclick="mN(this)"><span class="mi">✎</span>English</button>
+  <button class="mb" data-s="social-science" onclick="mN(this)"><span class="mi">🌏</span>SST</button>
+  <button class="mb" data-s="hindi" onclick="mN(this)"><span class="mi">अ</span>Hindi</button>
 </nav>
 
+<!-- ═══ SETTINGS MODAL ═══ -->
 <div class="ov" id="setO"><div class="mdl"><h2>⚙ Settings & API Keys</h2>
-  <p style="color:var(--t2);font-size:.8rem;margin-bottom:14px">Add any combination of AI engines. More keys = more options + better fallback.</p>
+  <p style="color:var(--t2);font-size:.8rem;margin-bottom:14px">Add any combination of AI engines. More keys = more options + better fallback.</p>
 
-  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#b44aff"></span> Anthropic Claude (recommended for teaching)</div>
-    <input type="password" class="fi" id="ckI" placeholder="sk-ant-..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> · Pay-per-use · Model: Haiku 4.5</div>
-  </div>
-  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#00f5d4"></span> Google Gemini (free tier available)</div>
-    <input type="password" class="fi" id="gkI" placeholder="AIza..." style="margin-bottom:4px"><div class="fh">Free key → <a href="https://aistudio.google.com/apikey" target="_blank">Google AI Studio</a> · No credit card · Model: Gemini 2.5 Flash</div>
-  </div>
-  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#10a37f"></span> OpenAI GPT</div>
-    <input type="password" class="fi" id="okI" placeholder="sk-..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a> · Pay-per-use · Model: GPT-4o-mini</div>
-  </div>
-  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#ff6d00"></span> Groq (ultra-fast, free tier)</div>
-    <input type="password" class="fi" id="qkI" placeholder="gsk_..." style="margin-bottom:4px"><div class="fh">Free key → <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a> · Free tier generous · Model: Llama 3.3 70B</div>
-  </div>
-  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#4cc9f0"></span> DeepSeek (great at maths)</div>
-    <input type="password" class="fi" id="dkI" placeholder="sk-..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://platform.deepseek.com/api_keys" target="_blank">platform.deepseek.com</a> · Very cheap · Model: DeepSeek Chat</div>
-  </div>
-  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#ff1744"></span> Mistral (strong multilingual/Hindi)</div>
-    <input type="password" class="fi" id="mkI" placeholder="..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://console.mistral.ai/api-keys" target="_blank">console.mistral.ai</a> · Free tier · Model: Mistral Small</div>
-  </div>
-  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#8b5cf6"></span> Ollama (local/offline — no API key needed)</div>
-    <input type="text" class="fi" id="olURL" placeholder="http://localhost:11434" style="margin-bottom:4px" value="http://localhost:11434">
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px"><input type="text" class="fi" id="olModel" placeholder="llama3.2" style="flex:1" value="llama3.2"><button class="bg p" style="padding:6px 14px;font-size:.72rem" onclick="testOllama()">Test</button></div>
-    <div class="fh">Install → <a href="https://ollama.com/download" target="_blank">ollama.com</a> · Run <code>ollama pull llama3.2</code> · 100% free & offline · <span id="olStat" style="color:var(--t3)">Not tested</span></div>
-  </div>
+  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#b44aff"></span> Anthropic Claude (recommended for teaching)</div>
+    <input type="password" class="fi" id="ckI" placeholder="sk-ant-..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> · Pay-per-use · Model: Haiku 4.5</div>
+  </div>
+  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#00f5d4"></span> Google Gemini (free tier available)</div>
+    <input type="password" class="fi" id="gkI" placeholder="AIza..." style="margin-bottom:4px"><div class="fh">Free key → <a href="https://aistudio.google.com/apikey" target="_blank">Google AI Studio</a> · No credit card · Model: Gemini 2.5 Flash</div>
+  </div>
+  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#10a37f"></span> OpenAI GPT</div>
+    <input type="password" class="fi" id="okI" placeholder="sk-..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a> · Pay-per-use · Model: GPT-4o-mini</div>
+  </div>
+  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#ff6d00"></span> Groq (ultra-fast, free tier)</div>
+    <input type="password" class="fi" id="qkI" placeholder="gsk_..." style="margin-bottom:4px"><div class="fh">Free key → <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a> · Free tier generous · Model: Llama 3.3 70B</div>
+  </div>
+  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#4cc9f0"></span> DeepSeek (great at maths)</div>
+    <input type="password" class="fi" id="dkI" placeholder="sk-..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://platform.deepseek.com/api_keys" target="_blank">platform.deepseek.com</a> · Very cheap · Model: DeepSeek Chat</div>
+  </div>
+  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#ff1744"></span> Mistral (strong multilingual/Hindi)</div>
+    <input type="password" class="fi" id="mkI" placeholder="..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://console.mistral.ai/api-keys" target="_blank">console.mistral.ai</a> · Free tier · Model: Mistral Small</div>
+  </div>
+  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#8b5cf6"></span> Ollama (local/offline — no API key needed)</div>
+    <input type="text" class="fi" id="olURL" placeholder="http://localhost:11434" style="margin-bottom:4px" value="http://localhost:11434">
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px"><input type="text" class="fi" id="olModel" placeholder="llama3.2" style="flex:1" value="llama3.2"><button class="bg p" style="padding:6px 14px;font-size:.72rem" onclick="testOllama()">Test</button></div>
+    <div class="fh">Install → <a href="https://ollama.com/download" target="_blank">ollama.com</a> · Run <code>ollama pull llama3.2</code> · 100% free & offline · <span id="olStat" style="color:var(--t3)">Not tested</span></div>
+  </div>
 
-  <div class="fg"><label class="fl">Your Name</label><input type="text" class="fi" id="nI" placeholder="What should I call you?"></div>
-  <div class="fg"><label class="fl">Primary AI Engine</label>
-    <select class="fi" id="prefSel">
-      <option value="auto">🔄 Auto (smart fallback chain)</option>
-      <option value="claude">🟣 Claude</option>
-      <option value="gemini">🟢 Gemini</option>
-      <option value="openai">🟩 GPT</option>
-      <option value="groq">🟠 Groq</option>
-      <option value="deepseek">🔵 DeepSeek</option>
-      <option value="mistral">🔴 Mistral</option>
-      <option value="ollama">🟣 Ollama (local)</option>
-    </select>
-    <div class="fh">Auto mode tries your preferred engine first, falls back through others if rate limited or errored.</div>
-  </div>
-  <div class="fg"><label class="fl">Daily Claude Limit (cost control)</label><input type="number" class="fi" id="dlI" placeholder="50" min="5" max="500" value="50"><div class="fh">Claude auto-switches to fallback after this limit. Free engines (Gemini, Groq) are unlimited.</div></div>
-  <div class="ma"><button class="bg s" onclick="closeM('set')">Cancel</button><button class="bg p" onclick="saveC()">Save ✨</button></div>
+  <div class="fg"><label class="fl">Your Name</label><input type="text" class="fi" id="nI" placeholder="What should I call you?"></div>
+  <div class="fg"><label class="fl">Primary AI Engine</label>
+    <select class="fi" id="prefSel">
+      <option value="auto">🔄 Auto (smart fallback chain)</option>
+      <option value="claude">🟣 Claude</option>
+      <option value="gemini">🟢 Gemini</option>
+      <option value="openai">🟩 GPT</option>
+      <option value="groq">🟠 Groq</option>
+      <option value="deepseek">🔵 DeepSeek</option>
+      <option value="mistral">🔴 Mistral</option>
+      <option value="ollama">🟣 Ollama (local)</option>
+    </select>
+    <div class="fh">Auto mode tries your preferred engine first, falls back through others if rate limited or errored.</div>
+  </div>
+  <div class="fg"><label class="fl">Daily Claude Limit (cost control)</label><input type="number" class="fi" id="dlI" placeholder="50" min="5" max="500" value="50"><div class="fh">Claude auto-switches to fallback after this limit. Free engines (Gemini, Groq) are unlimited.</div></div>
+  <div class="ma"><button class="bg s" onclick="closeM('set')">Cancel</button><button class="bg p" onclick="saveC()">Save ✨</button></div>
 </div></div>
 
+<!-- ═══ KB MODAL ═══ -->
 <div class="ov" id="kbO"><div class="mdl"><h2>📚 Load Extra Content</h2>
-  <p style="color:var(--t2);font-size:.82rem;margin-bottom:12px">NCERT PDFs auto-load from <code>/books/</code>. Use this for extra notes or sample papers.</p>
-  <div class="fg"><label class="fl">Subject</label><select class="fi" id="kSel"><option value="mathematics">Mathematics</option><option value="science">Science</option><option value="english">English</option><option value="social-science">Social Science</option><option value="hindi">Hindi</option></select></div>
-  <div class="fg"><label class="fl">Extra Content</label><textarea class="kbt" id="kTx" placeholder="Paste sample papers, extra notes, reference material..."></textarea></div>
-  <div class="ma"><button class="bg s" onclick="closeM('kb')">Cancel</button><button class="bg p" onclick="lKB()">Load ⚡</button></div>
+  <p style="color:var(--t2);font-size:.82rem;margin-bottom:12px">NCERT PDFs auto-load from <code>/books/</code>. Use this for extra notes or sample papers.</p>
+  <div class="fg"><label class="fl">Subject</label><select class="fi" id="kSel"><option value="mathematics">Mathematics</option><option value="science">Science</option><option value="english">English</option><option value="social-science">Social Science</option><option value="hindi">Hindi</option></select></div>
+  <div class="fg"><label class="fl">Extra Content</label><textarea class="kbt" id="kTx" placeholder="Paste sample papers, extra notes, reference material..."></textarea></div>
+  <div class="ma"><button class="bg s" onclick="closeM('kb')">Cancel</button><button class="bg p" onclick="lKB()">Load ⚡</button></div>
 </div></div>
 
+<!-- ═══ STATS MODAL ═══ -->
 <div class="ov" id="statsO"><div class="mdl" style="max-width:600px"><h2>📊 Usage Dashboard</h2>
-  <p style="color:var(--t2);font-size:.82rem;margin-bottom:12px">Activity log across all users of this BrainDrop instance.</p>
-  <div class="stat-grid" id="statGrid"></div>
-  <h3 style="font-size:.85rem;margin-top:16px;color:var(--np)">Recent Activity Log</h3>
-  <div style="max-height:250px;overflow-y:auto"><table class="log-table" id="logTable"><thead><tr><th>Time</th><th>User</th><th>Subject</th><th>Mode</th><th>AI</th></tr></thead><tbody id="logBody"></tbody></table></div>
-  <div class="ma"><button class="bg s" onclick="exportStats()">📥 Export CSV</button><button class="bg p" onclick="closeM('stats')">Close</button></div>
+  <p style="color:var(--t2);font-size:.82rem;margin-bottom:12px">Activity log across all users of this BrainDrop instance.</p>
+  <div class="stat-grid" id="statGrid"></div>
+  <h3 style="font-size:.85rem;margin-top:16px;color:var(--np)">Recent Activity Log</h3>
+  <div style="max-height:250px;overflow-y:auto"><table class="log-table" id="logTable"><thead><tr><th>Time</th><th>User</th><th>Subject</th><th>Mode</th><th>AI</th></tr></thead><tbody id="logBody"></tbody></table></div>
+  <div class="ma"><button class="bg s" onclick="exportStats()">📥 Export CSV</button><button class="bg p" onclick="closeM('stats')">Close</button></div>
 </div></div>
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   BrainDrop v5 — 6 AI Engines · Chat Memory · Stats Logging
-   Dedicated to Alishba & Inaayah
-   © Raja Shahnawaz Soni | raja.cloudmdm@gmail.com
-   ═══════════════════════════════════════════════════════════════ */
+   BrainDrop v5 — 6 AI Engines · Chat Memory · Stats Logging
+   Dedicated to Alishba & Inaayah
+   © Raja Shahnawaz Soni | raja.cloudmdm@gmail.com
+   ═══════════════════════════════════════════════════════════════ */
 
 const CONFIG = {
-  GOOGLE_CLIENT_ID: '342934078544-l6d5a8okr7853alv8fhrpi64f7vvd3lr.apps.googleusercontent.com',
-  ALLOWED_EMAILS: ['raja.cloudmdm@gmail.com','alishba.soni10@gmail.com','inaayah.soni@globalschoolsalumni.org'], // empty = allow all. Add emails to restrict.
-  // Pre-fill API keys so users don't need to enter them (loaded after auth)
-  DEFAULT_KEYS: {
-    claude: '',
-    gemini: '',
-    groq: '',
-    ollama: ''     // 'active' if Ollama is running locally
-  }
+  GOOGLE_CLIENT_ID: '342934078544-l6d5a8okr7853alv8fhrpi64f7vvd3lr.apps.googleusercontent.com',
+  ALLOWED_EMAILS: ['raja.cloudmdm@gmail.com','alishba.soni10@gmail.com','inaayah.soni@globalschoolsalumni.org'], // empty = allow all. Add emails to restrict.
+  // Pre-fill API keys so users don't need to enter them (loaded after auth)
+  DEFAULT_KEYS: {
+    claude: '',
+    gemini: '',
+    groq: '',
+    ollama: ''     // 'active' if Ollama is running locally
+  }
 };
 
 // ═══ AI PROVIDER REGISTRY ═══
 const AI_PROVIDERS = {
-  claude:   { name:'Claude',   color:'#b44aff', model:'claude-haiku-4-5-20251001', keyField:'ckI', stateKey:'ck' },
-  gemini:   { name:'Gemini',   color:'#00f5d4', model:'gemini-2.5-flash',          keyField:'gkI', stateKey:'gk' },
-  openai:   { name:'GPT',      color:'#10a37f', model:'gpt-4o-mini',               keyField:'okI', stateKey:'ok' },
-  groq:     { name:'Groq',     color:'#ff6d00', model:'llama-3.3-70b-versatile',   keyField:'qkI', stateKey:'qk' },
-  deepseek: { name:'DeepSeek', color:'#4cc9f0', model:'deepseek-chat',             keyField:'dkI', stateKey:'dk' },
-  mistral:  { name:'Mistral',  color:'#ff1744', model:'mistral-small-latest',      keyField:'mkI', stateKey:'mk' },
-  ollama:   { name:'Ollama',   color:'#8b5cf6', model:'llama3.2',                  keyField:'olURL', stateKey:'ol' }
+  claude:   { name:'Claude',   color:'#b44aff', model:'claude-haiku-4-5-20251001', keyField:'ckI', stateKey:'ck' },
+  gemini:   { name:'Gemini',   color:'#00f5d4', model:'gemini-2.5-flash',          keyField:'gkI', stateKey:'gk' },
+  openai:   { name:'GPT',      color:'#10a37f', model:'gpt-4o-mini',               keyField:'okI', stateKey:'ok' },
+  groq:     { name:'Groq',     color:'#ff6d00', model:'llama-3.3-70b-versatile',   keyField:'qkI', stateKey:'qk' },
+  deepseek: { name:'DeepSeek', color:'#4cc9f0', model:'deepseek-chat',             keyField:'dkI', stateKey:'dk' },
+  mistral:  { name:'Mistral',  color:'#ff1744', model:'mistral-small-latest',      keyField:'mkI', stateKey:'mk' },
+  ollama:   { name:'Ollama',   color:'#8b5cf6', model:'llama3.2',                  keyField:'olURL', stateKey:'ol' }
 };
 const PROVIDER_ORDER = ['claude','gemini','openai','groq','deepseek','mistral','ollama'];
 
 // ═══ STATE ═══
 const Z = {
-  g:10, s:'mathematics', m:'explain',
-  ck:'', gk:'PROXY', ok:'', qk:'PROXY', dk:'', mk:'', // API keys hardcoded for proxy
-  ol:'', olURL:'http://localhost:11434', olModel:'llama3.2', // Ollama
-  n:'', pref:'auto',
-  h:[], kb:{}, pdfKB:{},
-  busy:false, xp:0, str:0, qc:0,
-  usage:{ claude:0, gemini:0, openai:0, groq:0, deepseek:0, mistral:0, ollama:0, date:new Date().toDateString() },
-  dailyLimit:50,
-  user:null, lastAI:''
+  g:10, s:'mathematics', m:'explain',
+  ck:'PROXY', gk:'PROXY', ok:'', qk:'PROXY', dk:'', mk:'', // API keys hardcoded for proxy
+  ol:'', olURL:'http://localhost:11434', olModel:'llama3.2', // Ollama
+  n:'', pref:'auto',
+  h:[], kb:{}, pdfKB:{},
+  busy:false, xp:0, str:0, qc:0,
+  usage:{ claude:0, gemini:0, openai:0, groq:0, deepseek:0, mistral:0, ollama:0, date:new Date().toDateString() },
+  dailyLimit:50,
+  user:null, lastAI:''
 };
 try {
-  const sv = JSON.parse(localStorage.getItem('bd2')||'{}');
-  Object.assign(Z,{ck:sv.ck||'',gk:sv.gk||'PROXY',ok:sv.ok||'',qk:sv.qk||'PROXY',dk:sv.dk||'',mk:sv.mk||'',ol:sv.ol||'',olURL:sv.olURL||'http://localhost:11434',olModel:sv.olModel||'llama3.2',n:sv.n||'',pref:sv.pref||'auto',xp:sv.xp||0,str:sv.str||0,qc:sv.qc||0,dailyLimit:sv.dailyLimit||50});
-  if(sv.usage){if(sv.usage.date===new Date().toDateString())Z.usage=sv.usage;else Z.usage={claude:0,gemini:0,openai:0,groq:0,deepseek:0,mistral:0,date:new Date().toDateString()};}
+  const sv = JSON.parse(localStorage.getItem('bd2')||'{}');
+  Object.assign(Z,{ck:sv.ck||'PROXY',gk:sv.gk||'PROXY',ok:sv.ok||'',qk:sv.qk||'PROXY',dk:sv.dk||'',mk:sv.mk||'',ol:sv.ol||'',olURL:sv.olURL||'http://localhost:11434',olModel:sv.olModel||'llama3.2',n:sv.n||'',pref:sv.pref||'auto',xp:sv.xp||0,str:sv.str||0,qc:sv.qc||0,dailyLimit:sv.dailyLimit||50});
+  if(sv.usage){if(sv.usage.date===new Date().toDateString())Z.usage=sv.usage;else Z.usage={claude:0,gemini:0,openai:0,groq:0,deepseek:0,mistral:0,date:new Date().toDateString()};}
 } catch(e){}
 
 // ═══════════════════════════════════════════════════════════════
 // LOGGING & STATS ENGINE
 // ═══════════════════════════════════════════════════════════════
 function logEvent(type, data) {
-  try {
-    const logs = JSON.parse(localStorage.getItem('bd_logs')||'[]');
-    logs.push({ ts:new Date().toISOString(), user:Z.user?.name||Z.n||'Unknown', email:Z.user?.email||'guest', type, ...data });
-    // Keep last 500 entries
-    if(logs.length>500) logs.splice(0,logs.length-500);
-    localStorage.setItem('bd_logs',JSON.stringify(logs));
-  } catch(e){}
+  try {
+    const logs = JSON.parse(localStorage.getItem('bd_logs')||'[]');
+    logs.push({ ts:new Date().toISOString(), user:Z.user?.name||Z.n||'Unknown', email:Z.user?.email||'guest', type, ...data });
+    // Keep last 500 entries
+    if(logs.length>500) logs.splice(0,logs.length-500);
+    localStorage.setItem('bd_logs',JSON.stringify(logs));
+  } catch(e){}
 }
 
 function getLogs(){ try{return JSON.parse(localStorage.getItem('bd_logs')||'[]')}catch(e){return []} }
 
 function renderStats(){
-  const logs=getLogs();
-  const chats=logs.filter(l=>l.type==='chat');
-  const users=[...new Set(logs.map(l=>l.user))];
-  const today=new Date().toDateString();
-  const todayChats=chats.filter(l=>new Date(l.ts).toDateString()===today);
-  const aiCounts={};chats.forEach(l=>{aiCounts[l.ai]=(aiCounts[l.ai]||0)+1});
-  const topAI=Object.entries(aiCounts).sort((a,b)=>b[1]-a[1])[0];
+  const logs=getLogs();
+  const chats=logs.filter(l=>l.type==='chat');
+  const users=[...new Set(logs.map(l=>l.user))];
+  const today=new Date().toDateString();
+  const todayChats=chats.filter(l=>new Date(l.ts).toDateString()===today);
+  const aiCounts={};chats.forEach(l=>{aiCounts[l.ai]=(aiCounts[l.ai]||0)+1});
+  const topAI=Object.entries(aiCounts).sort((a,b)=>b[1]-a[1])[0];
 
-  document.getElementById('statGrid').innerHTML=`
-    <div class="stat-card"><div class="sv" style="color:var(--np)">${chats.length}</div><div class="sl">Total Questions</div></div>
-    <div class="stat-card"><div class="sv" style="color:var(--nc)">${users.length}</div><div class="sl">Unique Users</div></div>
-    <div class="stat-card"><div class="sv" style="color:var(--ny)">${todayChats.length}</div><div class="sl">Today's Questions</div></div>
-    <div class="stat-card"><div class="sv" style="color:var(--nk)">${topAI?topAI[0]:'—'}</div><div class="sl">Most Used AI${topAI?' ('+topAI[1]+')':''}</div></div>`;
+  document.getElementById('statGrid').innerHTML=`
+    <div class="stat-card"><div class="sv" style="color:var(--np)">${chats.length}</div><div class="sl">Total Questions</div></div>
+    <div class="stat-card"><div class="sv" style="color:var(--nc)">${users.length}</div><div class="sl">Unique Users</div></div>
+    <div class="stat-card"><div class="sv" style="color:var(--ny)">${todayChats.length}</div><div class="sl">Today's Questions</div></div>
+    <div class="stat-card"><div class="sv" style="color:var(--nk)">${topAI?topAI[0]:'—'}</div><div class="sl">Most Used AI${topAI?' ('+topAI[1]+')':''}</div></div>`;
 
-  const recent=chats.slice(-30).reverse();
-  document.getElementById('logBody').innerHTML=recent.map(l=>{
-    const t=new Date(l.ts);
-    return `<tr><td>${t.toLocaleDateString('en-IN')} ${t.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}</td><td>${l.user}</td><td>${l.subject||'—'}</td><td>${l.mode||'—'}</td><td style="color:${AI_PROVIDERS[l.ai]?.color||'#fff'}">${l.ai||'—'}</td></tr>`;
-  }).join('');
+  const recent=chats.slice(-30).reverse();
+  document.getElementById('logBody').innerHTML=recent.map(l=>{
+    const t=new Date(l.ts);
+    return `<tr><td>${t.toLocaleDateString('en-IN')} ${t.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}</td><td>${l.user}</td><td>${l.subject||'—'}</td><td>${l.mode||'—'}</td><td style="color:${AI_PROVIDERS[l.ai]?.color||'#fff'}">${l.ai||'—'}</td></tr>`;
+  }).join('');
 }
 
 function exportStats(){
-  const logs=getLogs();
-  const header='Timestamp,User,Email,Type,Subject,Mode,AI,Grade\n';
-  const rows=logs.map(l=>`"${l.ts}","${l.user}","${l.email}","${l.type}","${l.subject||''}","${l.mode||''}","${l.ai||''}","${l.grade||''}"`).join('\n');
-  const blob=new Blob([header+rows],{type:'text/csv'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`braindrop_stats_${new Date().toISOString().split('T')[0]}.csv`;a.click();
+  const logs=getLogs();
+  const header='Timestamp,User,Email,Type,Subject,Mode,AI,Grade\n';
+  const rows=logs.map(l=>`"${l.ts}","${l.user}","${l.email}","${l.type}","${l.subject||''}","${l.mode||''}","${l.ai||''}","${l.grade||''}"`).join('\n');
+  const blob=new Blob([header+rows],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`braindrop_stats_${new Date().toISOString().split('T')[0]}.csv`;a.click();
 }
 
 // ═══════════════════════════════════════════════════════════════
 // GOOGLE SIGN-IN + BYPASS WITH NAME CAPTURE
 // ═══════════════════════════════════════════════════════════════
 function initGoogleSignIn(){
-  if(typeof google==='undefined'||!google.accounts){setTimeout(initGoogleSignIn,500);return}
-  const savedUser=localStorage.getItem('bd_user');
-  if(savedUser){try{Z.user=JSON.parse(savedUser);onSignInSuccess();return}catch(e){localStorage.removeItem('bd_user')}}
-  if(CONFIG.GOOGLE_CLIENT_ID&&CONFIG.GOOGLE_CLIENT_ID!=='YOUR_CLIENT_ID.apps.googleusercontent.com'){
-    google.accounts.id.initialize({client_id:CONFIG.GOOGLE_CLIENT_ID,callback:handleGoogleResponse,auto_select:true});
-    google.accounts.id.renderButton(document.getElementById('gSignBtn'),{theme:'outline',size:'large',text:'signin_with',shape:'pill',width:300});
-    google.accounts.id.prompt();
-  } else {
-    document.querySelector('.login-gsign').innerHTML='<div style="color:var(--t3);font-size:.78rem;padding:8px">Google Sign-in available when configured</div>';
-  }
+  if(typeof google==='undefined'||!google.accounts){setTimeout(initGoogleSignIn,500);return}
+  const savedUser=localStorage.getItem('bd_user');
+  if(savedUser){try{Z.user=JSON.parse(savedUser);onSignInSuccess();return}catch(e){localStorage.removeItem('bd_user')}}
+  if(CONFIG.GOOGLE_CLIENT_ID&&CONFIG.GOOGLE_CLIENT_ID!=='YOUR_CLIENT_ID.apps.googleusercontent.com'){
+    google.accounts.id.initialize({client_id:CONFIG.GOOGLE_CLIENT_ID,callback:handleGoogleResponse,auto_select:true});
+    google.accounts.id.renderButton(document.getElementById('gSignBtn'),{theme:'outline',size:'large',text:'signin_with',shape:'pill',width:300});
+    google.accounts.id.prompt();
+  } else {
+    document.querySelector('.login-gsign').innerHTML='<div style="color:var(--t3);font-size:.78rem;padding:8px">Google Sign-in available when configured</div>';
+  }
 }
 
 function handleGoogleResponse(response){
-  const payload=JSON.parse(atob(response.credential.split('.')[1]));
-  const email=payload.email,name=payload.name||payload.given_name||email.split('@')[0],picture=payload.picture||'';
-  if(CONFIG.ALLOWED_EMAILS.length>0&&!CONFIG.ALLOWED_EMAILS.includes(email)){alert(`Access denied for ${email}.\nAsk Raja to add your email.`);return}
-  Z.user={email,name,picture,method:'google'};
-  localStorage.setItem('bd_user',JSON.stringify(Z.user));
-  logEvent('login',{method:'google',email});
-  onSignInSuccess();
+  const payload=JSON.parse(atob(response.credential.split('.')[1]));
+  const email=payload.email,name=payload.name||payload.given_name||email.split('@')[0],picture=payload.picture||'';
+  if(CONFIG.ALLOWED_EMAILS.length>0&&!CONFIG.ALLOWED_EMAILS.includes(email)){alert(`Access denied for ${email}.\nAsk Raja to add your email.`);return}
+  Z.user={email,name,picture,method:'google'};
+  localStorage.setItem('bd_user',JSON.stringify(Z.user));
+  logEvent('login',{method:'google',email});
+  onSignInSuccess();
 }
 
 function bypassLogin(){
-  const name=document.getElementById('bypassName').value.trim();
-  if(!name){document.getElementById('bypassName').style.borderColor='var(--nr)';document.getElementById('bypassName').placeholder='Please enter your name first!';return}
-  Z.user={email:'guest',name,picture:'',method:'bypass'};
-  localStorage.setItem('bd_user',JSON.stringify(Z.user));
-  logEvent('login',{method:'bypass',name});
-  onSignInSuccess();
+  const name=document.getElementById('bypassName').value.trim();
+  if(!name){document.getElementById('bypassName').style.borderColor='var(--nr)';document.getElementById('bypassName').placeholder='Please enter your name first!';return}
+  Z.user={email:'guest',name,picture:'',method:'bypass'};
+  localStorage.setItem('bd_user',JSON.stringify(Z.user));
+  logEvent('login',{method:'bypass',name});
+  onSignInSuccess();
 }
 
 function onSignInSuccess(){
-  document.getElementById('loginGate').classList.add('hidden');
-  document.getElementById('mainApp').style.display='flex';
-  if(!Z.n&&Z.user.name)Z.n=Z.user.name;
+  document.getElementById('loginGate').classList.add('hidden');
+  document.getElementById('mainApp').style.display='flex';
+  if(!Z.n&&Z.user.name)Z.n=Z.user.name;
 
-  // Apply default keys ONLY for Google sign-in users on the allowlist (never bypass guests)
-  const isAllowedGoogle = Z.user.method==='google' && (CONFIG.ALLOWED_EMAILS.length===0 || CONFIG.ALLOWED_EMAILS.includes(Z.user.email));
-  if(isAllowedGoogle){
-    for(const[prov,info]of Object.entries(AI_PROVIDERS)){
-      if(!Z[info.stateKey]&&CONFIG.DEFAULT_KEYS[prov])Z[info.stateKey]=CONFIG.DEFAULT_KEYS[prov];
-    }
-  }
+  // Apply default keys ONLY for Google sign-in users on the allowlist (never bypass guests)
+  const isAllowedGoogle = Z.user.method==='google' && (CONFIG.ALLOWED_EMAILS.length===0 || CONFIG.ALLOWED_EMAILS.includes(Z.user.email));
+  if(isAllowedGoogle){
+    for(const[prov,info]of Object.entries(AI_PROVIDERS)){
+      if(!Z[info.stateKey]&&CONFIG.DEFAULT_KEYS[prov])Z[info.stateKey]=CONFIG.DEFAULT_KEYS[prov];
+    }
+  }
 
-  // Show user badge
-  const badge=document.getElementById('userBadge');badge.style.display='flex';
-  document.getElementById('userName').textContent=Z.user.name.split(' ')[0];
-  if(Z.user.picture){document.getElementById('userAvatar').src=Z.user.picture;document.getElementById('userAvatar').style.display='block';document.getElementById('userInit').style.display='none'}
-  else{document.getElementById('userInit').textContent=Z.user.name.charAt(0).toUpperCase()}
+  // Show user badge
+  const badge=document.getElementById('userBadge');badge.style.display='flex';
+  document.getElementById('userName').textContent=Z.user.name.split(' ')[0];
+  if(Z.user.picture){document.getElementById('userAvatar').src=Z.user.picture;document.getElementById('userAvatar').style.display='block';document.getElementById('userInit').style.display='none'}
+  else{document.getElementById('userInit').textContent=Z.user.name.charAt(0).toUpperCase()}
 
-  // Populate settings fields
-  for(const[prov,info]of Object.entries(AI_PROVIDERS)){if(prov!=='ollama')document.getElementById(info.keyField).value=Z[info.stateKey]}
-  document.getElementById('olURL').value=Z.olURL;document.getElementById('olModel').value=Z.olModel;
-  document.getElementById('nI').value=Z.n;
-  document.getElementById('dlI').value=Z.dailyLimit;
-  document.getElementById('prefSel').value=Z.pref;
-  uXP();showW();loadAllPDFs();updateMemBadge();
+  // Populate settings fields
+  for(const[prov,info]of Object.entries(AI_PROVIDERS)){if(prov!=='ollama')document.getElementById(info.keyField).value=Z[info.stateKey]}
+  document.getElementById('olURL').value=Z.olURL;document.getElementById('olModel').value=Z.olModel;
+  document.getElementById('nI').value=Z.n;
+  document.getElementById('dlI').value=Z.dailyLimit;
+  document.getElementById('prefSel').value=Z.pref;
+  uXP();showW();loadAllPDFs();updateMemBadge();
 }
 
 function signOut(){
-  if(!confirm('Sign out? Your progress is saved locally.'))return;
-  localStorage.removeItem('bd_user');Z.user=null;
-  if(typeof google!=='undefined'&&google.accounts)google.accounts.id.disableAutoSelect();
-  location.reload();
+  if(!confirm('Sign out? Your progress is saved locally.'))return;
+  localStorage.removeItem('bd_user');Z.user=null;
+  if(typeof google!=='undefined'&&google.accounts)google.accounts.id.disableAutoSelect();
+  location.reload();
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -407,26 +413,26 @@ function loadMemory(){try{const r=localStorage.getItem(getMemoryKey());if(r)retu
 function saveMemory(mem){try{if(mem.history.length>60)mem.history=mem.history.slice(-60);if(mem.profile.topicsCovered.length>50)mem.profile.topicsCovered=mem.profile.topicsCovered.slice(-50);if(mem.profile.quizScores.length>30)mem.profile.quizScores=mem.profile.quizScores.slice(-30);if(mem.profile.weakAreas.length>20)mem.profile.weakAreas=mem.profile.weakAreas.slice(-20);localStorage.setItem(getMemoryKey(),JSON.stringify(mem))}catch(e){}}
 
 function updateLearningProfile(userMsg,aiReply){
-  const mem=loadMemory();const ts=new Date().toISOString();
-  mem.history.push({role:'user',text:userMsg,ts});mem.history.push({role:'assistant',text:aiReply,ts});
-  const topics=(T[Z.g]&&T[Z.g][Z.s])||[];
-  for(const topic of topics){if(userMsg.toLowerCase().includes(topic.toLowerCase().slice(0,10))||aiReply.toLowerCase().includes(topic.toLowerCase().slice(0,10))){if(!mem.profile.topicsCovered.includes(topic))mem.profile.topicsCovered.push(topic)}}
-  const correctMatch=aiReply.match(/correct|right|well done|great job|perfect/gi);const wrongMatch=aiReply.match(/incorrect|wrong|not quite|try again|almost/gi);
-  if(Z.m==='quiz'&&(correctMatch||wrongMatch)){mem.profile.quizScores.push({date:ts.split('T')[0],correct:correctMatch?correctMatch.length:0,wrong:wrongMatch?wrongMatch.length:0})}
-  const weakPatterns=aiReply.match(/(?:you (?:need to|should|might want to) (?:work on|practice|review|revisit)|(?:weak|struggle|difficulty) (?:in|with))\s+([^.!?\n]+)/gi);
-  if(weakPatterns){for(const p of weakPatterns){const area=p.replace(/^.*?(work on|practice|review|revisit|with|in)\s+/i,'').trim();if(area.length>3&&area.length<60&&!mem.profile.weakAreas.includes(area))mem.profile.weakAreas.push(area)}}
-  mem.profile.lastStudied=new Date().toLocaleDateString('en-IN');saveMemory(mem);updateMemBadge();
+  const mem=loadMemory();const ts=new Date().toISOString();
+  mem.history.push({role:'user',text:userMsg,ts});mem.history.push({role:'assistant',text:aiReply,ts});
+  const topics=(T[Z.g]&&T[Z.g][Z.s])||[];
+  for(const topic of topics){if(userMsg.toLowerCase().includes(topic.toLowerCase().slice(0,10))||aiReply.toLowerCase().includes(topic.toLowerCase().slice(0,10))){if(!mem.profile.topicsCovered.includes(topic))mem.profile.topicsCovered.push(topic)}}
+  const correctMatch=aiReply.match(/correct|right|well done|great job|perfect/gi);const wrongMatch=aiReply.match(/incorrect|wrong|not quite|try again|almost/gi);
+  if(Z.m==='quiz'&&(correctMatch||wrongMatch)){mem.profile.quizScores.push({date:ts.split('T')[0],correct:correctMatch?correctMatch.length:0,wrong:wrongMatch?wrongMatch.length:0})}
+  const weakPatterns=aiReply.match(/(?:you (?:need to|should|might want to) (?:work on|practice|review|revisit)|(?:weak|struggle|difficulty) (?:in|with))\s+([^.!?\n]+)/gi);
+  if(weakPatterns){for(const p of weakPatterns){const area=p.replace(/^.*?(work on|practice|review|revisit|with|in)\s+/i,'').trim();if(area.length>3&&area.length<60&&!mem.profile.weakAreas.includes(area))mem.profile.weakAreas.push(area)}}
+  mem.profile.lastStudied=new Date().toLocaleDateString('en-IN');saveMemory(mem);updateMemBadge();
 }
 
 function getMemoryContext(){
-  const mem=loadMemory();if(mem.history.length===0&&mem.profile.topicsCovered.length===0)return '';
-  let ctx='\n\nSTUDENT LEARNING MEMORY (from past sessions — use to personalize):';
-  if(mem.profile.topicsCovered.length>0)ctx+=`\nTopics already covered: ${mem.profile.topicsCovered.join(', ')}`;
-  if(mem.profile.weakAreas.length>0)ctx+=`\nAreas needing practice: ${mem.profile.weakAreas.join(', ')}`;
-  if(mem.profile.quizScores.length>0){const recent=mem.profile.quizScores.slice(-5);ctx+=`\nRecent quizzes: ${recent.reduce((s,q)=>s+q.correct,0)} correct, ${recent.reduce((s,q)=>s+q.wrong,0)} incorrect`}
-  if(mem.profile.lastStudied)ctx+=`\nLast studied: ${mem.profile.lastStudied}`;
-  if(mem.history.length>0){ctx+='\n\nRecent conversation:';const recent=mem.history.slice(-12);for(const m of recent){ctx+=`\n${m.role==='user'?'Student':'You'}: ${m.text.length>200?m.text.substring(0,200)+'...':m.text}`}}
-  ctx+='\n\nUse this memory: reference past topics, build on learning, address weak areas, acknowledge progress.';return ctx;
+  const mem=loadMemory();if(mem.history.length===0&&mem.profile.topicsCovered.length===0)return '';
+  let ctx='\n\nSTUDENT LEARNING MEMORY (from past sessions — use to personalize):';
+  if(mem.profile.topicsCovered.length>0)ctx+=`\nTopics already covered: ${mem.profile.topicsCovered.join(', ')}`;
+  if(mem.profile.weakAreas.length>0)ctx+=`\nAreas needing practice: ${mem.profile.weakAreas.join(', ')}`;
+  if(mem.profile.quizScores.length>0){const recent=mem.profile.quizScores.slice(-5);ctx+=`\nRecent quizzes: ${recent.reduce((s,q)=>s+q.correct,0)} correct, ${recent.reduce((s,q)=>s+q.wrong,0)} incorrect`}
+  if(mem.profile.lastStudied)ctx+=`\nLast studied: ${mem.profile.lastStudied}`;
+  if(mem.history.length>0){ctx+='\n\nRecent conversation:';const recent=mem.history.slice(-12);for(const m of recent){ctx+=`\n${m.role==='user'?'Student':'You'}: ${m.text.length>200?m.text.substring(0,200)+'...':m.text}`}}
+  ctx+='\n\nUse this memory: reference past topics, build on learning, address weak areas, acknowledge progress.';return ctx;
 }
 
 function updateMemBadge(){const el=document.getElementById('memBadge');if(!el)return;const mem=loadMemory();const ex=Math.floor(mem.history.length/2);const tp=mem.profile.topicsCovered.length;el.textContent=ex===0?'🧠 Memory: new session':`🧠 ${ex} chats · ${tp} topics`}
@@ -448,12 +454,12 @@ const EP={mathematics:{hot:[{t:"Quadratic Equations",f:"95%",m:"8-10"},{t:"Arith
 
 // ═══ SYSTEM PROMPT ═══
 function sysP(){
-  const nm=Z.n?` Student's name: ${Z.n}.`:'';const kbc=getKBForCurrentSubject();
-  const kbi=kbc?`\n\nKNOWLEDGE BASE (NCERT — PRIMARY source):\n---\n${kbc.substring(0,45000)}\n---`:'';
-  const sn={mathematics:'Mathematics',science:'Science',english:'English','social-science':'Social Science',hindi:'Hindi'};
-  const ep=EP[Z.s];const epb=(Z.g===10&&ep)?`\n\nEXAM PATTERNS (2015-2024):\nHigh-freq: ${ep.hot.map(h=>`${h.t} (${h.f}, ${h.m} marks)`).join('; ')}.\nTraps: ${ep.tr.join('; ')}.`:'';
-  const memCtx=getMemoryContext();
-  const base=`You are BrainDrop, an expert CBSE ${sn[Z.s]} tutor for Grade ${Z.g}. You speak like a cool, encouraging older sibling.${nm}
+  const nm=Z.n?` Student's name: ${Z.n}.`:'';const kbc=getKBForCurrentSubject();
+  const kbi=kbc?`\n\nKNOWLEDGE BASE (NCERT — PRIMARY source):\n---\n${kbc.substring(0,45000)}\n---`:'';
+  const sn={mathematics:'Mathematics',science:'Science',english:'English','social-science':'Social Science',hindi:'Hindi'};
+  const ep=EP[Z.s];const epb=(Z.g===10&&ep)?`\n\nEXAM PATTERNS (2015-2024):\nHigh-freq: ${ep.hot.map(h=>`${h.t} (${h.f}, ${h.m} marks)`).join('; ')}.\nTraps: ${ep.tr.join('; ')}.`:'';
+  const memCtx=getMemoryContext();
+  const base=`You are BrainDrop, an expert CBSE ${sn[Z.s]} tutor for Grade ${Z.g}. You speak like a cool, encouraging older sibling.${nm}
 Rules:
 - Patient, fun, never condescending. Simple language.
 - Indian examples (cricket, Bollywood, food, festivals)
@@ -465,99 +471,98 @@ Rules:
 - ASCII diagrams for geometry/circuits/bio where helpful
 - NCERT content is PRIMARY — use exact definitions/theorems
 - If memory provided, reference it naturally. Don't repeat known topics.${kbi}${epb}${memCtx}`;
-  const mp={
-    explain:base+'\n\nMODE: Explain\n- Structured explanations with worked examples\n- Real-world Indian examples\n- Memory tricks at end\n- End with 1-2 Quick Check questions',
-    socratic:base+'\n\nMODE: Socratic\n- NEVER give direct answers\n- Guide through questions ONE at a time\n- "What if..." "Think about..." "Can you connect..."',
-    quiz:base+'\n\nMODE: Quiz\n- One question, 4 options (A-D)\n- 40% easy, 40% medium, 20% HOTS\n- After answer: explain why\n- After 5 Qs: score + areas to improve\n- Target weak areas from memory',
-    examprep:base+'\n\nMODE: Exam Prep\n- Board patterns from last 10 years\n- Cheat sheets, traps, full-marks format\n- Time management + HOTS practice',
-    tutor:base+'\n\nMODE: AI Tutor\n- Answer anything. Adapt to level.\n- Suggest next topics based on memory\n- Connect related concepts'
-  };return mp[Z.m]||mp.explain;
+  const mp={
+    explain:base+'\n\nMODE: Explain\n- Structured explanations with worked examples\n- Real-world Indian examples\n- Memory tricks at end\n- End with 1-2 Quick Check questions',
+    socratic:base+'\n\nMODE: Socratic\n- NEVER give direct answers\n- Guide through questions ONE at a time\n- "What if..." "Think about..." "Can you connect..."',
+    quiz:base+'\n\nMODE: Quiz\n- One question, 4 options (A-D)\n- 40% easy, 40% medium, 20% HOTS\n- After answer: explain why\n- After 5 Qs: score + areas to improve\n- Target weak areas from memory',
+    examprep:base+'\n\nMODE: Exam Prep\n- Board patterns from last 10 years\n- Cheat sheets, traps, full-marks format\n- Time management + HOTS practice',
+    tutor:base+'\n\nMODE: AI Tutor\n- Answer anything. Adapt to level.\n- Suggest next topics based on memory\n- Connect related concepts'
+  };return mp[Z.m]||mp.explain;
 }
 
 // ═══════════════════════════════════════════════════════════════
 // 6-ENGINE AI CALLER
 // ═══════════════════════════════════════════════════════════════
 async function callProvider(provider, userMsg){
-  const msgs=Z.h.slice(-16);
-  switch(provider){
-    case 'claude': {
-      const messages=msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text}));messages.push({role:'user',content:userMsg});
-      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':Z.ck,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:4096,system:sysP(),messages})});
-      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.content?.[0]?.text||'No response';
-    }
-    case 'gemini': {
-      const history=msgs.map(m=>({role:m.role==='model'?'model':'user',parts:[{text:m.text}]}));history.push({role:'user',parts:[{text:userMsg}]});
-      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system_instruction:{parts:[{text:sysP()}]},contents:history,generationConfig:{temperature:0.75,maxOutputTokens:4096,topP:0.95},safetySettings:[{category:'HARM_CATEGORY_HARASSMENT',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_HATE_SPEECH',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_SEXUALLY_EXPLICIT',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_DANGEROUS_CONTENT',threshold:'BLOCK_NONE'}]})});
-      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.candidates?.[0]?.content?.parts?.[0]?.text||'No response';
-    }
-    case 'openai': {
-      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
-      const res=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${Z.ok}`},body:JSON.stringify({model:'gpt-4o-mini',max_tokens:4096,messages})});
-      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
-    }
-    case 'groq': {
-      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
-      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/groq',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:4096,messages})});
-      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
-    }
-    case 'deepseek': {
-      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
-      const res=await fetch('https://api.deepseek.com/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${Z.dk}`},body:JSON.stringify({model:'deepseek-chat',max_tokens:4096,messages})});
-      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
-    }
-    case 'mistral': {
-      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
-      const res=await fetch('https://api.mistral.ai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${Z.mk}`},body:JSON.stringify({model:'mistral-small-latest',max_tokens:4096,messages})});
-      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
-    }
-    case 'ollama': {
-      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
-      const res=await fetch(`${Z.olURL}/v1/chat/completions`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:Z.olModel,messages,stream:false})});
-      const data=await res.json();if(data.error)throw new Error(data.error.message||JSON.stringify(data.error));return data.choices?.[0]?.message?.content||'No response';
-    }
-  }
+  const msgs=Z.h.slice(-16);
+  switch(provider){
+    case 'claude': {
+      const messages=msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text}));messages.push({role:'user',content:userMsg});
+      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:4096,system:sysP(),messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.content?.[0]?.text||'No response';
+    }
+    case 'gemini': {
+      const history=msgs.map(m=>({role:m.role==='model'?'model':'user',parts:[{text:m.text}]}));history.push({role:'user',parts:[{text:userMsg}]});
+      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system_instruction:{parts:[{text:sysP()}]},contents:history,generationConfig:{temperature:0.75,maxOutputTokens:4096,topP:0.95},safetySettings:[{category:'HARM_CATEGORY_HARASSMENT',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_HATE_SPEECH',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_SEXUALLY_EXPLICIT',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_DANGEROUS_CONTENT',threshold:'BLOCK_NONE'}]})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.candidates?.[0]?.content?.parts?.[0]?.text||'No response';
+    }
+    case 'openai': {
+      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${Z.ok}`},body:JSON.stringify({model:'gpt-4o-mini',max_tokens:4096,messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
+    }
+    case 'groq': {
+      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/groq',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:4096,messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
+    }
+    case 'deepseek': {
+      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch('https://api.deepseek.com/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${Z.dk}`},body:JSON.stringify({model:'deepseek-chat',max_tokens:4096,messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
+    }
+    case 'mistral': {
+      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch('https://api.mistral.ai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${Z.mk}`},body:JSON.stringify({model:'mistral-small-latest',max_tokens:4096,messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
+    }
+    case 'ollama': {
+      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch(`${Z.olURL}/v1/chat/completions`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:Z.olModel,messages,stream:false})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message||JSON.stringify(data.error));return data.choices?.[0]?.message?.content||'No response';
+    }
+  }
 }
 
 function getAvailableProviders(){return PROVIDER_ORDER.filter(p=>!!Z[AI_PROVIDERS[p].stateKey])}
 
 async function callAI(userMsg){
-  if(Z.usage.date!==new Date().toDateString())Z.usage={claude:0,gemini:0,openai:0,groq:0,deepseek:0,mistral:0,ollama:0,date:new Date().toDateString()};
-  const avail=getAvailableProviders();
-  if(avail.length===0){addM('ai','⚙️ **Hey!** You need at least one AI engine.\n\nClick ⚙ in the top right. Recommended free combo:\n- **Gemini** — free, no credit card\n- **Groq** — free, ultra-fast\n- **Ollama** — 100% free & offline (runs on your computer)\n\n> 💡 Add Claude for best teaching quality (paid). More engines = better fallback!');return}
+  if(Z.usage.date!==new Date().toDateString())Z.usage={claude:0,gemini:0,openai:0,groq:0,deepseek:0,mistral:0,ollama:0,date:new Date().toDateString()};
+  const avail=getAvailableProviders();
+  if(avail.length===0){addM('ai','⚙️ **Hey!** You need at least one AI engine.\n\nClick ⚙ in the top right. Recommended free combo:\n- **Gemini** — free, no credit card\n- **Groq** — free, ultra-fast\n- **Ollama** — 100% free & offline (runs on your computer)\n\n> 💡 Add Claude for best teaching quality (paid). More engines = better fallback!');return}
 
-  Z.h.push({role:'user',text:userMsg});showT();Z.busy=true;document.getElementById('sb').disabled=true;
-  let reply='',usedAI='';
+  Z.h.push({role:'user',text:userMsg});showT();Z.busy=true;document.getElementById('sb').disabled=true;
+  let reply='',usedAI='';
 
-  // Build try-order: preferred first, then fallback chain
-  let tryOrder=[];
-  if(Z.pref!=='auto'&&avail.includes(Z.pref))tryOrder=[Z.pref,...avail.filter(p=>p!==Z.pref)];
-  else tryOrder=[...avail];
+  // Build try-order: preferred first, then fallback chain
+  let tryOrder=[];
+  if(Z.pref!=='auto'&&avail.includes(Z.pref))tryOrder=[Z.pref,...avail.filter(p=>p!==Z.pref)];
+  else tryOrder=[...avail];
 
-  // Skip Claude if over daily limit
-  if(Z.usage.claude>=Z.dailyLimit)tryOrder=tryOrder.filter(p=>p!=='claude').concat(tryOrder.includes('claude')?['claude']:[]);
-  if(Z.usage.claude>=Z.dailyLimit&&tryOrder[0]==='claude'&&tryOrder.length>1)tryOrder.push(tryOrder.shift());
+  // Skip Claude if over daily limit
+  if(Z.usage.claude>=Z.dailyLimit)tryOrder=tryOrder.filter(p=>p!=='claude').concat(tryOrder.includes('claude')?['claude']:[]);
+  if(Z.usage.claude>=Z.dailyLimit&&tryOrder[0]==='claude'&&tryOrder.length>1)tryOrder.push(tryOrder.shift());
 
-  for(const provider of tryOrder){
-    try{
-      reply=await callProvider(provider,userMsg);
-      usedAI=AI_PROVIDERS[provider].name;Z.lastAI=provider;
-      Z.usage[provider]=(Z.usage[provider]||0)+1;
-      break;
-    }catch(err){console.log(`${provider} failed: ${err.message}`);continue}
-  }
+  for(const provider of tryOrder){
+    try{
+      reply=await callProvider(provider,userMsg);
+      usedAI=AI_PROVIDERS[provider].name;Z.lastAI=provider;
+      Z.usage[provider]=(Z.usage[provider]||0)+1;
+      break;
+    }catch(err){console.log(`${provider} failed: ${err.message}`);continue}
+  }
 
-  hideT();
-  if(reply){
-    Z.h.push({role:'model',text:reply});addM('ai',reply,usedAI);gXP(Z.m==='quiz'?15:10);Z.qc++;
-    updateLearningProfile(userMsg,reply);
-    logEvent('chat',{subject:Z.s,mode:Z.m,ai:Z.lastAI,grade:Z.g});
-    saveZ();
-  } else {
-    addM('ai','❌ **All AI engines failed.** Check your API keys in ⚙ Settings, or try again shortly.');
-  }
-  Z.busy=false;document.getElementById('sb').disabled=false;
+  hideT();
+  if(reply){
+    Z.h.push({role:'model',text:reply});addM('ai',reply,usedAI);gXP(Z.m==='quiz'?15:10);Z.qc++;
+    updateLearningProfile(userMsg,reply);
+    logEvent('chat',{subject:Z.s,mode:Z.m,ai:Z.lastAI,grade:Z.g});
+    saveZ();
+  } else {
+    addM('ai','❌ **All AI engines failed.** Check your API keys in ⚙ Settings, or try again shortly.');
+  }
+  Z.busy=false;document.getElementById('sb').disabled=false;
 }
 
 // ═══ RENDERING ═══
 function md(t){return t.replace(/
-http://googleusercontent.com/immersive_entry_chip/0
