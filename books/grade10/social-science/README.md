@@ -1,1 +1,0 @@
-Social Science NCERT PDFs
