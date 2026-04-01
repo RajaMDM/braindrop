@@ -72,6 +72,38 @@
 /* Stats modal */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.stat-card{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:12px;text-align:center}.stat-card .sv{font-size:1.5rem;font-weight:700;font-family:'Space Mono',monospace}.stat-card .sl{font-size:.68rem;color:var(--t3);margin-top:4px}
 .log-table{width:100%;border-collapse:collapse;font-size:.72rem;margin-top:12px}.log-table th,.log-table td{border:1px solid var(--bd);padding:6px 8px;text-align:left}.log-table th{background:rgba(180,74,255,.08);color:var(--np);font-weight:600}
+/* Classroom mode */
+.cr-header{display:flex;align-items:center;gap:12px;padding:10px 18px;background:rgba(18,18,31,.6);border-bottom:1px solid var(--bd);font-size:.78rem;color:var(--t2)}.cr-header .cr-agent{display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:8px;background:var(--bg3);border:1px solid var(--bd)}.cr-header .cr-agent .cr-dot{width:8px;height:8px;border-radius:50%;display:inline-block}.cr-header .cr-agent .cr-name{font-weight:600}.cr-header .cr-agent .cr-ai{font-size:.62rem;color:var(--t3);font-family:'Space Mono',monospace}
+.msg.teacher .av{background:var(--gf);box-shadow:0 0 12px rgba(180,74,255,.3)}.msg.teacher .bb{background:rgba(180,74,255,.06);border:1px solid rgba(180,74,255,.15)}.msg.classmate .av{background:var(--gi);box-shadow:0 0 12px rgba(0,245,212,.25)}.msg.classmate .bb{background:rgba(0,245,212,.04);border:1px solid rgba(0,245,212,.12)}
+.agent-label{font-size:.62rem;margin-top:6px;font-family:'Space Mono',monospace;font-weight:600}.msg.teacher .agent-label{color:#b44aff}.msg.classmate .agent-label{color:#00f5d4}
+.cr-typing{font-size:.75rem;color:var(--t3);padding:6px 18px;display:flex;align-items:center;gap:8px}.cr-typing .cr-who{font-weight:600}
+
+/* MagicBlocks — Interactive Content */
+.magic-block{margin:12px 0;border:1px solid rgba(180,74,255,.25);border-radius:14px;overflow:hidden;background:var(--bg);position:relative}.magic-block .mb-head{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:rgba(180,74,255,.08);border-bottom:1px solid rgba(180,74,255,.15)}.magic-block .mb-label{font-size:.65rem;font-family:'Space Mono',monospace;font-weight:700;color:var(--np);display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:1.5px}.magic-block .mb-title{font-size:.75rem;color:var(--t2);font-weight:500}.magic-block .mb-toggle{background:none;border:1px solid var(--bd);border-radius:6px;color:var(--t3);font-size:.65rem;padding:3px 8px;cursor:pointer;font-family:'Space Mono',monospace}.magic-block .mb-toggle:hover{border-color:var(--np);color:var(--np)}
+.magic-block iframe{width:100%;height:400px;border:none;background:var(--bg);display:block}.magic-block.expanded iframe{height:600px}
+.sim-btn{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;border-radius:7px;border:1px solid rgba(180,74,255,.2);background:rgba(180,74,255,.06);color:var(--np);font-family:'Fredoka',sans-serif;font-size:.7rem;font-weight:500;cursor:pointer;transition:all .2s}.sim-btn:hover{background:rgba(180,74,255,.12);border-color:var(--np);transform:translateY(-1px)}.sim-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+/* Assessment — Quiz Cards */
+.quiz-card{background:var(--bg3);border:1px solid var(--bd);border-radius:12px;padding:16px;margin:10px 0}.quiz-card .qnum{font-size:.65rem;font-family:'Space Mono',monospace;color:var(--np);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:flex;align-items:center;gap:8px}.quiz-card .qnum .diff{padding:2px 8px;border-radius:4px;font-size:.6rem}.diff.easy{background:rgba(57,255,20,.1);color:var(--ng)}.diff.medium{background:rgba(254,228,64,.1);color:var(--ny)}.diff.hard{background:rgba(255,23,68,.1);color:var(--nr)}
+.quiz-card .qtxt{font-size:.92rem;margin-bottom:12px;line-height:1.6}.quiz-card .opts{display:flex;flex-direction:column;gap:6px}.quiz-card .opt{padding:10px 14px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--t2);font-family:'Fredoka',sans-serif;font-size:.84rem;cursor:pointer;text-align:left;transition:all .2s;display:flex;align-items:center;gap:8px}.quiz-card .opt:hover:not(.done){border-color:var(--np);color:var(--t1);background:rgba(180,74,255,.04)}.quiz-card .opt.correct{border-color:var(--ng);background:rgba(57,255,20,.08);color:var(--ng)}.quiz-card .opt.wrong{border-color:var(--nr);background:rgba(255,23,68,.08);color:var(--nr)}.quiz-card .opt.done{cursor:default;opacity:.7}.quiz-card .opt.done.correct{opacity:1}.quiz-card .expl{margin-top:10px;padding:10px 12px;border-radius:8px;background:rgba(180,74,255,.04);border-left:3px solid var(--np);font-size:.8rem;color:var(--t2);display:none}.quiz-card .expl.show{display:block}
+.quiz-score{background:var(--bg3);border:1px solid rgba(180,74,255,.2);border-radius:14px;padding:20px;margin:14px 0;text-align:center}.quiz-score .qs-big{font-size:2rem;font-weight:700;font-family:'Space Mono',monospace}.quiz-score .qs-label{font-size:.78rem;color:var(--t3);margin-top:4px}.quiz-score .qs-bar{height:8px;border-radius:4px;background:var(--bg);margin:12px auto;max-width:200px;overflow:hidden}.quiz-score .qs-fill{height:100%;border-radius:4px;transition:width .8s ease}
+
+/* Assessment — Flashcards */
+.fc-deck{perspective:800px;margin:12px 0}.fc-card{width:100%;min-height:180px;position:relative;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}.fc-card.flipped{transform:rotateY(180deg)}.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.fc-front{background:var(--bg3);border:1px solid var(--bd)}.fc-back{background:rgba(180,74,255,.06);border:1px solid rgba(180,74,255,.2);transform:rotateY(180deg)}.fc-front .fc-q{font-size:1.05rem;line-height:1.6}.fc-back .fc-a{font-size:.95rem;line-height:1.6;color:var(--nc)}.fc-hint{font-size:.68rem;color:var(--t3);margin-top:12px}
+.fc-controls{display:flex;gap:10px;justify-content:center;margin-top:12px}.fc-btn{padding:9px 20px;border-radius:8px;border:none;font-family:'Fredoka',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s}.fc-btn.got{background:rgba(57,255,20,.12);color:var(--ng);border:1px solid rgba(57,255,20,.2)}.fc-btn.got:hover{background:rgba(57,255,20,.2)}.fc-btn.need{background:rgba(255,23,68,.1);color:var(--nr);border:1px solid rgba(255,23,68,.2)}.fc-btn.need:hover{background:rgba(255,23,68,.18)}
+.fc-progress{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:.75rem;color:var(--t3)}.fc-dots{display:flex;gap:4px}.fc-dot{width:8px;height:8px;border-radius:50%;background:var(--bg3);border:1px solid var(--bd)}.fc-dot.done{background:var(--ng);border-color:var(--ng)}.fc-dot.fail{background:var(--nr);border-color:var(--nr)}.fc-dot.cur{border-color:var(--np);box-shadow:0 0 6px rgba(180,74,255,.4)}
+
+/* Score History */
+.score-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0}.score-card{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:12px;text-align:center}.score-card .sv{font-size:1.3rem;font-weight:700;font-family:'Space Mono',monospace}.score-card .sl{font-size:.65rem;color:var(--t3);margin-top:4px}
+.score-table{width:100%;border-collapse:collapse;font-size:.72rem;margin-top:12px}.score-table th,.score-table td{border:1px solid var(--bd);padding:7px 8px;text-align:left}.score-table th{background:rgba(180,74,255,.08);color:var(--np);font-weight:600}.acc-hi{color:var(--ng)}.acc-mid{color:var(--ny)}.acc-lo{color:var(--nr)}
+
+/* Analytics Dashboard */
+.ana-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}.ana-card{background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:14px}.ana-card h4{font-size:.72rem;color:var(--t3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;font-weight:600}
+.ana-bars{display:flex;flex-direction:column;gap:6px}.ana-bar{display:flex;align-items:center;gap:8px;font-size:.72rem}.ana-bar .ab-label{width:60px;color:var(--t2);text-align:right;flex-shrink:0}.ana-bar .ab-track{flex:1;height:10px;background:var(--bg3);border-radius:5px;overflow:hidden}.ana-bar .ab-fill{height:100%;border-radius:5px;transition:width .6s ease}.ana-bar .ab-val{width:32px;font-family:'Space Mono',monospace;font-size:.65rem;color:var(--t3)}
+.ana-heatmap{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.ana-hm-cell{aspect-ratio:1;border-radius:3px;position:relative}.ana-hm-cell.l0{background:var(--bg3)}.ana-hm-cell.l1{background:rgba(180,74,255,.15)}.ana-hm-cell.l2{background:rgba(180,74,255,.3)}.ana-hm-cell.l3{background:rgba(180,74,255,.5)}.ana-hm-cell.l4{background:rgba(180,74,255,.75)}
+.ana-tags{display:flex;flex-wrap:wrap;gap:5px}.ana-tag{font-size:.68rem;padding:3px 9px;border-radius:6px;font-weight:500}.ana-tag.strength{background:rgba(57,255,20,.1);color:var(--ng);border:1px solid rgba(57,255,20,.15)}.ana-tag.weak{background:rgba(255,23,68,.08);color:var(--nr);border:1px solid rgba(255,23,68,.15)}
+.ana-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}.ana-sm{text-align:center;padding:10px;background:var(--bg);border-radius:10px;border:1px solid var(--bd)}.ana-sm .v{font-size:1.4rem;font-weight:700;font-family:'Space Mono',monospace}.ana-sm .l{font-size:.6rem;color:var(--t3);margin-top:3px}
+
 .mnv{display:none}
 @media(max-width:768px){.sb{display:none}.top{padding:8px 14px}.bname{font-size:1.1rem}.btag{display:none}.xps{padding:5px 14px;gap:10px;font-size:.68rem}.mds{padding:8px 12px;gap:4px}.mt{padding:7px 11px;font-size:.72rem}.mt .em{font-size:.9rem}.ch{padding:14px}.iz{padding:10px 14px 14px}.ct{padding-bottom:58px}.mnv{display:flex!important;position:fixed;bottom:0;left:0;right:0;background:rgba(18,18,31,.95);backdrop-filter:blur(16px);border-top:1px solid var(--bd);padding:6px 2px;z-index:100;justify-content:space-around}.mb{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;color:var(--t3);font-size:.58rem;padding:4px 6px;border-radius:8px;cursor:pointer;font-family:'Fredoka',sans-serif;font-weight:500}.mb .mi{font-size:1.2rem}.mb.on{color:var(--np)}}
 </style>
@@ -92,6 +124,8 @@
     <div class="login-bypass-form">
       <label>What's your name? *</label>
       <input id="bypassName" placeholder="Enter your name to continue..." autocomplete="name">
+      <label>Your email <span style="color:var(--t3);font-size:.68rem">(optional — helps us remember you)</span></label>
+      <input id="bypassEmail" placeholder="your@email.com" type="email" autocomplete="email">
       <button onclick="bypassLogin()">Start Learning →</button>
     </div>
     <div class="login-note">
@@ -109,9 +143,11 @@
   <div class="brand"><div class="bico">⚡</div><div><div class="bname">BrainDrop</div><div class="btag">For Alishba & Inaayah · Multiple AI Engines</div></div></div>
   <div class="topc">
     <div class="gps"><button class="gp on" onclick="setG(10)">X</button><button class="gp" onclick="setG(7)">VII</button></div>
-    <button class="ib" onclick="openM('set')" title="Settings & API Keys">⚙</button>
+    <button class="ib" onclick="openM('set')" title="Settings">⚙</button>
     <button class="ib" onclick="openM('kb')" title="Load Extra Content">📚</button>
     <button class="ib" onclick="openM('stats')" title="Usage Stats">📊</button>
+    <button class="ib" onclick="openM('scores')" title="Quiz Scores">🏆</button>
+    <button class="ib" onclick="openM('analytics')" title="My Progress">📈</button>
     <button class="ib" onclick="clearMemory()" title="Clear Memory">🧹</button>
     <div class="ubadge" id="userBadge" onclick="signOut()" title="Click to sign out" style="display:none">
       <img id="userAvatar" src="" alt="" style="display:none">
@@ -153,6 +189,8 @@
     <button class="mt" data-m="quiz" onclick="setMd(this)"><span class="em">🎮</span> Quiz Me</button>
     <button class="mt" data-m="examprep" onclick="setMd(this)"><span class="em">🎯</span> Exam Prep</button>
     <button class="mt" data-m="tutor" onclick="setMd(this)"><span class="em">🤖</span> AI Tutor</button>
+    <button class="mt" data-m="classroom" onclick="setMd(this)"><span class="em">🏫</span> Classroom</button>
+    <button class="mt" data-m="flashcard" onclick="setMd(this)"><span class="em">🃏</span> Flashcards</button>
   </div>
   <div class="ch" id="ch"></div>
   <div class="iz"><div class="ir">
@@ -175,48 +213,26 @@
   <button class="mb" data-s="hindi" onclick="mN(this)"><span class="mi">अ</span>Hindi</button>
 </nav>
 
-<div class="ov" id="setO"><div class="mdl"><h2>⚙ Settings & API Keys</h2>
-  <p style="color:var(--t2);font-size:.8rem;margin-bottom:14px">Add any combination of AI engines. More keys = more options + better fallback.</p>
+<div class="ov" id="setO"><div class="mdl"><h2>⚙ Settings</h2>
+  <p style="color:var(--t2);font-size:.8rem;margin-bottom:14px">Customize your BrainDrop experience. All AI engines are ready to go — no setup needed!</p>
 
-  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#b44aff"></span> Anthropic Claude (recommended for teaching)</div>
-    <input type="password" class="fi" id="ckI" placeholder="sk-ant-..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> · Pay-per-use · Model: Haiku 4.5</div>
-  </div>
-  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#00f5d4"></span> Google Gemini (free tier available)</div>
-    <input type="password" class="fi" id="gkI" placeholder="AIza..." style="margin-bottom:4px"><div class="fh">Free key → <a href="https://aistudio.google.com/apikey" target="_blank">Google AI Studio</a> · No credit card · Model: Gemini 2.5 Flash</div>
-  </div>
-  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#10a37f"></span> OpenAI GPT</div>
-    <input type="password" class="fi" id="okI" placeholder="sk-..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a> · Pay-per-use · Model: GPT-4o-mini</div>
-  </div>
-  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#ff6d00"></span> Groq (ultra-fast, free tier)</div>
-    <input type="password" class="fi" id="qkI" placeholder="gsk_..." style="margin-bottom:4px"><div class="fh">Free key → <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a> · Free tier generous · Model: Llama 3.3 70B</div>
-  </div>
-  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#4cc9f0"></span> DeepSeek (great at maths)</div>
-    <input type="password" class="fi" id="dkI" placeholder="sk-..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://platform.deepseek.com/api_keys" target="_blank">platform.deepseek.com</a> · Very cheap · Model: DeepSeek Chat</div>
-  </div>
-  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#ff1744"></span> Mistral (strong multilingual/Hindi)</div>
-    <input type="password" class="fi" id="mkI" placeholder="..." style="margin-bottom:4px"><div class="fh">Get key → <a href="https://console.mistral.ai/api-keys" target="_blank">console.mistral.ai</a> · Free tier · Model: Mistral Small</div>
-  </div>
-  <div class="aisec"><div class="aisec-hd"><span class="dot" style="background:#8b5cf6"></span> Ollama (local/offline — no API key needed)</div>
-    <input type="text" class="fi" id="olURL" placeholder="http://localhost:11434" style="margin-bottom:4px" value="http://localhost:11434">
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px"><input type="text" class="fi" id="olModel" placeholder="llama3.2" style="flex:1" value="llama3.2"><button class="bg p" style="padding:6px 14px;font-size:.72rem" onclick="testOllama()">Test</button></div>
-    <div class="fh">Install → <a href="https://ollama.com/download" target="_blank">ollama.com</a> · Run <code>ollama pull llama3.2</code> · 100% free & offline · <span id="olStat" style="color:var(--t3)">Not tested</span></div>
+  <div style="padding:12px;background:rgba(57,255,20,.06);border:1px solid rgba(57,255,20,.15);border-radius:10px;margin-bottom:16px;font-size:.78rem;color:var(--ng);display:flex;align-items:center;gap:8px">
+    <span style="font-size:1.2rem">✓</span> <span>6 AI engines active — Claude, Gemini, GPT, Groq, DeepSeek, Mistral</span>
   </div>
 
   <div class="fg"><label class="fl">Your Name</label><input type="text" class="fi" id="nI" placeholder="What should I call you?"></div>
-  <div class="fg"><label class="fl">Primary AI Engine</label>
+  <div class="fg"><label class="fl">Preferred AI Engine</label>
     <select class="fi" id="prefSel">
       <option value="auto">🔄 Auto (smart fallback chain)</option>
-      <option value="claude">🟣 Claude</option>
-      <option value="gemini">🟢 Gemini</option>
-      <option value="openai">🟩 GPT</option>
-      <option value="groq">🟠 Groq</option>
-      <option value="deepseek">🔵 DeepSeek</option>
-      <option value="mistral">🔴 Mistral</option>
-      <option value="ollama">🟣 Ollama (local)</option>
+      <option value="claude">🟣 Claude (best for teaching)</option>
+      <option value="gemini">🟢 Gemini (fast & free)</option>
+      <option value="openai">🟩 GPT (versatile)</option>
+      <option value="groq">🟠 Groq (ultra-fast)</option>
+      <option value="deepseek">🔵 DeepSeek (great at maths)</option>
+      <option value="mistral">🔴 Mistral (strong Hindi)</option>
     </select>
-    <div class="fh">Auto mode tries your preferred engine first, falls back through others if rate limited or errored.</div>
+    <div class="fh">Auto mode picks the best available engine. Switch manually if you prefer a specific AI.</div>
   </div>
-  <div class="fg"><label class="fl">Daily Claude Limit (cost control)</label><input type="number" class="fi" id="dlI" placeholder="50" min="5" max="500" value="50"><div class="fh">Claude auto-switches to fallback after this limit. Free engines (Gemini, Groq) are unlimited.</div></div>
   <div class="ma"><button class="bg s" onclick="closeM('set')">Cancel</button><button class="bg p" onclick="saveC()">Save ✨</button></div>
 </div></div>
 
@@ -235,27 +251,31 @@
   <div class="ma"><button class="bg s" onclick="exportStats()">📥 Export CSV</button><button class="bg p" onclick="closeM('stats')">Close</button></div>
 </div></div>
 
+<div class="ov" id="scoresO"><div class="mdl" style="max-width:620px"><h2>🏆 Quiz Score History</h2>
+  <p style="color:var(--t2);font-size:.82rem;margin-bottom:12px">Your quiz and flashcard performance across all subjects.</p>
+  <div class="score-grid" id="scoreGrid"></div>
+  <h3 style="font-size:.85rem;margin-top:16px;color:var(--np)">Recent Results</h3>
+  <div style="max-height:280px;overflow-y:auto"><table class="score-table" id="scoreTable"><thead><tr><th>Date</th><th>Subject</th><th>Topic</th><th>Score</th><th>Accuracy</th></tr></thead><tbody id="scoreBody"></tbody></table></div>
+  <div class="ma"><button class="bg p" onclick="closeM('scores')">Close</button></div>
+</div></div>
+
+<div class="ov" id="analyticsO"><div class="mdl" style="max-width:680px"><h2>📈 My Progress</h2>
+  <p style="color:var(--t2);font-size:.82rem;margin-bottom:12px">Your learning journey at a glance.</p>
+  <div class="ana-summary" id="anaSummary"></div>
+  <div class="ana-grid" id="anaGrid"></div>
+  <div class="ma"><button class="bg p" onclick="closeM('analytics')">Close</button></div>
+</div></div>
+
 <script>
 /* ═══════════════════════════════════════════════════════════════
    BrainDrop v5 — 6 AI Engines · Chat Memory · Stats Logging
    Dedicated to Alishba & Inaayah
    © Raja Shahnawaz Soni | raja.cloudmdm@gmail.com
    ═══════════════════════════════════════════════════════════════ */
-// --- Identity Gate ---
-if (!localStorage.getItem('userEmail')) {
-    const email = prompt("Welcome to BrainDrop! Enter your registered email to start studying:");
-    if (email && email.includes('@')) {
-        localStorage.setItem('userEmail', email.toLowerCase().trim());
-        location.reload(); 
-    } else {
-        alert("Access Denied: A valid email is required.");
-        location.reload();
-    }
-}
 const CONFIG = {
   GOOGLE_CLIENT_ID: '342934078544-l6d5a8okr7853alv8fhrpi64f7vvd3lr.apps.googleusercontent.com',
-  ALLOWED_EMAILS: ['raja.cloudmdm@gmail.com','alishba.soni10@gmail.com','inaayah.soni@globalschoolsalumni.org'],
-  DEFAULT_KEYS: { claude: '', gemini: '', groq: '', ollama: '' }
+  ALLOWED_EMAILS: [],
+  DEFAULT_KEYS: {}
 };
 
 const AI_PROVIDERS = {
@@ -269,9 +289,24 @@ const AI_PROVIDERS = {
 };
 const PROVIDER_ORDER = ['claude','gemini','openai','groq','deepseek','mistral','ollama'];
 
+const CLASSROOM_AGENTS = {
+  teacher: { name:'Ms. Sharma', role:'teacher', emoji:'\u{1F469}\u200D\u{1F3EB}', color:'#b44aff', personality:'Patient, methodical, uses NCERT examples, connects to real life' },
+  classmate: { name:'Arjun', role:'classmate', emoji:'\u{1F64B}\u200D\u2642\uFE0F', color:'#00f5d4', personality:'Curious, sometimes confused, asks the questions students are afraid to ask' }
+};
+
+function getClassroomProviders(){
+  const avail=getAvailableProviders();
+  if(avail.length===0) return {teacher:null,classmate:null};
+  if(avail.length===1) return {teacher:avail[0],classmate:avail[0]};
+  let teacherProv = Z.pref!=='auto'&&avail.includes(Z.pref) ? Z.pref : avail[0];
+  const freeTiers=['gemini','groq','ollama'];
+  let classmateProv = avail.find(p=>p!==teacherProv&&freeTiers.includes(p)) || avail.find(p=>p!==teacherProv) || teacherProv;
+  return {teacher:teacherProv, classmate:classmateProv};
+}
+
 const Z = {
   g:10, s:'mathematics', m:'explain',
-  ck:'PROXY', gk:'PROXY', ok:'', qk:'PROXY', dk:'', mk:'', ol:'', olURL:'http://localhost:11434', olModel:'llama3.2',
+  ck:'PROXY', gk:'PROXY', ok:'PROXY', qk:'PROXY', dk:'PROXY', mk:'PROXY', ol:'', olURL:'http://localhost:11434', olModel:'llama3.2',
   n:'', pref:'auto', h:[], kb:{}, pdfKB:{}, busy:false, xp:0, str:0, qc:0,
   usage:{ claude:0, gemini:0, openai:0, groq:0, deepseek:0, mistral:0, ollama:0, date:new Date().toDateString() },
   dailyLimit:50, user:null, lastAI:''
@@ -279,7 +314,7 @@ const Z = {
 
 try {
   const sv = JSON.parse(localStorage.getItem('bd2')||'{}');
-  Object.assign(Z,{ck:sv.ck||'PROXY',gk:sv.gk||'PROXY',ok:sv.ok||'',qk:sv.qk||'PROXY',dk:sv.dk||'',mk:sv.mk||'',ol:sv.ol||'',olURL:sv.olURL||'http://localhost:11434',olModel:sv.olModel||'llama3.2',n:sv.n||'',pref:sv.pref||'auto',xp:sv.xp||0,str:sv.str||0,qc:sv.qc||0,dailyLimit:sv.dailyLimit||50});
+  Object.assign(Z,{ck:sv.ck||'PROXY',gk:sv.gk||'PROXY',ok:sv.ok||'PROXY',qk:sv.qk||'PROXY',dk:sv.dk||'PROXY',mk:sv.mk||'PROXY',ol:sv.ol||'',olURL:sv.olURL||'http://localhost:11434',olModel:sv.olModel||'llama3.2',n:sv.n||'',pref:sv.pref||'auto',xp:sv.xp||0,str:sv.str||0,qc:sv.qc||0,dailyLimit:sv.dailyLimit||50});
   if(sv.usage){if(sv.usage.date===new Date().toDateString())Z.usage=sv.usage;else Z.usage={claude:0,gemini:0,openai:0,groq:0,deepseek:0,mistral:0,date:new Date().toDateString()};}
 } catch(e){}
 
@@ -335,29 +370,31 @@ function handleGoogleResponse(response){
   const email=payload.email,name=payload.name||payload.given_name||email.split('@')[0],picture=payload.picture||'';
   if(CONFIG.ALLOWED_EMAILS.length>0&&!CONFIG.ALLOWED_EMAILS.includes(email)){alert(`Access denied for ${email}.\nAsk Raja to add your email.`);return}
   Z.user={email,name,picture,method:'google'}; localStorage.setItem('bd_user',JSON.stringify(Z.user));
+  localStorage.setItem('userEmail',email);
   logEvent('login',{method:'google',email}); onSignInSuccess();
 }
 
 function bypassLogin(){
   const name=document.getElementById('bypassName').value.trim();
+  const emailInput=document.getElementById('bypassEmail').value.trim();
   if(!name){document.getElementById('bypassName').style.borderColor='var(--nr)';document.getElementById('bypassName').placeholder='Please enter your name first!';return}
-  Z.user={email:'guest',name,picture:'',method:'bypass'}; localStorage.setItem('bd_user',JSON.stringify(Z.user));
-  logEvent('login',{method:'bypass',name}); onSignInSuccess();
+  const userEmail=(emailInput&&emailInput.includes('@'))?emailInput.toLowerCase():'guest_'+Date.now();
+  Z.user={email:userEmail,name,picture:'',method:'bypass'}; localStorage.setItem('bd_user',JSON.stringify(Z.user));
+  localStorage.setItem('userEmail',userEmail);
+  logEvent('login',{method:'bypass',name,email:userEmail}); onSignInSuccess();
 }
 
 function onSignInSuccess(){
+  if(Z.user&&Z.user.email) localStorage.setItem('userEmail',Z.user.email);
   document.getElementById('loginGate').classList.add('hidden');
   document.getElementById('mainApp').style.display='flex';
   if(!Z.n&&Z.user.name)Z.n=Z.user.name;
   const isAllowedGoogle = Z.user.method==='google' && (CONFIG.ALLOWED_EMAILS.length===0 || CONFIG.ALLOWED_EMAILS.includes(Z.user.email));
-  if(isAllowedGoogle){for(const[prov,info]of Object.entries(AI_PROVIDERS)){if(!Z[info.stateKey]&&CONFIG.DEFAULT_KEYS[prov])Z[info.stateKey]=CONFIG.DEFAULT_KEYS[prov];}}
   const badge=document.getElementById('userBadge');badge.style.display='flex';
   document.getElementById('userName').textContent=Z.user.name.split(' ')[0];
   if(Z.user.picture){document.getElementById('userAvatar').src=Z.user.picture;document.getElementById('userAvatar').style.display='block';document.getElementById('userInit').style.display='none'}
   else{document.getElementById('userInit').textContent=Z.user.name.charAt(0).toUpperCase()}
-  for(const[prov,info]of Object.entries(AI_PROVIDERS)){if(prov!=='ollama')document.getElementById(info.keyField).value=Z[info.stateKey]}
-  document.getElementById('olURL').value=Z.olURL;document.getElementById('olModel').value=Z.olModel;
-  document.getElementById('nI').value=Z.n; document.getElementById('dlI').value=Z.dailyLimit; document.getElementById('prefSel').value=Z.pref;
+  document.getElementById('nI').value=Z.n; document.getElementById('prefSel').value=Z.pref;
   uXP();showW();loadAllPDFs();updateMemBadge();
 }
 
@@ -453,14 +490,64 @@ Rules:
 - Markdown: **bold** key terms, bullets, > callouts, \`code\` for formulas
 - ASCII diagrams for geometry/circuits/bio where helpful
 - NCERT content is PRIMARY — use exact definitions/theorems
-- If memory provided, reference it naturally. Don't repeat known topics.${kbi}${epb}${memCtx}`;
+- If memory provided, reference it naturally. Don't repeat known topics.
+
+INTERACTIVE CONTENT (MagicBlocks):
+When a topic benefits from visualization or interactivity, include a <magic-block> tag with self-contained HTML.
+Use when explaining: graphs, geometry, physics simulations, chemistry reactions, circuits, timelines, maps, grammar structures, etc.
+Format:
+<magic-block title="Short title">
+<!DOCTYPE html><html><head><style>body{margin:0;background:#0b0b14;color:#eef0ff;font-family:sans-serif;display:flex;flex-direction:column;align-items:center;padding:16px}h3{color:#b44aff;margin-bottom:12px}button{background:#b44aff;color:#fff;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px}input[type=range]{accent-color:#b44aff;width:200px}</style></head><body>...interactive content with inline JS...</body></html>
+</magic-block>
+Rules: MUST be self-contained (no external CDNs/fetch). Use canvas/SVG for drawings. Include controls (sliders/buttons). Dark theme (#0b0b14 bg, #eef0ff text, #b44aff accent). Under 150 lines.
+Do NOT always include a magic-block — only when visualization genuinely helps understanding.${kbi}${epb}${memCtx}`;
   const mp={
     explain:base+'\n\nMODE: Explain\n- Structured explanations with worked examples\n- Real-world Indian examples\n- Memory tricks at end\n- End with 1-2 Quick Check questions',
     socratic:base+'\n\nMODE: Socratic\n- NEVER give direct answers\n- Guide through questions ONE at a time\n- "What if..." "Think about..." "Can you connect..."',
-    quiz:base+'\n\nMODE: Quiz\n- One question, 4 options (A-D)\n- 40% easy, 40% medium, 20% HOTS\n- After answer: explain why\n- After 5 Qs: score + areas to improve\n- Target weak areas from memory',
+    quiz:base+'\n\nMODE: Quiz\nYou MUST respond with a JSON quiz block wrapped in <quiz-data>...</quiz-data> tags.\nFormat:\n<quiz-data>\n[{"q":"Question text?","options":["A) opt1","B) opt2","C) opt3","D) opt4"],"answer":0,"explanation":"Why the correct option is right...","difficulty":"easy","topic":"Topic name"}]\n</quiz-data>\n\nRules:\n- Generate exactly 5 questions per round\n- Mix: 2 easy, 2 medium, 1 hard/HOTS\n- "answer" is the 0-based index of the correct option\n- Target weak areas from student memory\n- Use NCERT content for accuracy\n- After the <quiz-data> block, add a brief encouraging message (1-2 lines)',
+    flashcard:base+'\n\nMODE: Flashcards\nYou MUST respond with flashcard data wrapped in <flashcard-data>...</flashcard-data> tags.\nFormat:\n<flashcard-data>\n[{"front":"Question, term, or concept","back":"Answer, definition, or explanation","topic":"Topic name"}]\n</flashcard-data>\n\nRules:\n- Generate 8-10 flashcards on the requested topic\n- Mix: definitions, formulas, key facts, conceptual questions\n- Keep front side concise (1-2 lines), back side clear but brief\n- Use NCERT content. For Hindi subject: use Devanagari\n- After the <flashcard-data> block, add a brief study tip (1-2 lines)',
     examprep:base+'\n\nMODE: Exam Prep\n- Board patterns from last 10 years\n- Cheat sheets, traps, full-marks format\n- Time management + HOTS practice',
     tutor:base+'\n\nMODE: AI Tutor\n- Answer anything. Adapt to level.\n- Suggest next topics based on memory\n- Connect related concepts'
   };return mp[Z.m]||mp.explain;
+}
+
+function classroomSysP(agentRole){
+  const nm=Z.n||'Student';const kbc=getKBForCurrentSubject();
+  const kbi=kbc?`\n\nKNOWLEDGE BASE (NCERT — PRIMARY source):\n---\n${kbc.substring(0,35000)}\n---`:'';
+  const sn={mathematics:'Mathematics',science:'Science',english:'English','social-science':'Social Science',hindi:'Hindi'};
+  const ep=EP[Z.s];const epb=(Z.g===10&&ep)?`\n\nEXAM PATTERNS (2015-2024):\nHigh-freq: ${ep.hot.map(h=>`${h.t} (${h.f}, ${h.m} marks)`).join('; ')}.\nTraps: ${ep.tr.join('; ')}.`:'';
+  const memCtx=getMemoryContext();
+  const t=CLASSROOM_AGENTS.teacher;const c=CLASSROOM_AGENTS.classmate;
+  if(agentRole==='teacher'){
+    return `You are ${t.name}, a warm and expert CBSE ${sn[Z.s]} teacher for Grade ${Z.g}. You are teaching in a classroom with a student named ${nm} and a classmate named ${c.name}.
+Personality: ${t.personality}.
+Rules:
+- Deliver clear, structured explanations using NCERT content as primary source.
+- Use Indian examples (cricket scores for maths, festivals for science, Bollywood for English).
+- Break concepts into small steps. Use mnemonics and memory tricks.
+- For formulas: explain WHY, not just HOW.
+- After explaining, naturally invite questions: "Any doubts, ${nm}?" or "What do you think, ${c.name}?"
+- When ${c.name} asks a question or gets confused, respond warmly and clarify.
+- When ${c.name} says something wrong, gently correct with encouragement.
+- Use Markdown: **bold** key terms, bullets, > callouts, \`code\` for formulas.
+- For Hindi subject: respond in Devanagari.
+- Emojis sparingly. Match Hindi/Hinglish if student uses it.
+- Keep responses focused but thorough (not too long).${kbi}${epb}${memCtx}`;
+  } else {
+    return `You are ${c.name}, a Grade ${Z.g} CBSE student sitting in ${t.name}'s ${sn[Z.s]} class alongside your classmate ${nm}.
+Personality: ${c.personality}.
+Rules:
+- You are a STUDENT, not a teacher. React naturally to what ${t.name} just explained.
+- Ask questions that students genuinely wonder about but are shy to ask.
+- Sometimes get confused or make small mistakes — this helps everyone learn when ${t.name} corrects you.
+- Be relatable: mention exam stress, board prep anxiety, "will this come in boards?", cricket/Bollywood references.
+- Keep responses SHORT: 2-4 sentences max. You're a student commenting, not lecturing.
+- Sometimes say things like "Oh wait, so that means..." or "But ma'am, what if..." or "Bro ${nm}, did you get that part?"
+- If ${nm} asks something, you can chime in with your own understanding (right or wrong).
+- Use casual tone. Hinglish is fine if the student uses it.
+- For Hindi subject: respond in Devanagari with casual student tone.
+- NEVER repeat what ${t.name} already said. Add your own perspective or doubt.`;
+  }
 }
 
 async function callProvider(provider, userMsg){
@@ -478,7 +565,7 @@ async function callProvider(provider, userMsg){
     }
     case 'openai': {
       const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
-      const res=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${Z.ok}`},body:JSON.stringify({model:'gpt-4o-mini',max_tokens:4096,messages})});
+      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/openai',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({model:'gpt-4o-mini',max_tokens:4096,messages})});
       const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
     }
     case 'groq': {
@@ -488,12 +575,12 @@ async function callProvider(provider, userMsg){
     }
     case 'deepseek': {
       const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
-      const res=await fetch('https://api.deepseek.com/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${Z.dk}`},body:JSON.stringify({model:'deepseek-chat',max_tokens:4096,messages})});
+      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/deepseek',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({model:'deepseek-chat',max_tokens:4096,messages})});
       const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
     }
     case 'mistral': {
       const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
-      const res=await fetch('https://api.mistral.ai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${Z.mk}`},body:JSON.stringify({model:'mistral-small-latest',max_tokens:4096,messages})});
+      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/mistral',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({model:'mistral-small-latest',max_tokens:4096,messages})});
       const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
     }
     case 'ollama': {
@@ -509,7 +596,7 @@ function getAvailableProviders(){return PROVIDER_ORDER.filter(p=>!!Z[AI_PROVIDER
 async function callAI(userMsg){
   if(Z.usage.date!==new Date().toDateString())Z.usage={claude:0,gemini:0,openai:0,groq:0,deepseek:0,mistral:0,ollama:0,date:new Date().toDateString()};
   const avail=getAvailableProviders();
-  if(avail.length===0){addM('ai','⚙️ **Hey!** You need at least one AI engine.\n\nClick ⚙ in the top right. Recommended free combo:\n- **Gemini** — free, no credit card\n- **Groq** — free, ultra-fast\n- **Ollama** — 100% free & offline (runs on your computer)\n\n> 💡 Add Claude for best teaching quality (paid). More engines = better fallback!');return}
+  if(avail.length===0){addM('ai','⚙️ **Oops!** AI engines are temporarily unavailable. Please try again in a moment.');return}
 
   Z.h.push({role:'user',text:userMsg});showT();Z.busy=true;document.getElementById('sb').disabled=true;
   let reply='',usedAI='';
@@ -535,13 +622,321 @@ async function callAI(userMsg){
     logEvent('chat',{subject:Z.s,mode:Z.m,ai:Z.lastAI,grade:Z.g});
     saveZ();
   } else {
-    addM('ai','❌ **All AI engines failed.** Check your API keys in ⚙ Settings, or try again shortly.');
+    addM('ai','❌ **All AI engines failed.** All AI engines are busy. Please try again shortly.');
   }
   Z.busy=false;document.getElementById('sb').disabled=false;
 }
 
+async function callClassroom(userMsg){
+  const provs=getClassroomProviders();
+  if(!provs.teacher){addM('ai','⚙️ **Hey!** AI engines are not available right now. Please try again shortly.');return}
+  if(Z.usage.date!==new Date().toDateString())Z.usage={claude:0,gemini:0,openai:0,groq:0,deepseek:0,mistral:0,ollama:0,date:new Date().toDateString()};
+
+  Z.h.push({role:'user',text:userMsg,agent:'student'});
+  showT('teacher');Z.busy=true;document.getElementById('sb').disabled=true;
+
+  // Teacher responds
+  let teacherReply='',classmateReply='';
+  const teacherMsgs=Z.h.slice(-16).map(m=>{
+    if(m.agent==='teacher') return {role:'assistant',text:m.text};
+    if(m.agent==='classmate') return {role:'user',text:`[${CLASSROOM_AGENTS.classmate.name}]: ${m.text}`};
+    return {role:'user',text:m.text};
+  });
+
+  try{
+    const oldSysP=sysP;
+    const tSys=classroomSysP('teacher');
+    // Temporarily override sysP for teacher call
+    window._crSysOverride=tSys;
+    teacherReply=await callProviderWithSys(provs.teacher,userMsg,tSys,teacherMsgs);
+    Z.usage[provs.teacher]=(Z.usage[provs.teacher]||0)+1;
+    Z.lastAI=provs.teacher;
+  }catch(err){
+    console.log('Teacher failed:',err.message);
+    teacherReply='';
+  }
+  hideT();
+
+  if(teacherReply){
+    Z.h.push({role:'model',text:teacherReply,agent:'teacher'});
+    addM('teacher',teacherReply,AI_PROVIDERS[provs.teacher]?.name);
+    updateLearningProfile(userMsg,teacherReply);
+    gXP(12);Z.qc++;
+
+    // Classmate reacts after short delay
+    showT('classmate');
+    await new Promise(r=>setTimeout(r,600));
+
+    const classmateMsgs=Z.h.slice(-16).map(m=>{
+      if(m.agent==='classmate') return {role:'assistant',text:m.text};
+      if(m.agent==='teacher') return {role:'user',text:`[${CLASSROOM_AGENTS.teacher.name}]: ${m.text}`};
+      return {role:'user',text:`[${Z.n||'Student'}]: ${m.text}`};
+    });
+
+    try{
+      classmateReply=await callProviderWithSys(provs.classmate,`[${CLASSROOM_AGENTS.teacher.name}] just said: "${teacherReply.substring(0,500)}"\n\nReact naturally as a student.`,classroomSysP('classmate'),classmateMsgs);
+      Z.usage[provs.classmate]=(Z.usage[provs.classmate]||0)+1;
+    }catch(err){
+      console.log('Classmate failed:',err.message);
+      classmateReply='';
+    }
+    hideT();
+
+    if(classmateReply){
+      Z.h.push({role:'model',text:classmateReply,agent:'classmate'});
+      addM('classmate',classmateReply,AI_PROVIDERS[provs.classmate]?.name);
+    }
+
+    logEvent('chat',{subject:Z.s,mode:'classroom',ai:provs.teacher,grade:Z.g});
+    saveZ();
+  } else {
+    hideT();
+    addM('ai','❌ **Teacher couldn\'t respond.** Please try again shortly.');
+  }
+  Z.busy=false;document.getElementById('sb').disabled=false;
+}
+
+async function callProviderWithSys(provider,userMsg,systemPrompt,formattedMsgs){
+  const msgs=formattedMsgs||[];
+  switch(provider){
+    case 'claude': {
+      const messages=msgs.map(m=>({role:m.role==='assistant'?'assistant':'user',content:m.text}));messages.push({role:'user',content:userMsg});
+      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/claude',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:4096,system:systemPrompt,messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.content?.[0]?.text||'No response';
+    }
+    case 'gemini': {
+      const history=msgs.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.text}]}));history.push({role:'user',parts:[{text:userMsg}]});
+      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/gemini',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({system_instruction:{parts:[{text:systemPrompt}]},contents:history,generationConfig:{temperature:0.75,maxOutputTokens:4096,topP:0.95},safetySettings:[{category:'HARM_CATEGORY_HARASSMENT',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_HATE_SPEECH',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_SEXUALLY_EXPLICIT',threshold:'BLOCK_NONE'},{category:'HARM_CATEGORY_DANGEROUS_CONTENT',threshold:'BLOCK_NONE'}]})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.candidates?.[0]?.content?.parts?.[0]?.text||'No response';
+    }
+    case 'openai': {
+      const messages=[{role:'system',content:systemPrompt},...msgs.map(m=>({role:m.role==='assistant'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/openai',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({model:'gpt-4o-mini',max_tokens:4096,messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
+    }
+    case 'groq': {
+      const messages=[{role:'system',content:systemPrompt},...msgs.map(m=>({role:m.role==='assistant'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/groq',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:4096,messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
+    }
+    case 'deepseek': {
+      const messages=[{role:'system',content:systemPrompt},...msgs.map(m=>({role:m.role==='assistant'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/deepseek',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({model:'deepseek-chat',max_tokens:4096,messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
+    }
+    case 'mistral': {
+      const messages=[{role:'system',content:systemPrompt},...msgs.map(m=>({role:m.role==='assistant'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch('https://braindrop-proxy.raja-cloudmdm.workers.dev/mistral',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({model:'mistral-small-latest',max_tokens:4096,messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
+    }
+    case 'ollama': {
+      const messages=[{role:'system',content:systemPrompt},...msgs.map(m=>({role:m.role==='assistant'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch(`${Z.olURL}/v1/chat/completions`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:Z.olModel,messages,stream:false})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message||JSON.stringify(data.error));return data.choices?.[0]?.message?.content||'No response';
+    }
+  }
+}
+
+/* ═══ Assessment Engine ═══ */
+let _quizState={};
+function buildQuizHTML(questions){
+  const sid='qs_'+Math.random().toString(36).slice(2,8);
+  _quizState[sid]={total:questions.length,answered:0,correct:0,questions};
+  return questions.map((q,i)=>{
+    const diffClass=q.difficulty==='easy'?'easy':q.difficulty==='hard'?'hard':'medium';
+    const opts=q.options.map((o,j)=>`<button class="opt" onclick="selectQuizAnswer('${sid}',${i},${j},${q.answer})">${o}</button>`).join('');
+    return `<div class="quiz-card" id="${sid}_q${i}"><div class="qnum">Q${i+1} of ${questions.length} <span class="diff ${diffClass}">${q.difficulty||'medium'}</span></div><div class="qtxt">${q.q}</div><div class="opts">${opts}</div><div class="expl" id="${sid}_e${i}">${q.explanation||''}</div></div>`;
+  }).join('')+`<div class="quiz-score" id="${sid}_score" style="display:none"></div>`;
+}
+
+function selectQuizAnswer(sid,qIdx,optIdx,correctIdx){
+  const card=document.getElementById(`${sid}_q${qIdx}`);if(!card)return;
+  const opts=card.querySelectorAll('.opt');
+  if(opts[0].classList.contains('done'))return;
+  opts.forEach((o,j)=>{o.classList.add('done');if(j===correctIdx)o.classList.add('correct');if(j===optIdx&&j!==correctIdx)o.classList.add('wrong');});
+  const expl=document.getElementById(`${sid}_e${qIdx}`);if(expl)expl.classList.add('show');
+  const st=_quizState[sid];if(!st)return;
+  if(optIdx===correctIdx)st.correct++;
+  st.answered++;
+  if(st.answered>=st.total){
+    const acc=Math.round((st.correct/st.total)*100);
+    const scoreEl=document.getElementById(`${sid}_score`);
+    const color=acc>=80?'var(--ng)':acc>=50?'var(--ny)':'var(--nr)';
+    const bonus=acc>=80?20:acc>=50?10:0;
+    const xpEarned=st.total*15+bonus;
+    scoreEl.innerHTML=`<div class="qs-big" style="color:${color}">${st.correct}/${st.total}</div><div class="qs-label">${acc}% accuracy${bonus?' · +'+bonus+' bonus XP':''}</div><div class="qs-bar"><div class="qs-fill" style="width:${acc}%;background:${color}"></div></div><div class="qs-label" style="margin-top:8px">Total: +${xpEarned} XP earned</div>`;
+    scoreEl.style.display='block';
+    gXP(bonus);
+    const topic=st.questions[0]?.topic||Z.s;
+    recordQuizResult({date:new Date().toISOString().split('T')[0],topic,total:st.total,correct:st.correct,accuracy:acc,subject:Z.s,grade:Z.g});
+    st.questions.forEach((q,i)=>{const opts=document.getElementById(`${sid}_q${i}`)?.querySelectorAll('.opt');if(opts){const picked=[...opts].findIndex(o=>o.classList.contains('wrong'));if(picked>=0){const mem=loadMemory();const area=q.topic||q.q.substring(0,40);if(!mem.profile.weakAreas.includes(area)){mem.profile.weakAreas.push(area);saveMemory(mem)}}}});
+  }
+}
+
+function recordQuizResult(result){
+  const mem=loadMemory();
+  if(!mem.profile.quizResults)mem.profile.quizResults=[];
+  mem.profile.quizResults.push(result);
+  if(mem.profile.quizResults.length>30)mem.profile.quizResults=mem.profile.quizResults.slice(-30);
+  saveMemory(mem);
+}
+
+/* ═══ Flashcard Engine ═══ */
+let _fcState={};
+function buildFlashcardsHTML(cards){
+  const sid='fc_'+Math.random().toString(36).slice(2,8);
+  _fcState[sid]={cards,current:0,mastered:0,needPractice:0,results:[]};
+  return `<div id="${sid}_deck">${renderFCCard(sid,0)}</div>`;
+}
+
+function renderFCCard(sid,idx){
+  const st=_fcState[sid];if(!st||idx>=st.cards.length)return renderFCSummary(sid);
+  const c=st.cards[idx];
+  const dots=st.cards.map((_,i)=>{const cls=i<idx?(st.results[i]?'done':'fail'):i===idx?'cur':'';return `<span class="fc-dot ${cls}"></span>`;}).join('');
+  return `<div class="fc-progress"><span>Card ${idx+1} of ${st.cards.length}</span><div class="fc-dots">${dots}</div></div>
+  <div class="fc-deck"><div class="fc-card" id="${sid}_card" onclick="flipCard('${sid}')"><div class="fc-face fc-front"><div class="fc-q">${c.front}</div><div class="fc-hint">Tap to reveal answer</div></div><div class="fc-face fc-back"><div class="fc-a">${c.back}</div></div></div></div>
+  <div class="fc-controls" id="${sid}_ctrl" style="display:none"><button class="fc-btn got" onclick="markCard('${sid}',true)">Got it</button><button class="fc-btn need" onclick="markCard('${sid}',false)">Need practice</button></div>`;
+}
+
+function renderFCSummary(sid){
+  const st=_fcState[sid];if(!st)return '';
+  const total=st.cards.length;const pct=Math.round((st.mastered/total)*100);
+  const color=pct>=80?'var(--ng)':pct>=50?'var(--ny)':'var(--nr)';
+  gXP(st.mastered*8);
+  const mem=loadMemory();
+  st.cards.forEach((c,i)=>{if(!st.results[i]&&c.topic&&!mem.profile.weakAreas.includes(c.topic))mem.profile.weakAreas.push(c.topic);});
+  saveMemory(mem);updateMemBadge();
+  return `<div class="quiz-score"><div class="qs-big" style="color:${color}">${st.mastered}/${total}</div><div class="qs-label">Cards mastered · ${pct}%</div><div class="qs-bar"><div class="qs-fill" style="width:${pct}%;background:${color}"></div></div><div class="qs-label" style="margin-top:8px">${st.needPractice>0?st.needPractice+' cards need more practice · ':''} +${st.mastered*8} XP earned</div></div>`;
+}
+
+function flipCard(sid){
+  const card=document.getElementById(`${sid}_card`);if(!card)return;
+  card.classList.toggle('flipped');
+  const ctrl=document.getElementById(`${sid}_ctrl`);if(ctrl)ctrl.style.display=card.classList.contains('flipped')?'flex':'none';
+}
+
+function markCard(sid,mastered){
+  const st=_fcState[sid];if(!st)return;
+  st.results[st.current]=mastered;
+  if(mastered)st.mastered++;else st.needPractice++;
+  st.current++;
+  const deck=document.getElementById(`${sid}_deck`);if(deck)deck.innerHTML=renderFCCard(sid,st.current);
+}
+
+/* ═══ Score History ═══ */
+function renderScoreHistory(){
+  const allScores=[];const sn={mathematics:'Maths',science:'Science',english:'English','social-science':'SST',hindi:'Hindi'};
+  const subjects=['mathematics','science','english','social-science','hindi'];
+  for(const s of subjects){
+    try{const mem=JSON.parse(localStorage.getItem(`bd_mem_${Z.g}_${s}`)||'{}');
+    if(mem.profile?.quizResults)allScores.push(...mem.profile.quizResults.map(r=>({...r,subject:sn[s]||s})));}catch(e){}
+  }
+  allScores.sort((a,b)=>b.date.localeCompare(a.date));
+  const totalQ=allScores.length;const avgAcc=totalQ?Math.round(allScores.reduce((s,r)=>s+r.accuracy,0)/totalQ):0;const best=totalQ?Math.max(...allScores.map(r=>r.accuracy)):0;
+  document.getElementById('scoreGrid').innerHTML=`<div class="score-card"><div class="sv" style="color:var(--np)">${totalQ}</div><div class="sl">Total Quizzes</div></div><div class="score-card"><div class="sv" style="color:${avgAcc>=70?'var(--ng)':'var(--ny)'}">${avgAcc}%</div><div class="sl">Avg Accuracy</div></div><div class="score-card"><div class="sv" style="color:var(--nc)">${best}%</div><div class="sl">Best Score</div></div>`;
+  const recent=allScores.slice(0,20);
+  document.getElementById('scoreBody').innerHTML=recent.length?recent.map(r=>{const accCls=r.accuracy>=80?'acc-hi':r.accuracy>=50?'acc-mid':'acc-lo';return `<tr><td>${r.date}</td><td>${r.subject||'—'}</td><td>${r.topic||'—'}</td><td>${r.correct}/${r.total}</td><td class="${accCls}">${r.accuracy}%</td></tr>`;}).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--t3)">No quiz results yet. Try Quiz mode!</td></tr>';
+}
+
+/* ═══ Analytics Dashboard ═══ */
+function renderAnalytics(){
+  const subjects=['mathematics','science','english','social-science','hindi'];
+  const sn={mathematics:'Maths',science:'Science',english:'English','social-science':'SST',hindi:'Hindi'};
+  const colors={mathematics:'#b44aff',science:'#00f5d4',english:'#fee440','social-science':'#ff6b9d',hindi:'#4cc9f0'};
+  const logs=getLogs().filter(l=>l.type==='chat');
+
+  // Summary stats
+  const totalTopics=subjects.reduce((s,sub)=>{try{const m=JSON.parse(localStorage.getItem(`bd_mem_${Z.g}_${sub}`)||'{}');return s+(m.profile?.topicsCovered?.length||0)}catch(e){return s}},0);
+  const totalWeak=subjects.reduce((s,sub)=>{try{const m=JSON.parse(localStorage.getItem(`bd_mem_${Z.g}_${sub}`)||'{}');return s+(m.profile?.weakAreas?.length||0)}catch(e){return s}},0);
+  document.getElementById('anaSummary').innerHTML=`
+    <div class="ana-sm"><div class="v" style="color:var(--np)">${Z.xp}</div><div class="l">Total XP</div></div>
+    <div class="ana-sm"><div class="v" style="color:var(--no)">${Z.str}</div><div class="l">Streak</div></div>
+    <div class="ana-sm"><div class="v" style="color:var(--nc)">${totalTopics}</div><div class="l">Topics Covered</div></div>
+    <div class="ana-sm"><div class="v" style="color:var(--nr)">${totalWeak}</div><div class="l">Weak Areas</div></div>`;
+
+  // Subject progress bars
+  let subjectBars='';
+  subjects.forEach(sub=>{
+    const allTopics=(T[Z.g]&&T[Z.g][sub])||[];
+    try{
+      const m=JSON.parse(localStorage.getItem(`bd_mem_${Z.g}_${sub}`)||'{}');
+      const covered=m.profile?.topicsCovered?.length||0;
+      const pct=allTopics.length?Math.round((covered/allTopics.length)*100):0;
+      subjectBars+=`<div class="ana-bar"><span class="ab-label">${sn[sub]}</span><div class="ab-track"><div class="ab-fill" style="width:${pct}%;background:${colors[sub]}"></div></div><span class="ab-val">${pct}%</span></div>`;
+    }catch(e){subjectBars+=`<div class="ana-bar"><span class="ab-label">${sn[sub]}</span><div class="ab-track"><div class="ab-fill" style="width:0%"></div></div><span class="ab-val">0%</span></div>`}
+  });
+
+  // Activity heatmap (last 28 days)
+  const now=new Date();let heatCells='';
+  for(let i=27;i>=0;i--){
+    const d=new Date(now);d.setDate(d.getDate()-i);
+    const ds=d.toISOString().split('T')[0];
+    const count=logs.filter(l=>l.ts&&l.ts.startsWith(ds)).length;
+    const lvl=count===0?'l0':count<=2?'l1':count<=5?'l2':count<=10?'l3':'l4';
+    heatCells+=`<span class="ana-hm-cell ${lvl}" title="${ds}: ${count} Qs"></span>`;
+  }
+
+  // Strengths & Weaknesses
+  let strengths=[],weaknesses=[];
+  subjects.forEach(sub=>{
+    try{
+      const m=JSON.parse(localStorage.getItem(`bd_mem_${Z.g}_${sub}`)||'{}');
+      const allTopics=(T[Z.g]&&T[Z.g][sub])||[];
+      const covered=m.profile?.topicsCovered||[];
+      const pct=allTopics.length?Math.round((covered.length/allTopics.length)*100):0;
+      if(pct>=60)strengths.push(sn[sub]+' ('+pct+'%)');
+      const weak=m.profile?.weakAreas||[];
+      weak.slice(-3).forEach(w=>weaknesses.push(w));
+    }catch(e){}
+  });
+
+  // AI usage breakdown
+  let aiUsageBars='';
+  const aiTotals={};logs.forEach(l=>{if(l.ai)aiTotals[l.ai]=(aiTotals[l.ai]||0)+1});
+  const maxAI=Math.max(...Object.values(aiTotals),1);
+  Object.entries(aiTotals).sort((a,b)=>b[1]-a[1]).slice(0,5).forEach(([ai,cnt])=>{
+    const pct=Math.round((cnt/maxAI)*100);
+    const c=AI_PROVIDERS[ai]?.color||'var(--np)';
+    aiUsageBars+=`<div class="ana-bar"><span class="ab-label">${AI_PROVIDERS[ai]?.name||ai}</span><div class="ab-track"><div class="ab-fill" style="width:${pct}%;background:${c}"></div></div><span class="ab-val">${cnt}</span></div>`;
+  });
+
+  document.getElementById('anaGrid').innerHTML=`
+    <div class="ana-card"><h4>Subject Progress</h4><div class="ana-bars">${subjectBars||'<span style="color:var(--t3);font-size:.75rem">Start learning to see progress!</span>'}</div></div>
+    <div class="ana-card"><h4>Activity (28 days)</h4><div class="ana-heatmap">${heatCells}</div><div style="display:flex;justify-content:space-between;margin-top:6px;font-size:.58rem;color:var(--t3)"><span>4 weeks ago</span><span>Today</span></div></div>
+    <div class="ana-card"><h4>Strengths & Weak Areas</h4><div class="ana-tags">${strengths.map(s=>`<span class="ana-tag strength">${s}</span>`).join('')}${weaknesses.slice(0,6).map(w=>`<span class="ana-tag weak">${w}</span>`).join('')}${!strengths.length&&!weaknesses.length?'<span style="color:var(--t3);font-size:.75rem">Keep studying to unlock insights!</span>':''}</div></div>
+    <div class="ana-card"><h4>AI Usage</h4><div class="ana-bars">${aiUsageBars||'<span style="color:var(--t3);font-size:.75rem">No usage data yet</span>'}</div></div>`;
+}
+
+function buildMagicBlockHTML(mb){
+  const escaped=mb.html.replace(/"/g,'&quot;');
+  const uid='mb_'+Math.random().toString(36).slice(2,8);
+  return `<div class="magic-block" id="${uid}">
+    <div class="mb-head"><span class="mb-label">⚡ Interactive${mb.title?' — '+mb.title:''}</span><button class="mb-toggle" onclick="toggleMB('${uid}')">Expand</button></div>
+    <iframe sandbox="allow-scripts" srcdoc="${escaped}"></iframe>
+  </div>`;
+}
+function toggleMB(id){const el=document.getElementById(id);if(!el)return;el.classList.toggle('expanded');const btn=el.querySelector('.mb-toggle');if(btn)btn.textContent=el.classList.contains('expanded')?'Shrink':'Expand';}
+
 function md(t){
-  return t.replace(/```(\w*)\n([\s\S]*?)```/g,'<pre><code>$2</code></pre>')
+  // Extract quiz data before markdown processing
+  const quizBlocks=[];
+  t=t.replace(/<quiz-data>([\s\S]*?)<\/quiz-data>/gi,(match,json)=>{
+    try{quizBlocks.push(JSON.parse(json.trim()))}catch(e){quizBlocks.push(null)}
+    return `%%QUIZ_${quizBlocks.length-1}%%`;
+  });
+  // Extract flashcard data
+  const fcBlocks=[];
+  t=t.replace(/<flashcard-data>([\s\S]*?)<\/flashcard-data>/gi,(match,json)=>{
+    try{fcBlocks.push(JSON.parse(json.trim()))}catch(e){fcBlocks.push(null)}
+    return `%%FC_${fcBlocks.length-1}%%`;
+  });
+  // Extract magic blocks
+  const magicBlocks=[];
+  t=t.replace(/<magic-block(?:\s+title="([^"]*)")?\s*>([\s\S]*?)<\/magic-block>/gi,(match,title,html)=>{
+    magicBlocks.push({title:title||'Interactive',html:html.trim()});
+    return `%%MAGIC_${magicBlocks.length-1}%%`;
+  });
+  let result=t.replace(/```(\w*)\n([\s\S]*?)```/g,'<pre><code>$2</code></pre>')
           .replace(/`([^`]+)`/g,'<code>$1</code>')
           .replace(/^### (.+)$/gm,'<h3>$1</h3>')
           .replace(/^## (.+)$/gm,'<h2>$1</h2>')
@@ -555,31 +950,70 @@ function md(t){
           .replace(/^\d+\. (.+)$/gm,'<li>$1</li>')
           .replace(/\n{2,}/g,'</p><p>')
           .replace(/\n/g,'<br>');
+  // Inject magic block iframes
+  magicBlocks.forEach((mb,i)=>{result=result.replace(`%%MAGIC_${i}%%`,buildMagicBlockHTML(mb));});
+  quizBlocks.forEach((qb,i)=>{result=result.replace(`%%QUIZ_${i}%%`,qb?buildQuizHTML(qb):'<p style="color:var(--nr)">Quiz data error</p>');});
+  fcBlocks.forEach((fb,i)=>{result=result.replace(`%%FC_${i}%%`,fb?buildFlashcardsHTML(fb):'<p style="color:var(--nr)">Flashcard data error</p>');});
+  return result;
 }
 
 function showW(){
   const topics=(T[Z.g]&&T[Z.g][Z.s])||[];
-  const md_={explain:{i:'📖',t:'Ready to learn?',s:"Pick a topic — I'll break it down with examples & memory hacks!"},socratic:{i:'🧠',t:"Let's think together!",s:"I won't give answers — I'll guide you to discover them!"},quiz:{i:'🎮',t:'Game on!',s:'Board-exam style Qs. Earn XP and level up!'},examprep:{i:'🎯',t:'Exam mode: ON',s:"10 years of boards, common traps & cheat sheets."},tutor:{i:'🤖',t:'Your AI tutor is here!',s:'Ask anything. No judgement, just knowledge.'}};
+  const md_={explain:{i:'📖',t:'Ready to learn?',s:"Pick a topic — I'll break it down with examples & memory hacks!"},socratic:{i:'🧠',t:"Let's think together!",s:"I won't give answers — I'll guide you to discover them!"},quiz:{i:'🎮',t:'Quiz Time!',s:'5 MCQs per round with auto-grading. Pick a topic to start!'},flashcard:{i:'🃏',t:'Flashcard Deck',s:'Flip through cards to master key concepts. Pick a topic!'},examprep:{i:'🎯',t:'Exam mode: ON',s:"10 years of boards, common traps & cheat sheets."},tutor:{i:'🤖',t:'Your AI tutor is here!',s:'Ask anything. No judgement, just knowledge.'},classroom:{i:'🏫',t:'Welcome to your Classroom!',s:'Ms. Sharma is your teacher. Arjun is your classmate. Pick a topic to start the lesson!'}};
   const m=md_[Z.m]||md_.explain;
   const pdfLoaded=!!Z.pdfKB[`${Z.g}_${Z.s}`];
   const pdfNote=pdfLoaded?`<div class="pdfstat">📚 NCERT loaded (${Math.round(Z.pdfKB[Z.g+'_'+Z.s].length/1000)}K chars) · Textbook-grounded answers</div>`:`<div class="pdfstat">💡 Add NCERT PDFs to <code>/books/</code> for textbook-accurate answers</div>`;
   const mem=loadMemory();const memEx=Math.floor(mem.history.length/2);
   const memNote=memEx>0?`<div class="memstat">🧠 I remember ${memEx} past chats · ${mem.profile.topicsCovered.length} topics covered${mem.profile.weakAreas.length>0?' · Focus: '+mem.profile.weakAreas.slice(-3).join(', '):''}</div>`:`<div class="memstat">🧠 New session — I'll start remembering your progress!</div>`;
-  const avail=getAvailableProviders();const aiNote=avail.length>0?`<div style="margin-top:8px;font-size:.7rem;color:var(--t3)">Active: ${avail.map(p=>`<span style="color:${AI_PROVIDERS[p].color}">${AI_PROVIDERS[p].name}</span>`).join(' · ')}</div>`:'';
+  const avail=getAvailableProviders();
+  let aiNote='';
+  if(Z.m==='classroom'){
+    const provs=getClassroomProviders();
+    const tAI=provs.teacher?AI_PROVIDERS[provs.teacher]:null;
+    const cAI=provs.classmate?AI_PROVIDERS[provs.classmate]:null;
+    aiNote=`<div style="margin-top:12px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <div style="padding:8px 14px;border-radius:10px;background:rgba(180,74,255,.08);border:1px solid rgba(180,74,255,.2);font-size:.75rem">
+        ${CLASSROOM_AGENTS.teacher.emoji} <strong style="color:#b44aff">${CLASSROOM_AGENTS.teacher.name}</strong> <span style="color:var(--t3)">Teacher</span>${tAI?` <span style="font-size:.6rem;color:${tAI.color};font-family:\'Space Mono\',monospace">(${tAI.name})</span>`:''}
+      </div>
+      <div style="padding:8px 14px;border-radius:10px;background:rgba(0,245,212,.06);border:1px solid rgba(0,245,212,.15);font-size:.75rem">
+        ${CLASSROOM_AGENTS.classmate.emoji} <strong style="color:#00f5d4">${CLASSROOM_AGENTS.classmate.name}</strong> <span style="color:var(--t3)">Classmate</span>${cAI?` <span style="font-size:.6rem;color:${cAI.color};font-family:\'Space Mono\',monospace">(${cAI.name})</span>`:''}
+      </div>
+    </div>`;
+  } else {
+    aiNote=avail.length>0?`<div style="margin-top:8px;font-size:.7rem;color:var(--t3)">Active: ${avail.map(p=>`<span style="color:${AI_PROVIDERS[p].color}">${AI_PROVIDERS[p].name}</span>`).join(' · ')}</div>`:'';
+  }
   document.getElementById('ch').innerHTML=`<div class="hero"><div class="hchar">${m.i}</div><div class="htit">${m.t}</div><div class="hsub">${m.s}</div><div class="chips">${topics.slice(0,8).map(t=>`<button class="chip" onclick="ask(this.textContent)">${t}</button>`).join('')}</div>${pdfNote}${memNote}${aiNote}</div>`;
   updateMemBadge();
 }
 
 function addM(role,text,aiLabel){
   const c=document.getElementById('ch');const h=c.querySelector('.hero');if(h)h.remove();
+  // Classroom agent roles
+  if(role==='teacher'||role==='classmate'){
+    const agent=CLASSROOM_AGENTS[role];
+    const d=document.createElement('div');d.className=`msg ${role}`;
+    const aiBadge=aiLabel?` (${aiLabel})`:'';
+    d.innerHTML=`<div class="av">${agent.emoji}</div><div class="bb">${md(text)}<div class="agent-label">${agent.name} — ${role==='teacher'?'Teacher':'Classmate'}${aiBadge}</div></div>`;
+    c.appendChild(d);c.scrollTop=c.scrollHeight;return;
+  }
   const d=document.createElement('div');d.className=`msg ${role==='user'?'u':'a'}`;
   const aiColor=Z.lastAI?AI_PROVIDERS[Z.lastAI]?.color:'#b44aff';
   const badge=(role!=='user'&&aiLabel)?`<div style="font-size:.6rem;color:${aiColor};margin-top:6px;font-family:'Space Mono',monospace">— ${aiLabel}</div>`:'';
-  d.innerHTML=`<div class="av ${role==='user'?'uu':'a'}">${role==='user'?'✦':'⚡'}</div><div class="bb">${role==='user'?text:md(text)}${badge}</div>`;
+  const simBtn=(role==='ai'&&!text.includes('<magic-block'))?`<button class="sim-btn" onclick="genSim(this)">⚡ Generate Simulation</button>`:'';
+  d.innerHTML=`<div class="av ${role==='user'?'uu':'a'}">${role==='user'?'✦':'⚡'}</div><div class="bb">${role==='user'?text:md(text)}${badge}${simBtn}</div>`;
   c.appendChild(d);c.scrollTop=c.scrollHeight;
 }
 
-function showT(){const c=document.getElementById('ch');const d=document.createElement('div');d.className='msg a';d.id='ty';d.innerHTML='<div class="av a">⚡</div><div class="bb typ"><div class="dt"></div><div class="dt"></div><div class="dt"></div></div>';c.appendChild(d);c.scrollTop=c.scrollHeight}
+function showT(agentRole){
+  const c=document.getElementById('ch');
+  if(agentRole&&CLASSROOM_AGENTS[agentRole]){
+    const agent=CLASSROOM_AGENTS[agentRole];
+    const d=document.createElement('div');d.className=`msg ${agentRole}`;d.id='ty';
+    d.innerHTML=`<div class="av">${agent.emoji}</div><div class="bb typ"><div class="dt"></div><div class="dt"></div><div class="dt"></div></div>`;
+    c.appendChild(d);c.scrollTop=c.scrollHeight;return;
+  }
+  const d=document.createElement('div');d.className='msg a';d.id='ty';d.innerHTML='<div class="av a">⚡</div><div class="bb typ"><div class="dt"></div><div class="dt"></div><div class="dt"></div></div>';c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
 function hideT(){const t=document.getElementById('ty');if(t)t.remove()}
 
 function gXP(a){Z.xp+=a;Z.str++;uXP()}
@@ -592,8 +1026,37 @@ function uXP(){
 }
 function saveZ(){try{localStorage.setItem('bd2',JSON.stringify({ck:Z.ck,gk:Z.gk,ok:Z.ok,qk:Z.qk,dk:Z.dk,mk:Z.mk,ol:Z.ol,olURL:Z.olURL,olModel:Z.olModel,n:Z.n,pref:Z.pref,xp:Z.xp,str:Z.str,qc:Z.qc,usage:Z.usage,dailyLimit:Z.dailyLimit}))}catch(e){}}
 
-function go(){if(Z.busy)return;const i=document.getElementById('inp');const m=i.value.trim();if(!m)return;i.value='';i.style.height='auto';addM('user',m);callAI(m)}
-function ask(topic){const pf={explain:'Explain this clearly with NCERT examples: ',socratic:"Let's explore together: ",quiz:'Quiz me on: ',examprep:'Complete exam prep for: ',tutor:'I want to learn about: '};addM('user',(pf[Z.m]||'Explain: ')+topic);callAI((pf[Z.m]||'Explain: ')+topic)}
+async function genSim(btn){
+  if(Z.busy)return;
+  btn.disabled=true;btn.textContent='Generating...';
+  const bb=btn.closest('.bb');if(!bb)return;
+  const rawText=bb.innerText.substring(0,800);
+  Z.busy=true;document.getElementById('sb').disabled=true;
+  showT();
+  try{
+    const prompt=`Based on this explanation, generate ONLY an interactive HTML simulation wrapped in <magic-block title="..."> tags. No other text, just the magic-block.\n\nExplanation:\n${rawText}`;
+    const avail=getAvailableProviders();
+    let reply='';
+    for(const prov of avail){try{reply=await callProvider(prov,prompt);break}catch(e){continue}}
+    hideT();
+    if(reply){
+      const rendered=md(reply);
+      const container=document.createElement('div');container.innerHTML=rendered;
+      const mbEl=container.querySelector('.magic-block');
+      if(mbEl){bb.appendChild(mbEl);btn.style.display='none'}
+      else{btn.textContent='⚡ Generate Simulation';btn.disabled=false;addM('ai',reply)}
+    }
+  }catch(e){hideT();btn.textContent='⚡ Generate Simulation';btn.disabled=false;}
+  Z.busy=false;document.getElementById('sb').disabled=false;
+}
+
+function go(){
+  if(Z.busy)return;const i=document.getElementById('inp');const m=i.value.trim();if(!m)return;i.value='';i.style.height='auto';
+  // /sim command
+  if(m.startsWith('/sim ')){const topic=m.slice(5).trim();if(!topic)return;addM('user',m);callAI('Generate an interactive HTML simulation for: '+topic+'. Wrap it in <magic-block title="..."> tags. Include a brief explanation before the magic-block.');return}
+  addM('user',m);if(Z.m==='classroom')callClassroom(m);else callAI(m);
+}
+function ask(topic){const pf={explain:'Explain this clearly with NCERT examples: ',socratic:"Let's explore together: ",quiz:'Quiz me on: ',flashcard:'Create flashcards for: ',examprep:'Complete exam prep for: ',tutor:'I want to learn about: ',classroom:'Teach us about: '};const msg=(pf[Z.m]||'Explain: ')+topic;addM('user',msg);if(Z.m==='classroom')callClassroom(msg);else callAI(msg)}
 function setG(g){Z.g=g;document.querySelectorAll('.gp').forEach(b=>b.classList.toggle('on',(b.textContent==='X'?10:7)===g));Z.h=[];loadAllPDFs();showW()}
 function setS(b){Z.s=b.dataset.s;document.querySelectorAll('.sbb').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('.mb').forEach(x=>x.classList.toggle('on',x.dataset.s===Z.s));Z.h=[];updateKBStat();showW()}
 function mN(b){Z.s=b.dataset.s;document.querySelectorAll('.mb').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('.sbb').forEach(x=>x.classList.toggle('on',x.dataset.s===Z.s));Z.h=[];updateKBStat();showW()}
@@ -601,17 +1064,16 @@ function setMd(b){Z.m=b.dataset.m;document.querySelectorAll('.mt').forEach(x=>x.
 
 function openM(id){
   if(id==='stats'){renderStats();document.getElementById('statsO').classList.add('sh')}
+  else if(id==='scores'){renderScoreHistory();document.getElementById('scoresO').classList.add('sh')}
+  else if(id==='analytics'){renderAnalytics();document.getElementById('analyticsO').classList.add('sh')}
   else document.getElementById(id==='set'?'setO':'kbO').classList.add('sh');
 }
-function closeM(id){document.getElementById(id==='set'?'setO':id==='stats'?'statsO':'kbO').classList.remove('sh')}
+function closeM(id){const m={set:'setO',stats:'statsO',scores:'scoresO',analytics:'analyticsO',kb:'kbO'};document.getElementById(m[id]||'kbO').classList.remove('sh')}
 
 function saveC(){
-  for(const[prov,info]of Object.entries(AI_PROVIDERS)){if(prov!=='ollama')Z[info.stateKey]=document.getElementById(info.keyField).value.trim()}
-  Z.olURL=document.getElementById('olURL').value.trim()||'http://localhost:11434';Z.olModel=document.getElementById('olModel').value.trim()||'llama3.2';
-  Z.n=document.getElementById('nI').value.trim();Z.pref=document.getElementById('prefSel').value;Z.dailyLimit=parseInt(document.getElementById('dlI').value)||50;
+  Z.n=document.getElementById('nI').value.trim();Z.pref=document.getElementById('prefSel').value;
   saveZ();closeM('set');
-  const active=getAvailableProviders();
-  if(active.length)addM('ai',`✨ **All set${Z.n?', '+Z.n:''}!** Connected to: **${active.map(p=>AI_PROVIDERS[p].name).join(' + ')}**\n\nPrimary: **${Z.pref==='auto'?'Auto (smart fallback)':AI_PROVIDERS[Z.pref]?.name||Z.pref}** · Claude limit: **${Z.dailyLimit}/day**\n\n> Pick a topic or type your question. Let's go! 🔥`);
+  addM('ai',`✨ **Settings saved${Z.n?', '+Z.n:''}!** Preferred AI: **${Z.pref==='auto'?'Auto (smart fallback)':AI_PROVIDERS[Z.pref]?.name||Z.pref}**\n\n> Pick a topic or type your question. Let's go!`);
   uXP();
 }
 
@@ -637,13 +1099,21 @@ window.setMd = setMd;
 window.openM = openM;
 window.closeM = closeM;
 window.saveC = saveC;
-window.testOllama = testOllama;
 window.lKB = lKB;
 window.exportStats = exportStats;
 window.clearMemory = clearMemory;
 window.go = go;
 window.ask = ask;
 window.signOut = signOut;
+window.callClassroom = callClassroom;
+window.callProviderWithSys = callProviderWithSys;
+window.genSim = genSim;
+window.toggleMB = toggleMB;
+window.selectQuizAnswer = selectQuizAnswer;
+window.flipCard = flipCard;
+window.markCard = markCard;
+window.renderScoreHistory = renderScoreHistory;
+window.renderAnalytics = renderAnalytics;
 
 initGoogleSignIn();
 </script>
