@@ -778,16 +778,17 @@ async function callAI(userMsg){
       usedAI=AI_PROVIDERS[provider].name;Z.lastAI=provider;
       Z.usage[provider]=(Z.usage[provider]||0)+1;
       break;
-    }catch(err){console.log(`${provider} failed: ${err.message}`);continue}
+    }catch(err){console.warn(`[BrainDrop] ${provider} failed:`,err.message);continue}
   }
   hideT();
+  if(!reply&&tryOrder.length>0){console.error('[BrainDrop] All providers failed. Tried:',tryOrder.join(', '))}
   if(reply){
     Z.h.push({role:'model',text:reply});addM('ai',reply,usedAI);gXP(Z.m==='quiz'?15:10);Z.qc++;
     updateLearningProfile(userMsg,reply);
     logEvent('chat',{subject:Z.s,mode:Z.m,ai:Z.lastAI,grade:Z.g});
     saveZ();
   } else {
-    addM('ai','❌ **All AI engines failed.** All AI engines are busy. Please try again shortly.');
+    addM('ai','❌ **All AI engines are temporarily unavailable.** This usually resolves in a few seconds.\n\n> Tried: '+tryOrder.map(p=>AI_PROVIDERS[p]?.name||p).join(', ')+'\n\nTip: Try again, or switch to a different mode.');
   }
   Z.busy=false;document.getElementById('sb').disabled=false;
 }
