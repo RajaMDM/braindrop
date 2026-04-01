@@ -104,6 +104,15 @@
 .ana-tags{display:flex;flex-wrap:wrap;gap:5px}.ana-tag{font-size:.68rem;padding:3px 9px;border-radius:6px;font-weight:500}.ana-tag.strength{background:rgba(57,255,20,.1);color:var(--ng);border:1px solid rgba(57,255,20,.15)}.ana-tag.weak{background:rgba(255,23,68,.08);color:var(--nr);border:1px solid rgba(255,23,68,.15)}
 .ana-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}.ana-sm{text-align:center;padding:10px;background:var(--bg);border-radius:10px;border:1px solid var(--bd)}.ana-sm .v{font-size:1.4rem;font-weight:700;font-family:'Space Mono',monospace}.ana-sm .l{font-size:.6rem;color:var(--t3);margin-top:3px}
 
+/* Structured Courses */
+.course-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.course-header .ch-title{font-size:1.1rem;font-weight:700;color:var(--t1)}.course-header .ch-pct{font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700}.course-pbar{height:6px;border-radius:3px;background:var(--bg3);margin-bottom:16px;overflow:hidden}.course-pbar .cpf{height:100%;border-radius:3px;background:var(--xp);transition:width .6s ease}
+.course-list{display:flex;flex-direction:column;gap:6px;max-width:640px;margin:0 auto;width:100%}
+.ch-card{background:var(--bg3);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .2s}.ch-card:hover:not(.locked){border-color:rgba(180,74,255,.25);background:var(--bgH)}.ch-card.locked{opacity:.45;cursor:not-allowed}.ch-card.active{border-color:var(--np);background:rgba(180,74,255,.06)}.ch-card.done{border-color:rgba(57,255,20,.2)}
+.ch-card .ch-row{display:flex;align-items:center;gap:10px}.ch-card .ch-num{width:28px;height:28px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;font-family:'Space Mono',monospace;color:var(--t3);flex-shrink:0;border:1px solid var(--bd)}.ch-card.done .ch-num{background:rgba(57,255,20,.1);color:var(--ng);border-color:rgba(57,255,20,.2)}.ch-card.locked .ch-num{background:var(--bg)}.ch-card .ch-info{flex:1;min-width:0}.ch-card .ch-name{font-size:.85rem;font-weight:600;color:var(--t1)}.ch-card.locked .ch-name{color:var(--t3)}.ch-card .ch-meta{font-size:.65rem;color:var(--t3);margin-top:2px;font-family:'Space Mono',monospace}.ch-card .ch-pbar{height:4px;border-radius:2px;background:var(--bg);margin-top:6px;overflow:hidden}.ch-card .ch-pfill{height:100%;border-radius:2px;background:var(--np);transition:width .4s}.ch-card.done .ch-pfill{background:var(--ng)}
+.ch-card .ch-icon{font-size:.9rem;color:var(--t3);flex-shrink:0}
+.lesson-list{padding:8px 0 4px 38px;display:flex;flex-direction:column;gap:4px}.lesson-item{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:7px;font-size:.8rem;color:var(--t2);cursor:pointer;transition:all .15s;background:var(--bg);border:1px solid transparent}.lesson-item:hover{border-color:rgba(180,74,255,.15);color:var(--t1)}.lesson-item .li-check{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:.6rem;flex-shrink:0}.lesson-item.done .li-check{background:var(--ng);border-color:var(--ng);color:#0b0b14}
+.cert-ov{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;animation:fadeIn .4s ease}.cert-box{background:var(--bg3);border:2px solid var(--ny);border-radius:20px;padding:40px;text-align:center;max-width:440px;width:90%;box-shadow:0 0 60px rgba(254,228,64,.2);animation:certPop .5s ease}.cert-box .cert-icon{font-size:4rem;margin-bottom:16px}.cert-box .cert-title{font-size:1.5rem;font-weight:700;background:var(--gg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}.cert-box .cert-sub{color:var(--t2);font-size:.9rem;margin-bottom:20px;line-height:1.6}.cert-box .cert-name{font-size:1.1rem;font-weight:700;color:var(--ny);margin-bottom:4px}.cert-box .cert-date{font-size:.72rem;color:var(--t3);font-family:'Space Mono',monospace}@keyframes certPop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
 .mnv{display:none}
 @media(max-width:768px){.sb{display:none}.top{padding:8px 14px}.bname{font-size:1.1rem}.btag{display:none}.xps{padding:5px 14px;gap:10px;font-size:.68rem}.mds{padding:8px 12px;gap:4px}.mt{padding:7px 11px;font-size:.72rem}.mt .em{font-size:.9rem}.ch{padding:14px}.iz{padding:10px 14px 14px}.ct{padding-bottom:58px}.mnv{display:flex!important;position:fixed;bottom:0;left:0;right:0;background:rgba(18,18,31,.95);backdrop-filter:blur(16px);border-top:1px solid var(--bd);padding:6px 2px;z-index:100;justify-content:space-around}.mb{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;color:var(--t3);font-size:.58rem;padding:4px 6px;border-radius:8px;cursor:pointer;font-family:'Fredoka',sans-serif;font-weight:500}.mb .mi{font-size:1.2rem}.mb.on{color:var(--np)}}
 </style>
@@ -307,7 +316,7 @@ function getClassroomProviders(){
 const Z = {
   g:10, s:'mathematics', m:'explain',
   ck:'PROXY', gk:'PROXY', ok:'PROXY', qk:'PROXY', dk:'PROXY', mk:'PROXY', ol:'', olURL:'http://localhost:11434', olModel:'llama3.2',
-  n:'', pref:'auto', h:[], kb:{}, pdfKB:{}, busy:false, xp:0, str:0, qc:0,
+  n:'', pref:'auto', h:[], kb:{}, pdfKB:{}, busy:false, xp:0, str:0, qc:0, activeChapter:null, _pendingLesson:null,
   usage:{ claude:0, gemini:0, openai:0, groq:0, deepseek:0, mistral:0, ollama:0, date:new Date().toDateString() },
   dailyLimit:50, user:null, lastAI:''
 };
@@ -419,6 +428,8 @@ function updateLearningProfile(userMsg,aiReply){
   const weakPatterns=aiReply.match(/(?:you (?:need to|should|might want to) (?:work on|practice|review|revisit)|(?:weak|struggle|difficulty) (?:in|with))\s+([^.!?\n]+)/gi);
   if(weakPatterns){for(const p of weakPatterns){const area=p.replace(/^.*?(work on|practice|review|revisit|with|in)\s+/i,'').trim();if(area.length>3&&area.length<60&&!mem.profile.weakAreas.includes(area))mem.profile.weakAreas.push(area)}}
   mem.profile.lastStudied=new Date().toLocaleDateString('en-IN');saveMemory(mem);updateMemBadge();
+  // Auto-complete lesson if triggered from course
+  if(Z._pendingLesson){const pl=Z._pendingLesson;Z._pendingLesson=null;completeLesson(pl.chId,pl.lesson);}
 }
 
 function getMemoryContext(){
@@ -471,6 +482,82 @@ function updateKBStat(){
   }
 }
 const T={10:{mathematics:["Real Numbers & Euclid's Division","Polynomials — Zeroes","Linear Equations Pair","Quadratic Equations","Arithmetic Progressions","Triangles & Similarity","Coordinate Geometry","Trigonometry","Circles & Tangents","Surface Areas & Volumes","Statistics","Probability"],science:["Chemical Reactions","Acids, Bases & Salts","Metals & Non-metals","Life Processes","Control & Coordination","Heredity & Evolution","Light — Reflection & Refraction","Electricity & Circuits","Magnetic Effects","Our Environment"],english:["Formal Letter Writing","Reading Comprehension","Tenses & Usage","Direct & Indirect Speech","Active & Passive Voice","Report Writing","Poem Analysis","Story Writing","Question Tags","Essay Writing"],"social-science":["Rise of Nationalism — Europe","Nationalism in India","Resources & Development","Agriculture","Power Sharing","Federalism","Development","Sectors of Economy","Money & Credit","Globalisation"],hindi:["पत्र लेखन","अनुच्छेद लेखन","समास","मुहावरे","संधि विच्छेद","पद परिचय","वाक्य रचना","अलंकार","सूचना लेखन","विज्ञापन लेखन"]},7:{mathematics:["Integers","Fractions & Decimals","Data Handling","Simple Equations","Lines & Angles","Triangles","Perimeter & Area","Rational Numbers","Practical Geometry","Symmetry"],science:["Nutrition in Plants","Nutrition in Animals","Heat & Temperature","Acids & Bases","Physical & Chemical Changes","Weather & Climate","Respiration","Soil Types","Motion & Time","Light & Shadows"],english:["Reading Comprehension","Nouns & Pronouns","Adjectives & Adverbs","Simple Tenses","Prepositions","Conjunctions","Sentence Formation","Paragraph Writing","Story Completion","Letter Writing"],"social-science":["Tracing Changes","New Kings & Kingdoms","Environment","Our Changing Earth","Inside Our Earth","Democracy & Equality","Government & Health","Markets","Ads & Democracy","Gender & Equality"],hindi:["संज्ञा और सर्वनाम","विशेषण","क्रिया","वचन","लिंग","विलोम शब्द","पर्यायवाची","अनेकार्थी शब्द","चित्र वर्णन","अपठित गद्यांश"]}};
+const COURSES={10:{
+mathematics:{name:'Mathematics',chapters:[
+{id:'ch1',title:'Real Numbers',lessons:["Euclid's Division Lemma","Fundamental Theorem of Arithmetic","Irrational Numbers","Decimal Expansions of Rationals"]},
+{id:'ch2',title:'Polynomials',lessons:["Zeroes of a Polynomial","Relationship between Zeroes & Coefficients","Division Algorithm for Polynomials"]},
+{id:'ch3',title:'Pair of Linear Equations',lessons:["Graphical Method","Substitution Method","Elimination Method","Cross-Multiplication Method"]},
+{id:'ch4',title:'Quadratic Equations',lessons:["Standard Form & Solutions","Factorisation Method","Completing the Square","Quadratic Formula & Discriminant"]},
+{id:'ch5',title:'Arithmetic Progressions',lessons:["Introduction to AP","nth Term of AP","Sum of n Terms","Applications of AP"]},
+{id:'ch6',title:'Triangles',lessons:["Similar Figures","Similarity Criteria (AA, SSS, SAS)","Pythagoras Theorem","Areas of Similar Triangles"]},
+{id:'ch7',title:'Coordinate Geometry',lessons:["Distance Formula","Section Formula","Area of a Triangle using Coordinates"]},
+{id:'ch8',title:'Introduction to Trigonometry',lessons:["Trigonometric Ratios","Ratios of Specific Angles","Complementary Angles","Trigonometric Identities"]},
+{id:'ch9',title:'Applications of Trigonometry',lessons:["Heights and Distances","Angle of Elevation","Angle of Depression","Problems with Two Triangles"]},
+{id:'ch10',title:'Circles',lessons:["Tangent to a Circle","Theorems on Tangents","Number of Tangents from a Point"]},
+{id:'ch11',title:'Constructions',lessons:["Division of a Line Segment","Tangent to a Circle Construction","Similar Triangle Construction"]},
+{id:'ch12',title:'Areas Related to Circles',lessons:["Perimeter & Area of Circle","Area of Sector & Segment","Areas of Combinations of Figures"]},
+{id:'ch13',title:'Surface Areas & Volumes',lessons:["Combination of Solids","Volume of Combined Solids","Conversion of Solids","Frustum of a Cone"]},
+{id:'ch14',title:'Statistics',lessons:["Mean of Grouped Data","Mode of Grouped Data","Median of Grouped Data","Ogive Curves"]},
+{id:'ch15',title:'Probability',lessons:["Classical Probability","Complementary Events","Impossible & Sure Events","Problems on Probability"]}
+]},
+science:{name:'Science',chapters:[
+{id:'ch1',title:'Chemical Reactions & Equations',lessons:["Types of Chemical Reactions","Balancing Equations","Oxidation & Reduction","Corrosion & Rancidity"]},
+{id:'ch2',title:'Acids, Bases & Salts',lessons:["Properties of Acids & Bases","pH Scale","Salts & their Properties","Bleaching Powder & Baking Soda"]},
+{id:'ch3',title:'Metals & Non-metals',lessons:["Physical Properties","Chemical Properties","Reactivity Series","Extraction of Metals"]},
+{id:'ch4',title:'Carbon & its Compounds',lessons:["Bonding in Carbon","Homologous Series","Chemical Properties of Carbon Compounds","Soaps & Detergents"]},
+{id:'ch5',title:'Periodic Classification',lessons:["Early Classification","Mendeleev's Table","Modern Periodic Table","Trends in Properties"]},
+{id:'ch6',title:'Life Processes',lessons:["Nutrition","Respiration","Transportation","Excretion"]},
+{id:'ch7',title:'Control & Coordination',lessons:["Nervous System","Reflex Actions","Hormones in Animals","Plant Hormones"]},
+{id:'ch8',title:'How do Organisms Reproduce',lessons:["Asexual Reproduction","Sexual Reproduction in Plants","Sexual Reproduction in Humans","Reproductive Health"]},
+{id:'ch9',title:'Heredity & Evolution',lessons:["Mendel's Laws","Sex Determination","Evolution & Classification","Speciation"]},
+{id:'ch10',title:'Light — Reflection & Refraction',lessons:["Reflection by Mirrors","Mirror Formula","Refraction through Lens","Lens Formula & Power"]},
+{id:'ch11',title:'Human Eye & Colourful World',lessons:["Structure of Eye","Defects of Vision","Refraction through Prism","Scattering of Light"]},
+{id:'ch12',title:'Electricity',lessons:["Electric Current & Circuit","Ohm's Law","Resistance & Resistivity","Power & Energy"]},
+{id:'ch13',title:'Magnetic Effects of Current',lessons:["Magnetic Field Lines","Electromagnet","Fleming's Rules","Electric Motor & Generator"]},
+{id:'ch14',title:'Sources of Energy',lessons:["Conventional Sources","Solar Energy","Nuclear Energy","Environmental Consequences"]},
+{id:'ch15',title:'Our Environment',lessons:["Ecosystem & Components","Food Chains & Webs","Ozone Layer","Waste Management"]},
+{id:'ch16',title:'Sustainable Management',lessons:["Forest & Wildlife","Water Management","Coal & Petroleum","Natural Resource Management"]}
+]},
+english:{name:'English',chapters:[
+{id:'ch1',title:'A Letter to God (First Flight)',lessons:["Summary & Theme","Character Analysis","Important Questions","Vocabulary & Grammar"]},
+{id:'ch2',title:'Nelson Mandela (First Flight)',lessons:["Summary & Theme","Freedom & Apartheid","Important Questions","Comprehension Practice"]},
+{id:'ch3',title:'Two Stories about Flying',lessons:["His First Flight — Summary","Black Aeroplane — Summary","Themes & Morals","Important Questions"]},
+{id:'ch4',title:'From the Diary of Anne Frank',lessons:["Summary & Context","Character of Anne","Important Questions","Diary Writing Practice"]},
+{id:'ch5',title:'The Hundred Dresses',lessons:["Part I Summary","Part II Summary","Themes — Bullying & Empathy","Important Questions"]},
+{id:'ch6',title:'Formal Letter Writing',lessons:["Format & Structure","Complaint Letters","Application Letters","Practice & Common Mistakes"]},
+{id:'ch7',title:'Reading Comprehension',lessons:["Factual Passages","Discursive Passages","Answering Techniques","Practice Passages"]},
+{id:'ch8',title:'Grammar & Usage',lessons:["Tenses Review","Active & Passive Voice","Direct & Indirect Speech","Modals & Determiners"]},
+{id:'ch9',title:'Creative Writing',lessons:["Story Writing","Report Writing","Essay Writing","Paragraph & Article Writing"]},
+{id:'ch10',title:'Poetry Analysis',lessons:["Dust of Snow & Fire and Ice","A Tiger in the Zoo","The Ball Poem","Amanda & Animals"]}
+]},
+'social-science':{name:'Social Science',chapters:[
+{id:'ch1',title:'Rise of Nationalism in Europe',lessons:["French Revolution & Idea of Nation","Unification of Germany","Unification of Italy","Nationalism & Imperialism"]},
+{id:'ch2',title:'Nationalism in India',lessons:["First World War & Nationalism","Non-Cooperation Movement","Civil Disobedience Movement","Sense of Collective Belonging"]},
+{id:'ch3',title:'The Making of a Global World',lessons:["Pre-Modern World","19th Century Globalisation","Inter-War Economy","Post-War Reconstruction"]},
+{id:'ch4',title:'Resources & Development',lessons:["Types of Resources","Resource Planning","Land Resources","Soil Types & Conservation"]},
+{id:'ch5',title:'Agriculture',lessons:["Types of Farming","Cropping Patterns","Food Security","Technological Reforms"]},
+{id:'ch6',title:'Power Sharing',lessons:["Belgium & Sri Lanka","Why Power Sharing","Forms of Power Sharing","Federal & Unitary Government"]},
+{id:'ch7',title:'Federalism',lessons:["What is Federalism","Linguistic States","Decentralisation","Panchayati Raj"]},
+{id:'ch8',title:'Democracy & Diversity',lessons:["Social Differences","Politics of Social Divisions","Democracy & Accommodation"]},
+{id:'ch9',title:'Development',lessons:["What is Development","Income & Other Criteria","Human Development Index","Sustainability"]},
+{id:'ch10',title:'Sectors of the Indian Economy',lessons:["Primary, Secondary, Tertiary","Organised & Unorganised","Public & Private Sector","Employment Trends"]},
+{id:'ch11',title:'Money & Credit',lessons:["Money as Medium of Exchange","Banks & Credit","Terms of Credit","Self-Help Groups"]},
+{id:'ch12',title:'Globalisation',lessons:["What is Globalisation","Factors of Globalisation","WTO & MNCs","Impact on India"]}
+]},
+hindi:{name:'Hindi',chapters:[
+{id:'ch1',title:'सूरदास — पद (क्षितिज)',lessons:["पद का सारांश","भाव व अर्थ","काव्य सौंदर्य","महत्वपूर्ण प्रश्न"]},
+{id:'ch2',title:'तुलसीदास — राम-लक्ष्मण परशुराम संवाद',lessons:["प्रसंग व सारांश","पात्र विश्लेषण","काव्य सौंदर्य","महत्वपूर्ण प्रश्न"]},
+{id:'ch3',title:'बालगोबिन भगत (क्षितिज)',lessons:["कहानी का सारांश","चरित्र चित्रण","भाषा शैली","महत्वपूर्ण प्रश्न"]},
+{id:'ch4',title:'नेताजी का चश्मा (क्षितिज)',lessons:["कहानी का सारांश","देशभक्ति का संदेश","पात्र परिचय","महत्वपूर्ण प्रश्न"]},
+{id:'ch5',title:'पत्र लेखन',lessons:["औपचारिक पत्र","अनौपचारिक पत्र","प्रारूप व भाषा","अभ्यास"]},
+{id:'ch6',title:'अनुच्छेद व निबंध लेखन',lessons:["अनुच्छेद लेखन","विषय चयन","भाषा व शैली","अभ्यास"]},
+{id:'ch7',title:'व्याकरण — समास',lessons:["समास की परिभाषा","समास के प्रकार","समास विग्रह","अभ्यास प्रश्न"]},
+{id:'ch8',title:'व्याकरण — संधि',lessons:["संधि की परिभाषा","स्वर संधि","व्यंजन संधि","विसर्ग संधि"]},
+{id:'ch9',title:'व्याकरण — पद परिचय',lessons:["संज्ञा व सर्वनाम","विशेषण व क्रिया","अव्यय","वाक्य में प्रयोग"]},
+{id:'ch10',title:'सूचना व विज्ञापन लेखन',lessons:["सूचना लेखन प्रारूप","विज्ञापन लेखन","संदेश लेखन","अभ्यास"]}
+]}
+}};
+
 const EP={mathematics:{hot:[{t:"Quadratic Equations",f:"95%",m:"8-10"},{t:"Arithmetic Progressions",f:"100%",m:"8-12"},{t:"Statistics",f:"100%",m:"8-10"},{t:"Triangles",f:"90%",m:"6-8"},{t:"Trig Identities",f:"92%",m:"6-8"},{t:"Surface Areas & Volumes",f:"88%",m:"6-8"}],tr:["Forgetting extraneous roots in quadratics","Mixing AP nth-term vs sum formula","Sign errors in coordinate geometry","Wrong median class in grouped data","Not showing constructions in proofs"]},science:{hot:[{t:"Chemical Reactions",f:"100%",m:"5-8"},{t:"Life Processes",f:"95%",m:"8-10"},{t:"Electricity",f:"100%",m:"8-10"},{t:"Light — Mirror/Lens",f:"92%",m:"6-8"},{t:"Heredity",f:"88%",m:"5-6"},{t:"Magnetic Effects",f:"85%",m:"5-8"}],tr:["Unbalanced equations","Series vs parallel confusion","Sign convention errors","Incomplete ray diagrams","Mixing arteries & veins"]},english:{hot:[{t:"Letter Writing",f:"100%",m:"5"},{t:"Reading Comprehension",f:"100%",m:"10"},{t:"Grammar",f:"100%",m:"4-5"},{t:"Report Writing",f:"85%",m:"5"}],tr:["Wrong letter format","No textual evidence","Tense inconsistency","Passive voice with modals"]},"social-science":{hot:[{t:"Nationalism in India",f:"95%",m:"5-8"},{t:"Federalism",f:"92%",m:"5-6"},{t:"Development & Sectors",f:"90%",m:"5-8"},{t:"Resources",f:"88%",m:"5-6"}],tr:["Confusing dates","No real-world examples","Missing map work","Vague answers"]},hindi:{hot:[{t:"पत्र लेखन",f:"100%",m:"5"},{t:"अनुच्छेद",f:"95%",m:"5"},{t:"व्याकरण",f:"100%",m:"4-5"}],tr:["गलत प्रारूप","विषय से भटकना","समास/संधि भ्रम"]}};
 
 function sysP(){
@@ -737,6 +824,129 @@ async function callProviderWithSys(provider,userMsg,systemPrompt,formattedMsgs){
   }
 }
 
+/* ═══ Structured Courses ═══ */
+function getCourseProgress(){
+  const course=COURSES[Z.g]?.[Z.s];if(!course)return null;
+  const mem=loadMemory();const cp=mem.profile.courseProgress||{};
+  let totalLessons=0,completedLessons=0,chaptersComplete=0;
+  course.chapters.forEach(ch=>{
+    totalLessons+=ch.lessons.length;
+    const prog=cp[ch.id];
+    const done=prog?.completed?.length||0;
+    completedLessons+=done;
+    if(done>=ch.lessons.length)chaptersComplete++;
+  });
+  return{totalLessons,completedLessons,pct:totalLessons?Math.round((completedLessons/totalLessons)*100):0,chaptersComplete,totalChapters:course.chapters.length};
+}
+
+function isChapterUnlocked(course,chIdx){
+  if(chIdx<2)return true;
+  const mem=loadMemory();const cp=mem.profile.courseProgress||{};
+  const prevCh=course.chapters[chIdx-1];
+  const prevProg=cp[prevCh.id];
+  return prevProg&&prevProg.completed&&prevProg.completed.length>=prevCh.lessons.length;
+}
+
+function renderCourseView(){
+  const course=COURSES[Z.g]?.[Z.s];if(!course)return null;
+  const mem=loadMemory();const cp=mem.profile.courseProgress||{};
+  const prog=getCourseProgress();
+  const pctColor=prog.pct>=80?'var(--ng)':prog.pct>=40?'var(--ny)':'var(--np)';
+
+  let html=`<div style="max-width:640px;margin:0 auto;padding:10px 0">
+    <div class="course-header"><span class="ch-title">${course.name} — ${course.chapters.length} Chapters</span><span class="ch-pct" style="color:${pctColor}">${prog.pct}%</span></div>
+    <div class="course-pbar"><div class="cpf" style="width:${prog.pct}%"></div></div>
+    <div class="course-list">`;
+
+  course.chapters.forEach((ch,i)=>{
+    const unlocked=isChapterUnlocked(course,i);
+    const chProg=cp[ch.id];
+    const done=chProg?.completed?.length||0;
+    const total=ch.lessons.length;
+    const isDone=done>=total;
+    const isActive=Z.activeChapter===ch.id;
+    const cls=isDone?'done':!unlocked?'locked':isActive?'active':'';
+    const pct=total?Math.round((done/total)*100):0;
+    const icon=isDone?'✓':!unlocked?'🔒':(i+1);
+
+    html+=`<div class="ch-card ${cls}" onclick="${unlocked?`selectChapter('${ch.id}')`:''}">
+      <div class="ch-row">
+        <div class="ch-num">${icon}</div>
+        <div class="ch-info"><div class="ch-name">${ch.title}</div><div class="ch-meta">${done}/${total} lessons${isDone?' · Complete':''}</div>
+        <div class="ch-pbar"><div class="ch-pfill" style="width:${pct}%"></div></div></div>
+        <div class="ch-icon">${isActive?'▾':'▸'}</div>
+      </div>`;
+
+    if(isActive&&unlocked){
+      html+=`<div class="lesson-list">`;
+      ch.lessons.forEach((lesson,li)=>{
+        const lDone=chProg?.completed?.includes(lesson);
+        html+=`<div class="lesson-item ${lDone?'done':''}" onclick="event.stopPropagation();selectLesson('${ch.id}',${li})"><span class="li-check">${lDone?'✓':''}</span>${lesson}</div>`;
+      });
+      html+=`</div>`;
+    }
+    html+=`</div>`;
+  });
+
+  html+=`</div></div>`;
+  return html;
+}
+
+function selectChapter(chId){
+  Z.activeChapter=Z.activeChapter===chId?null:chId;
+  showW();
+}
+
+function selectLesson(chId,lessonIdx){
+  const course=COURSES[Z.g]?.[Z.s];if(!course)return;
+  const ch=course.chapters.find(c=>c.id===chId);if(!ch)return;
+  const lesson=ch.lessons[lessonIdx];if(!lesson)return;
+  Z._pendingLesson={chId,lesson};
+  ask(lesson);
+}
+
+function completeLesson(chId,lessonName){
+  const mem=loadMemory();
+  if(!mem.profile.courseProgress)mem.profile.courseProgress={};
+  if(!mem.profile.courseProgress[chId])mem.profile.courseProgress[chId]={completed:[],started:new Date().toISOString().split('T')[0],done:false};
+  const cp=mem.profile.courseProgress[chId];
+  if(!cp.completed.includes(lessonName)){
+    cp.completed.push(lessonName);
+    gXP(20);
+  }
+  const course=COURSES[Z.g]?.[Z.s];
+  if(course){
+    const ch=course.chapters.find(c=>c.id===chId);
+    if(ch&&cp.completed.length>=ch.lessons.length&&!cp.done){
+      cp.done=true;
+      gXP(50);
+      const prog=getCourseProgress();
+      if(prog&&prog.chaptersComplete>=prog.totalChapters){
+        gXP(100);
+        saveMemory(mem);
+        setTimeout(()=>showCertificate(Z.s),800);
+        return;
+      }
+    }
+  }
+  saveMemory(mem);
+}
+
+function showCertificate(subject){
+  const sn={mathematics:'Mathematics',science:'Science',english:'English','social-science':'Social Science',hindi:'Hindi'};
+  const name=Z.n||Z.user?.name||'Student';
+  const el=document.createElement('div');el.className='cert-ov';el.onclick=()=>el.remove();
+  el.innerHTML=`<div class="cert-box" onclick="event.stopPropagation()">
+    <div class="cert-icon">🏅</div>
+    <div class="cert-title">Course Completed!</div>
+    <div class="cert-sub">Congratulations on completing all chapters of<br><strong>Grade ${Z.g} ${sn[subject]||subject}</strong></div>
+    <div class="cert-name">${name}</div>
+    <div class="cert-date">${new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})}</div>
+    <button class="bg p" style="margin-top:20px" onclick="this.closest('.cert-ov').remove()">Awesome! 🎉</button>
+  </div>`;
+  document.body.appendChild(el);
+}
+
 /* ═══ Assessment Engine ═══ */
 let _quizState={};
 function buildQuizHTML(questions){
@@ -982,7 +1192,13 @@ function showW(){
   } else {
     aiNote=avail.length>0?`<div style="margin-top:8px;font-size:.7rem;color:var(--t3)">Active: ${avail.map(p=>`<span style="color:${AI_PROVIDERS[p].color}">${AI_PROVIDERS[p].name}</span>`).join(' · ')}</div>`:'';
   }
-  document.getElementById('ch').innerHTML=`<div class="hero"><div class="hchar">${m.i}</div><div class="htit">${m.t}</div><div class="hsub">${m.s}</div><div class="chips">${topics.slice(0,8).map(t=>`<button class="chip" onclick="ask(this.textContent)">${t}</button>`).join('')}</div>${pdfNote}${memNote}${aiNote}</div>`;
+  // Course view: show chapters instead of flat topic chips
+  const courseView=COURSES[Z.g]?.[Z.s]?renderCourseView():null;
+  if(courseView){
+    document.getElementById('ch').innerHTML=`<div class="hero"><div class="hchar">${m.i}</div><div class="htit">${m.t}</div><div class="hsub">${m.s}</div>${courseView}${pdfNote}${memNote}${aiNote}</div>`;
+  } else {
+    document.getElementById('ch').innerHTML=`<div class="hero"><div class="hchar">${m.i}</div><div class="htit">${m.t}</div><div class="hsub">${m.s}</div><div class="chips">${topics.slice(0,8).map(t=>`<button class="chip" onclick="ask(this.textContent)">${t}</button>`).join('')}</div>${pdfNote}${memNote}${aiNote}</div>`;
+  }
   updateMemBadge();
 }
 
@@ -1114,6 +1330,10 @@ window.flipCard = flipCard;
 window.markCard = markCard;
 window.renderScoreHistory = renderScoreHistory;
 window.renderAnalytics = renderAnalytics;
+window.selectChapter = selectChapter;
+window.selectLesson = selectLesson;
+window.completeLesson = completeLesson;
+window.showCertificate = showCertificate;
 
 initGoogleSignIn();
 </script>
