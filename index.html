@@ -463,15 +463,93 @@ try {
 } catch(err) { console.log('PDF loader unavailable'); }
 
 async function loadPDF(path){try{const pdf=await pdfjsLib.getDocument(path).promise;let text='';for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i);const content=await page.getTextContent();text+=content.items.map(item=>item.str).join(' ')+'\n\n'}return text}catch(e){return null}}
-async function loadAllPDFs(){const el=document.getElementById('kbs');el.textContent='Loading PDFs...';el.className='kbcv load';let loaded=0,total=0;const books=BOOKS[Z.g]||{};for(const[sub,path]of Object.entries(books)){total++;const text=await loadPDF(path);if(text&&text.trim().length>100){Z.pdfKB[`${Z.g}_${sub}`]=text;loaded++}}updateKBStat();if(loaded>0)console.log(`Loaded ${loaded}/${total} PDFs`)}
-function getKBForCurrentSubject(){const p=Z.pdfKB[`${Z.g}_${Z.s}`]||'';const e=Z.kb[Z.s]||'';let c='';if(p)c+=p.substring(0,50000);if(e)c+='\n\nADDITIONAL REFERENCE:\n'+e.substring(0,15000);return c}
+async function loadAllPDFs(){const el=document.getElementById('kbs');el.textContent='Loading PDFs...';el.className='kbcv load';let loaded=0,total=0;const books=BOOKS[Z.g]||{};for(const[sub,path]of Object.entries(books)){total++;const text=await loadPDF(path);if(text&&text.trim().length>100){Z.pdfKB[`${Z.g}_${sub}`]=text;loaded++}}updateKBStat();if(loaded>0){console.log(`Loaded ${loaded}/${total} PDFs`);buildChunkIndex()}}
+
+/* ═══ RAG Pipeline — Client-Side Retrieval ═══ */
+const _ragIndex={};
+
+function chunkText(text,chunkSize=500,overlap=100){
+  const chunks=[];const sentences=text.split(/(?<=[.!?।\n])\s+/);
+  let current='';
+  for(const s of sentences){
+    if((current+' '+s).length>chunkSize&&current.length>0){
+      chunks.push(current.trim());
+      const words=current.split(' ');
+      current=words.slice(-Math.floor(overlap/6)).join(' ')+' '+s;
+    } else {current+=(current?' ':'')+s;}
+  }
+  if(current.trim())chunks.push(current.trim());
+  return chunks;
+}
+
+function tokenize(text){
+  return text.toLowerCase().replace(/[^\w\s]/g,' ').split(/\s+/).filter(w=>w.length>2);
+}
+
+function buildChunkIndex(){
+  const key=`${Z.g}_${Z.s}`;const text=Z.pdfKB[key];
+  if(!text||_ragIndex[key])return;
+  const chunks=chunkText(text,500,100);
+  const df={};const chunkTokens=[];
+  chunks.forEach((chunk,i)=>{
+    const tokens=tokenize(chunk);const unique=new Set(tokens);
+    chunkTokens.push({text:chunk,tokens,tf:{}});
+    unique.forEach(t=>{df[t]=(df[t]||0)+1});
+    tokens.forEach(t=>{chunkTokens[i].tf[t]=(chunkTokens[i].tf[t]||0)+1});
+  });
+  const n=chunks.length;const idf={};
+  Object.keys(df).forEach(t=>{idf[t]=Math.log((n+1)/(df[t]+1))+1});
+  _ragIndex[key]={chunks:chunkTokens,idf,total:n};
+  console.log(`RAG index: ${n} chunks for ${key}`);
+}
+
+function ragSearch(query,topK=5){
+  const key=`${Z.g}_${Z.s}`;const idx=_ragIndex[key];
+  if(!idx||idx.total===0)return null;
+  const qTokens=tokenize(query);
+  const scores=idx.chunks.map((chunk,i)=>{
+    let score=0;
+    qTokens.forEach(qt=>{
+      const tf=chunk.tf[qt]||0;
+      const idf=idx.idf[qt]||0;
+      score+=tf*idf;
+    });
+    return{idx:i,score,text:chunk.text};
+  });
+  scores.sort((a,b)=>b.score-a.score);
+  const results=scores.slice(0,topK).filter(s=>s.score>0);
+  return results.length>0?results:null;
+}
+
+function getKBForCurrentSubject(query){
+  // Build index for current subject if not ready
+  const key=`${Z.g}_${Z.s}`;
+  if(Z.pdfKB[key]&&!_ragIndex[key])buildChunkIndex();
+
+  // RAG: retrieve relevant chunks instead of dumping entire PDF
+  if(query&&_ragIndex[key]){
+    const results=ragSearch(query,5);
+    if(results){
+      const ragText=results.map((r,i)=>`[Chunk ${i+1}, relevance: ${r.score.toFixed(1)}]\n${r.text}`).join('\n\n');
+      const extra=Z.kb[Z.s]||'';
+      let c='[RAG-RETRIEVED — Top '+results.length+' relevant sections from NCERT]\n\n'+ragText;
+      if(extra)c+='\n\nADDITIONAL REFERENCE:\n'+extra.substring(0,8000);
+      return c;
+    }
+  }
+  // Fallback: return truncated full text if no RAG results
+  const p=Z.pdfKB[key]||'';const e=Z.kb[Z.s]||'';
+  let c='';if(p)c+=p.substring(0,30000);if(e)c+='\n\nADDITIONAL REFERENCE:\n'+e.substring(0,10000);return c;
+}
 function updateKBStat(){
   const el=document.getElementById('kbs');
   // Logic: If R2_URL exists and is a cloud link, it's active
   const isCloudActive = typeof R2_URL !== 'undefined' && R2_URL.includes('r2.dev');
   
   if(isCloudActive){
-    el.textContent = '✓ Cloud Library Active';
+    const ragKey=`${Z.g}_${Z.s}`;
+    const ragReady=!!_ragIndex[ragKey];
+    el.textContent = ragReady?'✓ RAG Search Active':'✓ Cloud Library Active';
     el.className = 'kbcv ok';
     // Remove the "Add PDFs to /books/" prompt from the UI
     const promptBox = document.querySelector('.pdfstat');
@@ -561,7 +639,7 @@ hindi:{name:'Hindi',chapters:[
 const EP={mathematics:{hot:[{t:"Quadratic Equations",f:"95%",m:"8-10"},{t:"Arithmetic Progressions",f:"100%",m:"8-12"},{t:"Statistics",f:"100%",m:"8-10"},{t:"Triangles",f:"90%",m:"6-8"},{t:"Trig Identities",f:"92%",m:"6-8"},{t:"Surface Areas & Volumes",f:"88%",m:"6-8"}],tr:["Forgetting extraneous roots in quadratics","Mixing AP nth-term vs sum formula","Sign errors in coordinate geometry","Wrong median class in grouped data","Not showing constructions in proofs"]},science:{hot:[{t:"Chemical Reactions",f:"100%",m:"5-8"},{t:"Life Processes",f:"95%",m:"8-10"},{t:"Electricity",f:"100%",m:"8-10"},{t:"Light — Mirror/Lens",f:"92%",m:"6-8"},{t:"Heredity",f:"88%",m:"5-6"},{t:"Magnetic Effects",f:"85%",m:"5-8"}],tr:["Unbalanced equations","Series vs parallel confusion","Sign convention errors","Incomplete ray diagrams","Mixing arteries & veins"]},english:{hot:[{t:"Letter Writing",f:"100%",m:"5"},{t:"Reading Comprehension",f:"100%",m:"10"},{t:"Grammar",f:"100%",m:"4-5"},{t:"Report Writing",f:"85%",m:"5"}],tr:["Wrong letter format","No textual evidence","Tense inconsistency","Passive voice with modals"]},"social-science":{hot:[{t:"Nationalism in India",f:"95%",m:"5-8"},{t:"Federalism",f:"92%",m:"5-6"},{t:"Development & Sectors",f:"90%",m:"5-8"},{t:"Resources",f:"88%",m:"5-6"}],tr:["Confusing dates","No real-world examples","Missing map work","Vague answers"]},hindi:{hot:[{t:"पत्र लेखन",f:"100%",m:"5"},{t:"अनुच्छेद",f:"95%",m:"5"},{t:"व्याकरण",f:"100%",m:"4-5"}],tr:["गलत प्रारूप","विषय से भटकना","समास/संधि भ्रम"]}};
 
 function sysP(){
-  const nm=Z.n?` Student's name: ${Z.n}.`:'';const kbc=getKBForCurrentSubject();
+  const nm=Z.n?` Student's name: ${Z.n}.`:'';const kbc=getKBForCurrentSubject(Z._ragQuery||'');
   const kbi=kbc?`\n\nKNOWLEDGE BASE (NCERT — PRIMARY source):\n---\n${kbc.substring(0,45000)}\n---`:'';
   const sn={mathematics:'Mathematics',science:'Science',english:'English','social-science':'Social Science',hindi:'Hindi'};
   const ep=EP[Z.s];const epb=(Z.g===10&&ep)?`\n\nEXAM PATTERNS (2015-2024):\nHigh-freq: ${ep.hot.map(h=>`${h.t} (${h.f}, ${h.m} marks)`).join('; ')}.\nTraps: ${ep.tr.join('; ')}.`:'';
@@ -599,7 +677,7 @@ Do NOT always include a magic-block — only when visualization genuinely helps 
 }
 
 function classroomSysP(agentRole){
-  const nm=Z.n||'Student';const kbc=getKBForCurrentSubject();
+  const nm=Z.n||'Student';const kbc=getKBForCurrentSubject(Z._ragQuery||'');
   const kbi=kbc?`\n\nKNOWLEDGE BASE (NCERT — PRIMARY source):\n---\n${kbc.substring(0,35000)}\n---`:'';
   const sn={mathematics:'Mathematics',science:'Science',english:'English','social-science':'Social Science',hindi:'Hindi'};
   const ep=EP[Z.s];const epb=(Z.g===10&&ep)?`\n\nEXAM PATTERNS (2015-2024):\nHigh-freq: ${ep.hot.map(h=>`${h.t} (${h.f}, ${h.m} marks)`).join('; ')}.\nTraps: ${ep.tr.join('; ')}.`:'';
@@ -685,7 +763,7 @@ async function callAI(userMsg){
   const avail=getAvailableProviders();
   if(avail.length===0){addM('ai','⚙️ **Oops!** AI engines are temporarily unavailable. Please try again in a moment.');return}
 
-  Z.h.push({role:'user',text:userMsg});showT();Z.busy=true;document.getElementById('sb').disabled=true;
+  Z.h.push({role:'user',text:userMsg});Z._ragQuery=userMsg;showT();Z.busy=true;document.getElementById('sb').disabled=true;
   let reply='',usedAI='';
   let tryOrder=[];
   if(Z.pref!=='auto'&&avail.includes(Z.pref))tryOrder=[Z.pref,...avail.filter(p=>p!==Z.pref)];
@@ -719,7 +797,7 @@ async function callClassroom(userMsg){
   if(!provs.teacher){addM('ai','⚙️ **Hey!** AI engines are not available right now. Please try again shortly.');return}
   if(Z.usage.date!==new Date().toDateString())Z.usage={claude:0,gemini:0,openai:0,groq:0,deepseek:0,mistral:0,ollama:0,date:new Date().toDateString()};
 
-  Z.h.push({role:'user',text:userMsg,agent:'student'});
+  Z.h.push({role:'user',text:userMsg,agent:'student'});Z._ragQuery=userMsg;
   showT('teacher');Z.busy=true;document.getElementById('sb').disabled=true;
 
   // Teacher responds
@@ -1172,7 +1250,8 @@ function showW(){
   const md_={explain:{i:'📖',t:'Ready to learn?',s:"Pick a topic — I'll break it down with examples & memory hacks!"},socratic:{i:'🧠',t:"Let's think together!",s:"I won't give answers — I'll guide you to discover them!"},quiz:{i:'🎮',t:'Quiz Time!',s:'5 MCQs per round with auto-grading. Pick a topic to start!'},flashcard:{i:'🃏',t:'Flashcard Deck',s:'Flip through cards to master key concepts. Pick a topic!'},examprep:{i:'🎯',t:'Exam mode: ON',s:"10 years of boards, common traps & cheat sheets."},tutor:{i:'🤖',t:'Your AI tutor is here!',s:'Ask anything. No judgement, just knowledge.'},classroom:{i:'🏫',t:'Welcome to your Classroom!',s:'Ms. Sharma is your teacher. Arjun is your classmate. Pick a topic to start the lesson!'}};
   const m=md_[Z.m]||md_.explain;
   const pdfLoaded=!!Z.pdfKB[`${Z.g}_${Z.s}`];
-  const pdfNote=pdfLoaded?`<div class="pdfstat">📚 NCERT loaded (${Math.round(Z.pdfKB[Z.g+'_'+Z.s].length/1000)}K chars) · Textbook-grounded answers</div>`:`<div class="pdfstat">💡 Add NCERT PDFs to <code>/books/</code> for textbook-accurate answers</div>`;
+  const ragKey=`${Z.g}_${Z.s}`;const ragReady=!!_ragIndex[ragKey];
+  const pdfNote=pdfLoaded?`<div class="pdfstat">${ragReady?'🔍 RAG Search Active':'📚 NCERT loaded'} (${ragReady?_ragIndex[ragKey].total+' chunks':Math.round(Z.pdfKB[ragKey].length/1000)+'K chars'}) · Textbook-grounded answers</div>`:`<div class="pdfstat">💡 NCERT PDFs loading from cloud...</div>`;
   const mem=loadMemory();const memEx=Math.floor(mem.history.length/2);
   const memNote=memEx>0?`<div class="memstat">🧠 I remember ${memEx} past chats · ${mem.profile.topicsCovered.length} topics covered${mem.profile.weakAreas.length>0?' · Focus: '+mem.profile.weakAreas.slice(-3).join(', '):''}</div>`:`<div class="memstat">🧠 New session — I'll start remembering your progress!</div>`;
   const avail=getAvailableProviders();
@@ -1274,8 +1353,8 @@ function go(){
 }
 function ask(topic){const pf={explain:'Explain this clearly with NCERT examples: ',socratic:"Let's explore together: ",quiz:'Quiz me on: ',flashcard:'Create flashcards for: ',examprep:'Complete exam prep for: ',tutor:'I want to learn about: ',classroom:'Teach us about: '};const msg=(pf[Z.m]||'Explain: ')+topic;addM('user',msg);if(Z.m==='classroom')callClassroom(msg);else callAI(msg)}
 function setG(g){Z.g=g;document.querySelectorAll('.gp').forEach(b=>b.classList.toggle('on',(b.textContent==='X'?10:7)===g));Z.h=[];loadAllPDFs();showW()}
-function setS(b){Z.s=b.dataset.s;document.querySelectorAll('.sbb').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('.mb').forEach(x=>x.classList.toggle('on',x.dataset.s===Z.s));Z.h=[];updateKBStat();showW()}
-function mN(b){Z.s=b.dataset.s;document.querySelectorAll('.mb').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('.sbb').forEach(x=>x.classList.toggle('on',x.dataset.s===Z.s));Z.h=[];updateKBStat();showW()}
+function setS(b){Z.s=b.dataset.s;Z.activeChapter=null;document.querySelectorAll('.sbb').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('.mb').forEach(x=>x.classList.toggle('on',x.dataset.s===Z.s));Z.h=[];buildChunkIndex();updateKBStat();showW()}
+function mN(b){Z.s=b.dataset.s;Z.activeChapter=null;document.querySelectorAll('.mb').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('.sbb').forEach(x=>x.classList.toggle('on',x.dataset.s===Z.s));Z.h=[];buildChunkIndex();updateKBStat();showW()}
 function setMd(b){Z.m=b.dataset.m;document.querySelectorAll('.mt').forEach(x=>x.classList.remove('on'));b.classList.add('on');Z.h=[];showW()}
 
 function openM(id){
