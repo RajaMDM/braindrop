@@ -68,6 +68,14 @@ const PROVIDERS = {
       'Authorization': `Bearer ${key}`,
     }),
   },
+  '/nvidia': {
+    url: 'https://integrate.api.nvidia.com/v1/chat/completions',
+    keyEnv: 'NVIDIA_API_KEY',
+    headers: (key) => ({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${key}`,
+    }),
+  },
   '/mistral': {
     url: 'https://api.mistral.ai/v1/chat/completions',
     keyEnv: 'MISTRAL_API_KEY',

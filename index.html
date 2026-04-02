@@ -186,7 +186,7 @@
     <div class="kbct">Knowledge Base</div>
     <div class="kbcv no" id="kbs">Loading PDFs...</div>
     <div class="aibadge">
-      <span class="aib cl">Claude</span><span class="aib gm">Gemini</span><span class="aib gpt">GPT</span><span class="aib gq">Groq</span><span class="aib ds">DeepSeek</span><span class="aib ms">Mistral</span><span class="aib" style="background:rgba(139,92,246,.12);color:#8b5cf6">Ollama</span>
+      <span class="aib cl">Claude</span><span class="aib gm">Gemini</span><span class="aib" style="background:rgba(118,185,0,.12);color:#76b900">NVIDIA</span><span class="aib gpt">GPT</span><span class="aib gq">Groq</span><span class="aib ds">DeepSeek</span><span class="aib ms">Mistral</span>
     </div>
     <div class="membadge" id="memBadge">🧠 Memory: loading...</div>
   </div>
@@ -226,7 +226,7 @@
   <p style="color:var(--t2);font-size:.8rem;margin-bottom:14px">Customize your BrainDrop experience. All AI engines are ready to go — no setup needed!</p>
 
   <div style="padding:12px;background:rgba(57,255,20,.06);border:1px solid rgba(57,255,20,.15);border-radius:10px;margin-bottom:16px;font-size:.78rem;color:var(--ng);display:flex;align-items:center;gap:8px">
-    <span style="font-size:1.2rem">✓</span> <span>6 AI engines active — Claude, Gemini, GPT, Groq, DeepSeek, Mistral</span>
+    <span style="font-size:1.2rem">✓</span> <span>7 AI engines active — Claude, Gemini, NVIDIA, GPT, Groq, DeepSeek, Mistral</span>
   </div>
 
   <div class="fg"><label class="fl">Your Name</label><input type="text" class="fi" id="nI" placeholder="What should I call you?"></div>
@@ -239,6 +239,7 @@
       <option value="groq">🟠 Groq (ultra-fast)</option>
       <option value="deepseek">🔵 DeepSeek (great at maths)</option>
       <option value="mistral">🔴 Mistral (strong Hindi)</option>
+      <option value="nvidia">🟢 NVIDIA (Llama 3.3 70B)</option>
     </select>
     <div class="fh">Auto mode picks the best available engine. Switch manually if you prefer a specific AI.</div>
   </div>
@@ -294,9 +295,10 @@ const AI_PROVIDERS = {
   groq:     { name:'Groq',     color:'#ff6d00', model:'llama-3.3-70b-versatile',   keyField:'qkI', stateKey:'qk' },
   deepseek: { name:'DeepSeek', color:'#4cc9f0', model:'deepseek-chat',             keyField:'dkI', stateKey:'dk' },
   mistral:  { name:'Mistral',  color:'#ff1744', model:'mistral-small-latest',      keyField:'mkI', stateKey:'mk' },
+  nvidia:   { name:'NVIDIA',   color:'#76b900', model:'meta/llama-3.3-70b-instruct', keyField:'nvI', stateKey:'nv' },
   ollama:   { name:'Ollama',   color:'#8b5cf6', model:'llama3.2',                  keyField:'olURL', stateKey:'ol' }
 };
-const PROVIDER_ORDER = ['claude','gemini','openai','groq','deepseek','mistral','ollama'];
+const PROVIDER_ORDER = ['claude','gemini','nvidia','groq','openai','deepseek','mistral','ollama'];
 
 const CLASSROOM_AGENTS = {
   teacher: { name:'Ms. Sharma', role:'teacher', emoji:'\u{1F469}\u200D\u{1F3EB}', color:'#b44aff', personality:'Patient, methodical, uses NCERT examples, connects to real life' },
@@ -315,7 +317,7 @@ function getClassroomProviders(){
 
 const Z = {
   g:10, s:'mathematics', m:'explain',
-  ck:'PROXY', gk:'PROXY', ok:'PROXY', qk:'PROXY', dk:'PROXY', mk:'PROXY', ol:'', olURL:'http://localhost:11434', olModel:'llama3.2',
+  ck:'PROXY', gk:'PROXY', ok:'PROXY', qk:'PROXY', dk:'PROXY', mk:'PROXY', nv:'PROXY', ol:'', olURL:'http://localhost:11434', olModel:'llama3.2',
   n:'', pref:'auto', h:[], kb:{}, pdfKB:{}, busy:false, xp:0, str:0, qc:0, activeChapter:null, _pendingLesson:null,
   usage:{ claude:0, gemini:0, openai:0, groq:0, deepseek:0, mistral:0, ollama:0, date:new Date().toDateString() },
   dailyLimit:50, user:null, lastAI:''
@@ -323,8 +325,8 @@ const Z = {
 
 try {
   const sv = JSON.parse(localStorage.getItem('bd2')||'{}');
-  Object.assign(Z,{ck:sv.ck||'PROXY',gk:sv.gk||'PROXY',ok:sv.ok||'PROXY',qk:sv.qk||'PROXY',dk:sv.dk||'PROXY',mk:sv.mk||'PROXY',ol:sv.ol||'',olURL:sv.olURL||'http://localhost:11434',olModel:sv.olModel||'llama3.2',n:sv.n||'',pref:sv.pref||'auto',xp:sv.xp||0,str:sv.str||0,qc:sv.qc||0,dailyLimit:sv.dailyLimit||50});
-  if(sv.usage){if(sv.usage.date===new Date().toDateString())Z.usage=sv.usage;else Z.usage={claude:0,gemini:0,openai:0,groq:0,deepseek:0,mistral:0,date:new Date().toDateString()};}
+  Object.assign(Z,{ck:sv.ck||'PROXY',gk:sv.gk||'PROXY',ok:sv.ok||'PROXY',qk:sv.qk||'PROXY',dk:sv.dk||'PROXY',mk:sv.mk||'PROXY',nv:sv.nv||'PROXY',ol:sv.ol||'',olURL:sv.olURL||'http://localhost:11434',olModel:sv.olModel||'llama3.2',n:sv.n||'',pref:sv.pref||'auto',xp:sv.xp||0,str:sv.str||0,qc:sv.qc||0,dailyLimit:sv.dailyLimit||50});
+  if(sv.usage){if(sv.usage.date===new Date().toDateString())Z.usage=sv.usage;else Z.usage={claude:0,gemini:0,nvidia:0,openai:0,groq:0,deepseek:0,mistral:0,date:new Date().toDateString()};}
 } catch(e){}
 
 function logEvent(type, data) {
@@ -748,6 +750,11 @@ async function callProvider(provider, userMsg){
       const res=await fetch('https://braindrop-ai-proxy.raja-cloudmdm.workers.dev/mistral',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({model:'mistral-small-latest',max_tokens:4096,messages})});
       const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
     }
+    case 'nvidia': {
+      const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch('https://braindrop-ai-proxy.raja-cloudmdm.workers.dev/nvidia',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({model:'meta/llama-3.3-70b-instruct',max_tokens:4096,temperature:0.2,top_p:0.7,messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
+    }
     case 'ollama': {
       const messages=[{role:'system',content:sysP()},...msgs.map(m=>({role:m.role==='model'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
       const res=await fetch(`${Z.olURL}/v1/chat/completions`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:Z.olModel,messages,stream:false})});
@@ -759,7 +766,7 @@ async function callProvider(provider, userMsg){
 function getAvailableProviders(){return PROVIDER_ORDER.filter(p=>!!Z[AI_PROVIDERS[p].stateKey])}
 
 async function callAI(userMsg){
-  if(Z.usage.date!==new Date().toDateString())Z.usage={claude:0,gemini:0,openai:0,groq:0,deepseek:0,mistral:0,ollama:0,date:new Date().toDateString()};
+  if(Z.usage.date!==new Date().toDateString())Z.usage={claude:0,gemini:0,nvidia:0,openai:0,groq:0,deepseek:0,mistral:0,ollama:0,date:new Date().toDateString()};
   const avail=getAvailableProviders();
   if(avail.length===0){addM('ai','⚙️ **Oops!** AI engines are temporarily unavailable. Please try again in a moment.');return}
 
@@ -796,7 +803,7 @@ async function callAI(userMsg){
 async function callClassroom(userMsg){
   const provs=getClassroomProviders();
   if(!provs.teacher){addM('ai','⚙️ **Hey!** AI engines are not available right now. Please try again shortly.');return}
-  if(Z.usage.date!==new Date().toDateString())Z.usage={claude:0,gemini:0,openai:0,groq:0,deepseek:0,mistral:0,ollama:0,date:new Date().toDateString()};
+  if(Z.usage.date!==new Date().toDateString())Z.usage={claude:0,gemini:0,nvidia:0,openai:0,groq:0,deepseek:0,mistral:0,ollama:0,date:new Date().toDateString()};
 
   Z.h.push({role:'user',text:userMsg,agent:'student'});Z._ragQuery=userMsg;
   showT('teacher');Z.busy=true;document.getElementById('sb').disabled=true;
@@ -893,6 +900,11 @@ async function callProviderWithSys(provider,userMsg,systemPrompt,formattedMsgs){
     case 'mistral': {
       const messages=[{role:'system',content:systemPrompt},...msgs.map(m=>({role:m.role==='assistant'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
       const res=await fetch('https://braindrop-ai-proxy.raja-cloudmdm.workers.dev/mistral',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({model:'mistral-small-latest',max_tokens:4096,messages})});
+      const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
+    }
+    case 'nvidia': {
+      const messages=[{role:'system',content:systemPrompt},...msgs.map(m=>({role:m.role==='assistant'?'assistant':'user',content:m.text})),{role:'user',content:userMsg}];
+      const res=await fetch('https://braindrop-ai-proxy.raja-cloudmdm.workers.dev/nvidia',{method:'POST',headers:{'Content-Type':'application/json','X-User-Email':localStorage.getItem('userEmail')},body:JSON.stringify({model:'meta/llama-3.3-70b-instruct',max_tokens:4096,temperature:0.2,top_p:0.7,messages})});
       const data=await res.json();if(data.error)throw new Error(data.error.message);return data.choices?.[0]?.message?.content||'No response';
     }
     case 'ollama': {
