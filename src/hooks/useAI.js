@@ -162,18 +162,9 @@ export function useAI() {
       let reply = '';
       let usedAI = '';
 
-      // For quiz/flashcard modes, inject format reminder directly into the user message
-      // so the AI sees it in the conversation, not just in system instructions (Gemini ignores system_instruction for structured output)
-      let enhancedMsg = userMsg;
-      if (mode === 'quiz') {
-        enhancedMsg = userMsg + '\n\n[IMPORTANT: Respond with a <quiz-data> JSON block containing exactly 5 MCQ questions. Format: <quiz-data>[{"q":"...","options":["A)...","B)...","C)...","D)..."],"answer":0,"explanation":"...","difficulty":"easy","topic":"..."}]</quiz-data>]';
-      } else if (mode === 'flashcard') {
-        enhancedMsg = userMsg + '\n\n[IMPORTANT: Respond with a <flashcard-data> JSON block containing 8-10 flashcards. Format: <flashcard-data>[{"front":"...","back":"...","topic":"..."}]</flashcard-data>]';
-      }
-
       for (const provider of tryOrder) {
         try {
-          reply = await callProvider(provider, enhancedMsg, systemPrompt, history);
+          reply = await callProvider(provider, userMsg, systemPrompt, history);
           usedAI = AI_PROVIDERS[provider].name;
           lastAIRef.current = provider;
           usage[provider] = (usage[provider] || 0) + 1;
@@ -183,6 +174,44 @@ export function useAI() {
           console.warn(`[BrainDrop] ${provider} failed:`, err.message);
           continue;
         }
+      }
+
+      // Two-step conversion: if quiz/flashcard mode got plain text (no tags),
+      // make a second focused call to convert the content into structured JSON.
+      if (reply && mode === 'quiz' && !reply.includes('<quiz-data>') && !reply.includes('"q"') && !reply.includes('"question"')) {
+        try {
+          const convertPrompt = `Convert the following quiz content into EXACT JSON format. Output ONLY the JSON, nothing else.
+
+Content to convert:
+${reply.substring(0, 2000)}
+
+Output this EXACT format (valid JSON array):
+<quiz-data>
+[{"q":"Question text here?","options":["A) option1","B) option2","C) option3","D) option4"],"answer":0,"explanation":"Why correct","difficulty":"medium","topic":"${subject}"}]
+</quiz-data>`;
+          const converted = await callProviderWithSys('claude', convertPrompt, 'You are a JSON formatter. Output ONLY the requested JSON wrapped in <quiz-data> tags. No other text.', []);
+          if (converted && converted.includes('<quiz-data>')) {
+            reply = converted;
+          }
+        } catch (e) { console.warn('[BrainDrop] Quiz conversion failed:', e.message); }
+      }
+
+      if (reply && mode === 'flashcard' && !reply.includes('<flashcard-data>') && !reply.includes('"front"')) {
+        try {
+          const convertPrompt = `Convert the following flashcard content into EXACT JSON format. Output ONLY the JSON, nothing else.
+
+Content to convert:
+${reply.substring(0, 2000)}
+
+Output this EXACT format (valid JSON array):
+<flashcard-data>
+[{"front":"Question or term","back":"Answer or definition","topic":"${subject}"}]
+</flashcard-data>`;
+          const converted = await callProviderWithSys('claude', convertPrompt, 'You are a JSON formatter. Output ONLY the requested JSON wrapped in <flashcard-data> tags. No other text.', []);
+          if (converted && converted.includes('<flashcard-data>')) {
+            reply = converted;
+          }
+        } catch (e) { console.warn('[BrainDrop] Flashcard conversion failed:', e.message); }
       }
 
       if (reply) {
