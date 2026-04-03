@@ -131,16 +131,26 @@ export function useAI() {
         text: m.text,
       }));
 
-      // Determine try order (preferred first, then fallback)
+      // Determine try order
       let tryOrder = [];
-      if (preferences.pref !== 'auto' && avail.includes(preferences.pref)) {
+
+      // Quiz and Flashcard modes REQUIRE structured JSON output.
+      // Free models (NVIDIA, Groq, Gemini) are unreliable at generating JSON.
+      // Force Claude first for these modes — it follows instructions precisely.
+      if (mode === 'quiz' || mode === 'flashcard') {
+        if (avail.includes('claude')) {
+          tryOrder = ['claude', ...avail.filter(p => p !== 'claude')];
+        } else {
+          tryOrder = [...avail];
+        }
+      } else if (preferences.pref !== 'auto' && avail.includes(preferences.pref)) {
         tryOrder = [preferences.pref, ...avail.filter((p) => p !== preferences.pref)];
       } else {
         tryOrder = [...avail];
       }
 
-      // Rate-limit Claude
-      if (usage.claude >= DAILY_LIMIT) {
+      // Rate-limit Claude (but NOT for quiz/flashcard — those need it)
+      if (mode !== 'quiz' && mode !== 'flashcard' && usage.claude >= DAILY_LIMIT) {
         tryOrder = tryOrder.filter((p) => p !== 'claude').concat(
           tryOrder.includes('claude') ? ['claude'] : []
         );
