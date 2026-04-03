@@ -7,7 +7,7 @@ import LessonItem from './LessonItem.jsx';
 export default function ChapterCard({ chapter, index, unlocked }) {
   const { activeChapter } = useApp();
   const { selectChapter, completeLesson, selectLesson, getCourse } = useCourseProgress();
-  const { showCertificate } = useApp();
+  const { triggerCertificate } = useApp();
   const { loadMemory } = useMemory();
 
   const isActive = activeChapter === chapter.id;
@@ -32,7 +32,7 @@ export default function ChapterCard({ chapter, index, unlocked }) {
     // Complete the lesson and check for certificate
     const certSubject = completeLesson(chapter.id, lesson.lesson);
     if (certSubject) {
-      showCertificate(certSubject);
+      triggerCertificate(certSubject);
     }
   };
 

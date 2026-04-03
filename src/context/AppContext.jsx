@@ -176,7 +176,7 @@ export function AppProvider({ children }) {
     () => dispatch({ type: CLOSE_MODAL }),
     []
   );
-  const showCertificate = useCallback(
+  const triggerCertificate = useCallback(
     (subject) => dispatch({ type: SHOW_CERTIFICATE, payload: subject }),
     []
   );
@@ -204,7 +204,7 @@ export function AppProvider({ children }) {
     setBusy,
     openModal,
     closeModal,
-    showCertificate,
+    triggerCertificate,
     hideCertificate,
     setActiveChapter,
     setPreferences,
