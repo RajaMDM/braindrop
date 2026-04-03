@@ -99,7 +99,10 @@ UX Rules for MagicBlocks:
 - Responsive: use max-width, flex-wrap, and percentage widths
 - Touch-friendly: buttons min 44px tall, sliders wide and easy to grab
 - Use the gradient button style (pink to purple) for actions
-- Canvas should be at least 300px wide for graphs
+- Canvas: use width 100% and max-width 480px. Set height explicitly (e.g. 250px for graphs, 200px for simple visuals). NEVER leave canvas height unset — it creates huge blank space.
+- COMPACT layout: put controls DIRECTLY below the canvas/visualization, not at the bottom of the page. No large gaps. Everything should fit in ~450px total height.
+- Order: Title → Subtitle → Canvas/Visual (compact) → Controls → Output/Results. Keep it tight.
+- For coordinate/graph visualizers: canvas 300x250px max, controls immediately below
 Do NOT always include a magic-block — only when visualization genuinely helps understanding.${kbi}${epb}${memoryContext}`;
 
   const modePrompts = {
