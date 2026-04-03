@@ -52,7 +52,7 @@ export default function MagicBlock({ title, html }) {
       <motion.div
         layout
         style={{ overflow: 'hidden' }}
-        animate={{ height: expanded ? 600 : 400 }}
+        animate={{ height: expanded ? 750 : 520 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
         <iframe

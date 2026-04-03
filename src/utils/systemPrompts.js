@@ -64,9 +64,42 @@ When a topic benefits from visualization or interactivity, include a <magic-bloc
 Use when explaining: graphs, geometry, physics simulations, chemistry reactions, circuits, timelines, maps, grammar structures, etc.
 Format:
 <magic-block title="Short title">
-<!DOCTYPE html><html><head><style>body{margin:0;background:#0b0b14;color:#eef0ff;font-family:sans-serif;display:flex;flex-direction:column;align-items:center;padding:16px}h3{color:#b44aff;margin-bottom:12px}button{background:#b44aff;color:#fff;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px}input[type=range]{accent-color:#b44aff;width:200px}</style></head><body>...interactive content with inline JS...</body></html>
+<!DOCTYPE html><html><head><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0b0b14;color:#eef0ff;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 20px;gap:16px}
+h2{color:#b44aff;font-size:1.3rem;text-align:center;margin-bottom:4px}
+p.subtitle{color:#a0a4c4;font-size:0.85rem;text-align:center;margin-bottom:8px}
+.controls{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;width:100%;max-width:500px}
+.control-group{display:flex;flex-direction:column;align-items:center;gap:4px}
+.control-group label{color:#a0a4c4;font-size:0.75rem;text-transform:uppercase;letter-spacing:1px}
+.control-group .value{color:#fee440;font-family:monospace;font-size:1.1rem;font-weight:bold}
+input[type=range]{accent-color:#b44aff;width:100%;min-width:200px;max-width:320px;height:6px;cursor:pointer}
+button{background:linear-gradient(135deg,#ff6b9d,#b44aff);color:#fff;border:none;padding:10px 24px;border-radius:10px;cursor:pointer;font-size:0.9rem;font-weight:600;transition:transform 0.15s}
+button:hover{transform:scale(1.04)}
+button:active{transform:scale(0.97)}
+.output{background:#1a1a2e;border:1px solid rgba(255,255,255,0.05);border-radius:14px;padding:20px;width:100%;max-width:500px;text-align:center;font-size:1rem;line-height:1.8}
+.output .formula{color:#00f5d4;font-family:monospace;font-size:1.1rem}
+.output .result{color:#fee440;font-size:1.4rem;font-weight:bold;margin-top:8px}
+.output .step{color:#a0a4c4;font-size:0.82rem;margin:4px 0;text-align:left}
+canvas{border-radius:14px;background:#1a1a2e;border:1px solid rgba(255,255,255,0.05);max-width:100%}
+.legend{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-size:0.78rem;color:#a0a4c4}
+.legend span::before{content:'';display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle}
+</style></head><body>...interactive content with inline JS...</body></html>
 </magic-block>
-Rules: MUST be self-contained (no external CDNs/fetch). Use canvas/SVG for drawings. Include controls (sliders/buttons). Dark theme (#0b0b14 bg, #eef0ff text, #b44aff accent). Under 150 lines.
+UX Rules for MagicBlocks:
+- MUST be self-contained (no external CDNs/fetch)
+- Use canvas or SVG for drawings, CSS animations for motion
+- SPACIOUS layout: generous padding (24px+), gaps between elements, max-width 500px for content
+- LARGE readable text: headings 1.3rem, values 1.1rem+, labels 0.75rem
+- Controls: use the .controls and .control-group CSS classes above for clean layout
+- Show a subtitle explaining what the visualization does
+- Display current values prominently in yellow (#fee440) with monospace font
+- Use the .output card for results/formulas/steps
+- Show step-by-step calculations in .step elements when applicable
+- Responsive: use max-width, flex-wrap, and percentage widths
+- Touch-friendly: buttons min 44px tall, sliders wide and easy to grab
+- Use the gradient button style (pink to purple) for actions
+- Canvas should be at least 300px wide for graphs
 Do NOT always include a magic-block — only when visualization genuinely helps understanding.${kbi}${epb}${memoryContext}`;
 
   const modePrompts = {
