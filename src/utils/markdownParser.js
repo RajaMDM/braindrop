@@ -18,11 +18,32 @@ import katex from 'katex';
 export function parseMarkdown(text) {
   let t = text;
 
+  // Strip markdown code fences that wrap our custom tags (Claude does this)
+  t = t.replace(/```(?:json|html)?\s*\n?\s*(<(?:quiz-data|flashcard-data|magic-block)[^>]*>)/gi, '$1');
+  t = t.replace(/(<\/(?:quiz-data|flashcard-data|magic-block)>)\s*\n?\s*```/gi, '$1');
+
   // --- Extract quiz-data blocks before markdown processing ---
   const quizBlocks = [];
   t = t.replace(/<quiz-data>([\s\S]*?)<\/quiz-data>/gi, (match, json) => {
     try {
-      quizBlocks.push(JSON.parse(json.trim()));
+      let parsed = JSON.parse(json.trim());
+      // Normalize: might be an array or { questions: [...] } or { topic, questions }
+      if (parsed && !Array.isArray(parsed)) {
+        if (parsed.questions) parsed = parsed.questions;
+        else parsed = [parsed];
+      }
+      // Normalize field names: correctAnswer→answer, question→q
+      if (Array.isArray(parsed)) {
+        parsed = parsed.map(q => ({
+          q: q.q || q.question || q.text || '',
+          options: q.options || [],
+          answer: q.answer ?? q.correctAnswer ?? q.correct_answer ?? 0,
+          explanation: q.explanation || q.explain || '',
+          difficulty: q.difficulty || 'medium',
+          topic: q.topic || '',
+        }));
+      }
+      quizBlocks.push(parsed);
     } catch (e) {
       quizBlocks.push(null);
     }
@@ -33,7 +54,22 @@ export function parseMarkdown(text) {
   const flashcardBlocks = [];
   t = t.replace(/<flashcard-data>([\s\S]*?)<\/flashcard-data>/gi, (match, json) => {
     try {
-      flashcardBlocks.push(JSON.parse(json.trim()));
+      let parsed = JSON.parse(json.trim());
+      // Normalize: might be { cards: [...] } or { flashcards: [...] }
+      if (parsed && !Array.isArray(parsed)) {
+        if (parsed.cards) parsed = parsed.cards;
+        else if (parsed.flashcards) parsed = parsed.flashcards;
+        else parsed = [parsed];
+      }
+      // Normalize field names
+      if (Array.isArray(parsed)) {
+        parsed = parsed.map(c => ({
+          front: c.front || c.question || c.term || c.q || '',
+          back: c.back || c.answer || c.definition || c.a || '',
+          topic: c.topic || '',
+        }));
+      }
+      flashcardBlocks.push(parsed);
     } catch (e) {
       flashcardBlocks.push(null);
     }
