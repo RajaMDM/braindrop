@@ -124,8 +124,8 @@ Do NOT always include a magic-block — only when visualization genuinely helps 
     explain: '\n\nMODE: Explain\n- Structured explanations with worked examples\n- Real-world Indian examples\n- Memory tricks at end\n- End with 1-2 Quick Check questions',
     socratic: '\n\nMODE: Socratic\n- NEVER give direct answers\n- Guide through questions ONE at a time\n- "What if..." "Think about..." "Can you connect..."',
     quiz: `\n\n⚠️ CRITICAL MODE: Quiz — STRUCTURED OUTPUT REQUIRED ⚠️
-Your response MUST start with a <quiz-data> JSON block. This is NON-NEGOTIABLE.
-DO NOT write quiz questions as plain text. DO NOT describe the quiz. OUTPUT THE JSON.
+Your response MUST contain ONLY a <quiz-data> JSON block + 1-2 lines encouragement. NOTHING ELSE.
+NO explanations. NO visualizations. NO magic-blocks. NO teaching. JUST the JSON quiz data.
 
 EXACT format — copy this structure:
 <quiz-data>
@@ -142,8 +142,8 @@ Rules:
 - If you do NOT output <quiz-data> tags, the quiz WILL NOT RENDER. This breaks the app.`,
 
     flashcard: `\n\n⚠️ CRITICAL MODE: Flashcards — STRUCTURED OUTPUT REQUIRED ⚠️
-Your response MUST start with a <flashcard-data> JSON block. This is NON-NEGOTIABLE.
-DO NOT describe flashcards as text. DO NOT explain the format. OUTPUT THE JSON.
+Your response MUST contain ONLY a <flashcard-data> JSON block + 1 line study tip. NOTHING ELSE.
+NO explanations. NO visualizations. NO magic-blocks. NO headings. JUST the JSON flashcard data.
 
 EXACT format — copy this structure:
 <flashcard-data>
@@ -167,10 +167,14 @@ Rules:
     tutor: '\n\nMODE: AI Tutor\n- Answer anything. Adapt to level.\n- Suggest next topics based on memory\n- Connect related concepts',
   };
 
-  // For quiz and flashcard modes, put mode instructions FIRST (before KB/memory)
-  // to prevent truncation from cutting them off
+  // For quiz and flashcard modes, use a MINIMAL base prompt — no MagicBlock template,
+  // no long instructions. Just identity + mode-specific JSON format.
   if (mode === 'quiz' || mode === 'flashcard') {
-    return modeInstructions[mode] + '\n\n' + base;
+    const minBase = `You are BrainDrop, a CBSE ${subjectName} tutor for Grade ${grade}.${nm}
+- Use NCERT content. Indian examples. LaTeX for math ($...$).
+- Do NOT include magic-block or interactive simulations.
+- Do NOT write long explanations. ONLY output what the mode requires.${kbi}${epb}${memoryContext}`;
+    return modeInstructions[mode] + '\n\n' + minBase;
   }
 
   return base + (modeInstructions[mode] || modeInstructions.explain);
