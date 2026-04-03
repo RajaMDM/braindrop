@@ -238,8 +238,8 @@
       <option value="gemini">🟢 Gemini 2.5 Flash (free)</option>
       <option value="deepseek">🔵 DeepSeek (cheap, great at maths)</option>
       <option value="mistral">🔴 Mistral (free, strong Hindi)</option>
-      <option value="claude">🟣 Claude (paid, best teaching)</option>
-      <option value="openai">🟩 GPT-4o-mini (paid)</option>
+      <option value="openai">🟩 GPT-4o-mini (free tier)</option>
+      <option value="claude">🟣 Claude (best teaching)</option>
     </select>
     <div class="fh">Auto mode picks the best available engine. Switch manually if you prefer a specific AI.</div>
   </div>
@@ -298,7 +298,7 @@ const AI_PROVIDERS = {
   nvidia:   { name:'NVIDIA',   color:'#76b900', model:'meta/llama-3.3-70b-instruct', keyField:'nvI', stateKey:'nv' },
   ollama:   { name:'Ollama',   color:'#8b5cf6', model:'llama3.2',                  keyField:'olURL', stateKey:'ol' }
 };
-const PROVIDER_ORDER = ['nvidia','groq','gemini','deepseek','mistral','claude','openai','ollama'];
+const PROVIDER_ORDER = ['nvidia','groq','gemini','openai','deepseek','mistral','claude','ollama'];
 
 const CLASSROOM_AGENTS_BY_GRADE = {
   10: {
