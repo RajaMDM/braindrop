@@ -62,47 +62,60 @@ Rules:
 INTERACTIVE CONTENT (MagicBlocks):
 When a topic benefits from visualization or interactivity, include a <magic-block> tag with self-contained HTML.
 Use when explaining: graphs, geometry, physics simulations, chemistry reactions, circuits, timelines, maps, grammar structures, etc.
-Format:
-<magic-block title="Short title">
+Here is a COMPLETE working example. Follow this pattern EXACTLY for canvas-based visualizations:
+<magic-block title="Example Visualizer">
 <!DOCTYPE html><html><head><style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0b0b14;color:#eef0ff;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 20px;gap:16px}
-h2{color:#b44aff;font-size:1.3rem;text-align:center;margin-bottom:4px}
-p.subtitle{color:#a0a4c4;font-size:0.85rem;text-align:center;margin-bottom:8px}
-.controls{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;width:100%;max-width:500px}
-.control-group{display:flex;flex-direction:column;align-items:center;gap:4px}
-.control-group label{color:#a0a4c4;font-size:0.75rem;text-transform:uppercase;letter-spacing:1px}
-.control-group .value{color:#fee440;font-family:monospace;font-size:1.1rem;font-weight:bold}
-input[type=range]{accent-color:#b44aff;width:100%;min-width:200px;max-width:320px;height:6px;cursor:pointer}
-button{background:linear-gradient(135deg,#ff6b9d,#b44aff);color:#fff;border:none;padding:10px 24px;border-radius:10px;cursor:pointer;font-size:0.9rem;font-weight:600;transition:transform 0.15s}
-button:hover{transform:scale(1.04)}
-button:active{transform:scale(0.97)}
-.output{background:#1a1a2e;border:1px solid rgba(255,255,255,0.05);border-radius:14px;padding:20px;width:100%;max-width:500px;text-align:center;font-size:1rem;line-height:1.8}
-.output .formula{color:#00f5d4;font-family:monospace;font-size:1.1rem}
-.output .result{color:#fee440;font-size:1.4rem;font-weight:bold;margin-top:8px}
-.output .step{color:#a0a4c4;font-size:0.82rem;margin:4px 0;text-align:left}
-canvas{border-radius:14px;background:#1a1a2e;border:1px solid rgba(255,255,255,0.05);max-width:100%}
-.legend{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-size:0.78rem;color:#a0a4c4}
-.legend span::before{content:'';display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle}
-</style></head><body>...interactive content with inline JS...</body></html>
+body{background:#0b0b14;color:#eef0ff;font-family:'Segoe UI',system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;padding:20px;gap:12px}
+h2{color:#b44aff;font-size:1.2rem;text-align:center}
+.sub{color:#a0a4c4;font-size:0.82rem;text-align:center}
+canvas{border-radius:12px;background:#1a1a2e;border:1px solid rgba(255,255,255,0.08)}
+.row{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;align-items:center}
+.group{display:flex;flex-direction:column;align-items:center;gap:4px}
+.group label{color:#a0a4c4;font-size:0.7rem;text-transform:uppercase;letter-spacing:1px}
+.group .val{color:#fee440;font-family:monospace;font-size:1.1rem;font-weight:bold}
+input[type=range]{accent-color:#b44aff;width:220px}
+.card{background:#1a1a2e;border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:14px;width:100%;max-width:460px;text-align:center}
+.formula{color:#00f5d4;font-family:monospace;font-size:1rem}
+.result{color:#fee440;font-size:1.3rem;font-weight:bold;margin-top:6px}
+</style></head><body>
+<h2>Title Here</h2>
+<p class="sub">Short description of what this shows</p>
+<canvas id="c" width="440" height="260"></canvas>
+<div class="row">
+  <div class="group"><label>Param 1</label><input type="range" id="s1" min="0" max="100" value="50"><div class="val" id="v1">50</div></div>
+  <div class="group"><label>Param 2</label><input type="range" id="s2" min="0" max="100" value="30"><div class="val" id="v2">30</div></div>
+</div>
+<div class="card"><div class="formula">formula here</div><div class="result" id="res">result</div></div>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const s1=document.getElementById('s1'),s2=document.getElementById('s2');
+function draw(){
+  ctx.clearRect(0,0,c.width,c.height);
+  // Draw grid
+  ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=1;
+  for(let i=0;i<c.width;i+=40){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,c.height);ctx.stroke();}
+  for(let i=0;i<c.height;i+=40){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(c.width,i);ctx.stroke();}
+  // Draw your visualization here using ctx
+  const val1=+s1.value, val2=+s2.value;
+  ctx.fillStyle='#b44aff';ctx.beginPath();ctx.arc(c.width/2,c.height/2,val1,0,Math.PI*2);ctx.fill();
+  document.getElementById('v1').textContent=val1;
+  document.getElementById('v2').textContent=val2;
+  document.getElementById('res').textContent=val1+val2;
+}
+s1.oninput=s2.oninput=draw;
+draw();
+</script></body></html>
 </magic-block>
-UX Rules for MagicBlocks:
-- MUST be self-contained (no external CDNs/fetch)
-- Use canvas or SVG for drawings, CSS animations for motion
-- SPACIOUS layout: generous padding (24px+), gaps between elements, max-width 500px for content
-- LARGE readable text: headings 1.3rem, values 1.1rem+, labels 0.75rem
-- Controls: use the .controls and .control-group CSS classes above for clean layout
-- Show a subtitle explaining what the visualization does
-- Display current values prominently in yellow (#fee440) with monospace font
-- Use the .output card for results/formulas/steps
-- Show step-by-step calculations in .step elements when applicable
-- Responsive: use max-width, flex-wrap, and percentage widths
-- Touch-friendly: buttons min 44px tall, sliders wide and easy to grab
-- Use the gradient button style (pink to purple) for actions
-- Canvas: use width 100% and max-width 480px. Set height explicitly (e.g. 250px for graphs, 200px for simple visuals). NEVER leave canvas height unset — it creates huge blank space.
-- COMPACT layout: put controls DIRECTLY below the canvas/visualization, not at the bottom of the page. No large gaps. Everything should fit in ~450px total height.
-- Order: Title → Subtitle → Canvas/Visual (compact) → Controls → Output/Results. Keep it tight.
-- For coordinate/graph visualizers: canvas 300x250px max, controls immediately below
+
+CRITICAL canvas rules:
+- ALWAYS set width and height attributes on <canvas>: width="440" height="260" (NOT via CSS)
+- ALWAYS call draw() at the end of the script to render immediately
+- ALWAYS use ctx.clearRect() at the start of draw()
+- Draw a subtle grid for coordinate/graph visualizations
+- Use bright colors: #b44aff (purple), #00f5d4 (cyan), #ff6b9d (pink), #fee440 (yellow)
+- Canvas text: use ctx.fillStyle='#eef0ff' and ctx.font='14px system-ui' for readable labels
+- Controls go DIRECTLY below canvas. No gaps. Total height under 450px.
 Do NOT always include a magic-block — only when visualization genuinely helps understanding.${kbi}${epb}${memoryContext}`;
 
   const modePrompts = {
