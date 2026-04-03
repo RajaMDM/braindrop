@@ -26,7 +26,7 @@ Major overhaul that made BrainDrop usable by anyone:
 - XP system and gamification mechanics to keep students engaged.
 - Stats dashboard with CSV export for tracking study patterns.
 - CBSE exam pattern archive covering 2015–2024.
-- NCERT PDF textbooks hosted on Cloudflare R2 for instant access.
+- NCERT PDF textbooks hosted on Cloudflare R2 for instant access (Grade 10 subjects configured; Grade 7 PDFs are pending upload).
 
 ### Phase 3 — Platform Upgrade (v6, April 2026)
 Massive feature expansion in a single session, transforming BrainDrop from a chat tool into a full learning platform:
@@ -50,7 +50,7 @@ AI-generated interactive HTML simulations rendered as sandboxed iframes directly
 Visual progress tracking with subject progress bars, 28-day activity heatmap, strengths/weak areas tags, and AI usage breakdown.
 
 **Structured Courses (NCERT Chapters)**
-63 NCERT chapters across all 5 Grade 10 subjects, each with sequential lessons. Linear unlock system — complete chapters to unlock the next. Certificate celebration on subject completion. XP bonuses at lesson, chapter, and subject milestones.
+63 NCERT chapters across all 5 Grade 10 subjects (Grade 10 only — Grade 7 has flat topic lists but no structured chapter data yet), each with sequential lessons. Linear unlock system — complete chapters to unlock the next. Certificate celebration on subject completion. XP bonuses at lesson, chapter, and subject milestones.
 
 **RAG Pipeline**
 Client-side TF-IDF retrieval replaces the brute-force 50K char PDF dump. NCERT text is chunked into ~500 char segments, indexed, and the top 5 most relevant chunks are retrieved per query. ~95% reduction in token usage with better answer relevance.
@@ -73,7 +73,7 @@ Added NVIDIA (Llama 3.3 70B) as an AI provider via their OpenAI-compatible API. 
 
 ### What Students See
 1. Open BrainDrop → Sign in (Google or name+email) → Choose subject → Start learning
-2. 8 learning modes: Explain, Socratic, Quiz, Flashcards, Exam Prep, AI Tutor, Classroom
+2. 7 learning modes: Explain, Socratic, Quiz, Flashcard, Exam Prep, AI Tutor, Classroom
 3. NCERT chapters with progress tracking and unlock mechanics
 4. Interactive simulations generated on-the-fly
 5. Score history and analytics dashboard

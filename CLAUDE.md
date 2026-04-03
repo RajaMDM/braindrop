@@ -14,10 +14,10 @@ Built for my daughters (Alishba and Inaayah) and open to every student everywher
 
 ## Key Features (v6 — Current)
 - 4 AI engines: NVIDIA (Llama 3.3 70B), Groq (Llama 3.3), Gemini (2.5 Flash), Claude (Haiku 4.5).
-- 8 learning modes: Explain, Socratic, Quiz, Flashcards, Exam Prep, AI Tutor, Classroom.
+- 7 learning modes: Explain, Socratic, Quiz, Flashcard, Exam Prep, AI Tutor, Classroom.
 - Multi-agent Classroom: grade-specific Teacher + 2 Classmates with distinct personalities.
 - MagicBlocks: AI-generated interactive HTML simulations (sandboxed iframes).
-- Structured Courses: 63 NCERT chapters with progress tracking, unlock mechanics, certificates.
+- Structured Courses: 63 NCERT chapters (Grade 10 only) with progress tracking, unlock mechanics, certificates. Grade 7 has flat topic lists only — no structured chapter data yet.
 - Assessment: auto-graded MCQ quiz engine, flashcard decks with mastery tracking, score history.
 - Analytics Dashboard: subject progress, activity heatmap, strengths/weaknesses, AI usage.
 - RAG Pipeline: client-side TF-IDF retrieval over NCERT content (~95% token reduction).

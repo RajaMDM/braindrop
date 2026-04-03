@@ -16,7 +16,7 @@ Live: https://rajamdm.github.io/braindrop
 - [x] MagicBlocks (AI-generated interactive simulations)
 - [x] Assessment System (quiz engine, flashcards, score history)
 - [x] Analytics Dashboard (progress bars, heatmap, strengths/weaknesses)
-- [x] Structured Courses (63 NCERT chapters, unlock mechanics, certificates)
+- [x] Structured Courses (63 NCERT chapters for Grade 10, unlock mechanics, certificates)
 - [x] RAG Pipeline (client-side TF-IDF retrieval)
 - [x] API Security (all providers proxied via Cloudflare Worker)
 - [x] Auth Cleanup (open registration, mandatory email)
@@ -28,11 +28,18 @@ Live: https://rajamdm.github.io/braindrop
 
 ## Near-Term (Next Sprint)
 
-### Upload Remaining NCERT PDFs
-- **What:** Upload all Grade 10 and Grade 7 NCERT PDFs to Cloudflare R2
-- **Why:** RAG pipeline is ready but only has partial content
+### Upload Grade 10 Remaining NCERT PDFs
+- **What:** Ensure all Grade 10 NCERT PDFs are uploaded to Cloudflare R2
+- **Why:** RAG pipeline is configured for Grade 10 but some PDFs may still be missing
 - **Blocked by:** Manual PDF preparation (OCR quality varies)
 - **Trigger:** Content ready to upload
+
+### Upload and Configure Grade 7 PDFs to Cloudflare R2
+- **What:** Upload Grade 7 NCERT PDFs to R2 and add a `7: { ... }` block to the `BOOKS` object in `index.html`
+- **Why:** Grade 7 is a supported grade but the `BOOKS` object only contains Grade 10 entries — the RAG pipeline cannot load any PDF for Grade 7 students until this is done
+- **Blocked by:** Manual PDF preparation + code change in `index.html`
+- **Effort:** PDF upload via R2 dashboard + ~5 lines of code change
+- **Trigger:** Grade 7 student usage justifies the work
 
 ### Google OAuth Production Config
 - **What:** Configure Google OAuth Client ID for production domain
@@ -40,10 +47,11 @@ Live: https://rajamdm.github.io/braindrop
 - **Effort:** ~30 minutes in Google Cloud Console
 - **Trigger:** When user base grows beyond family/friends
 
-### Grade 7 Course Content
-- **What:** Add COURSES data for Grade 7 (currently only Grade 10 has chapters)
-- **Why:** Grade 7 students exist in the app but see flat topic chips, not course view
-- **Effort:** Data entry — define chapters and lessons for 5 subjects
+### Grade 7 Course Content — Add Structured Chapter Data
+- **What:** Add a `7: { ... }` block to the `COURSES` object in `index.html` (currently only Grade 10 has chapters)
+- **Why:** Grade 7 students exist in the app but see flat topic chips, not the structured course view with unlock mechanics and certificates
+- **Note:** Grade 7 subjects already have flat topic chip lists in the UI — this is about adding the deeper chapter/lesson structure
+- **Effort:** Data entry — define chapters and lessons for 5 subjects; no architecture change needed
 
 ---
 

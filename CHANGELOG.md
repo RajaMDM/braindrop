@@ -31,7 +31,7 @@
 - **Impact:** Students and parents can track learning patterns
 
 ### Structured Courses
-- 63 NCERT chapters across 5 Grade 10 subjects with sequential lessons
+- 63 NCERT chapters across 5 Grade 10 subjects with sequential lessons (Grade 10 only — Grade 7 has flat topic lists, no structured chapters yet)
 - Linear unlock: complete chapters to unlock next
 - Certificate celebration on subject completion
 - XP bonuses: 20/lesson, 50/chapter, 100/subject
@@ -85,7 +85,7 @@
 - XP system, streaks, gamification
 - Stats dashboard with CSV export
 - CBSE exam pattern archive (2015–2024)
-- 5 learning modes: Explain, Socratic, Quiz, Exam Prep, AI Tutor
+- 7 learning modes: Explain, Socratic, Quiz, Flashcard, Exam Prep, AI Tutor, Classroom
 
 ---
 

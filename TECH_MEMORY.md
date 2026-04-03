@@ -47,6 +47,53 @@ AI-generated HTML rendered via iframe `srcdoc` with `sandbox="allow-scripts"`. N
 ### Course Progress
 Stored in `bd_mem_${grade}_${subject}` → `profile.courseProgress[chapterId]`. Lessons auto-complete via `_pendingLesson` flag after AI interaction.
 
+### Memory Context Injection (`getMemoryContext()`)
+`getMemoryContext()` is called at the start of every AI system prompt build. It reads the current subject's localStorage memory and injects:
+- Topics already covered (last 50)
+- Weak areas identified from past sessions
+- Recent quiz scores (last 5 rounds, correct/incorrect counts)
+- Last studied date
+- Last 12 messages of chat history (truncated to 200 chars each)
+
+The resulting context string is appended to every system prompt so the AI has full continuity — it knows what the student already covered, where they struggle, and what was said earlier in the session. This is not just "memory" — it is live personalization at every call.
+
+### `EP` Object — Exam Patterns
+`EP` is a hardcoded object defined in `index.html` (not loaded from an external source). It covers all 5 Grade 10 CBSE subjects and contains:
+- `hot`: high-frequency topics with approximate frequency % and mark range
+- `tr`: common student traps/mistakes for that subject
+
+`EP` is referenced in `Exam Prep` mode: the system prompt for `examprep` instructs the AI to use board patterns from the last 10 years, cheat sheets, and traps — `EP` provides the structured source data for this. It is embedded in code, not in a config file; changes require editing `index.html` directly.
+
+### Classroom Character Personalities (Full Dialogue Specs)
+The `CLASSROOM_AGENTS_BY_GRADE` object in `index.html` contains full personality dialogue specs — not just names. These specs are injected verbatim into each agent's system prompt during classroom interactions:
+
+**Grade 10:**
+- `Sunita Ma'am` (teacher): warm, structured, connects concepts to real life and exam patterns
+- `Aabha` (classmate1): studious, asks thoughtful questions, wants to understand the "why"
+- `Optimus Prime` (classmate2): bold, dramatic, makes wild analogies (quadratic equations = battle strategies), says "Autobots, let's learn!" and "That formula is our weapon!"
+
+**Grade 7:**
+- `Rupa Ma'am` (teacher): gentle, encouraging, uses stories and fun examples for younger students
+- `Buffy` (classmate1): energetic, playful, asks "silly" questions, uses food/game comparisons
+- `BumbleBee` (classmate2): shy at first, buzzes with excitement when something clicks, says "Bzzt! I get it now!" and "Wait wait wait..."
+
+These personality strings are load-bearing: they define agent tone and distinctiveness. If they are shortened or genericized, classroom mode loses its differentiation.
+
+### `ALLOWED_EMAILS` Whitelist
+`CONFIG.ALLOWED_EMAILS` is an array defined at the top of `index.html`. Currently set to `[]` (empty = open access for all). When populated with email addresses, only those Google accounts or guest emails are allowed to proceed past sign-in. Used for restricting access during testing or for school deployments. To lock the app down, add emails to this array and redeploy.
+
+### Model Versions Pinned in `cloudflare-worker-proxy.js`
+Exact model versions are pinned in the `PROVIDERS` object inside the browser-side call logic in `index.html` (in `callProvider()` and `callProviderWithSys()`), not in the Cloudflare Worker. Current pinned versions (as of April 2026):
+- Claude: `claude-haiku-4-5-20251001`
+- Gemini: `gemini-2.5-flash`
+- Groq: `llama-3.3-70b-versatile`
+- NVIDIA: `meta/llama-3.3-70b-instruct`
+
+To bump a model version, edit the hardcoded model string in the relevant `case` block inside `callProvider()` and `callProviderWithSys()` in `index.html`. The Worker itself is model-agnostic — it passes through whatever body the browser sends.
+
+### Grade 7 PDFs — Not Yet Configured
+The `BOOKS` object in `index.html` only has entries for Grade 10 (mathematics, science, english, social-science). Grade 7 has no entries in `BOOKS`, so the RAG pipeline will not load any PDF for Grade 7 students. Grade 7 PDFs need to be uploaded to Cloudflare R2 and a `7: { ... }` block added to `BOOKS` before RAG works for that grade.
+
 ---
 
 ## localStorage Keys

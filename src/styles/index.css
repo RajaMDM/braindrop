@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0b0b14;
+  --color-bg2: #12121f;
+  --color-bg3: #1a1a2e;
+  --color-bgH: #1f1f3a;
+  --color-np: #b44aff;
+  --color-nk: #ff6b9d;
+  --color-nc: #00f5d4;
+  --color-ny: #fee440;
+  --color-nb: #4cc9f0;
+  --color-no: #ff6d00;
+  --color-ng: #39ff14;
+  --color-nr: #ff1744;
+  --color-t1: #eef0ff;
+  --color-t2: #a0a4c4;
+  --color-t3: #5c5f80;
+  --color-bd: rgba(255,255,255,0.05);
+}
+
+:root {
+  --bg:#0b0b14;--bg2:#12121f;--bg3:#1a1a2e;--bgH:#1f1f3a;
+  --np:#b44aff;--nk:#ff6b9d;--nc:#00f5d4;--ny:#fee440;--nb:#4cc9f0;
+  --no:#ff6d00;--ng:#39ff14;--nr:#ff1744;
+  --t1:#eef0ff;--t2:#a0a4c4;--t3:#5c5f80;
+  --bd:rgba(255,255,255,0.05);
+  --gf:linear-gradient(135deg,#ff6b9d,#b44aff);
+  --gi:linear-gradient(135deg,#4cc9f0,#00f5d4);
+  --gg:linear-gradient(135deg,#fee440,#ff6d00);
+  --xp:linear-gradient(90deg,#b44aff,#ff6b9d,#00f5d4);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { height:100%; }
+body {
+  font-family:'Fredoka',sans-serif;
+  background:var(--bg);
+  color:var(--t1);
+  height:100%;
+  overflow:hidden;
+}
+
+/* Background effects */
+.bgfx { position:fixed; inset:0; z-index:0; pointer-events:none; }
+.bgfx::before {
+  content:''; position:absolute; width:500px; height:500px;
+  background:radial-gradient(circle,rgba(180,74,255,.12),transparent 70%);
+  top:-100px; left:-100px; animation:drift1 20s ease-in-out infinite;
+}
+.bgfx::after {
+  content:''; position:absolute; width:600px; height:600px;
+  background:radial-gradient(circle,rgba(0,245,212,.08),transparent 70%);
+  bottom:-150px; right:-150px; animation:drift2 25s ease-in-out infinite;
+}
+@keyframes drift1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(100px,80px)} }
+@keyframes drift2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-80px,-60px)} }
+
+.pgrid {
+  position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.03;
+  background-image:linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);
+  background-size:24px 24px;
+}
