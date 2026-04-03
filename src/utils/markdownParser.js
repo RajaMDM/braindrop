@@ -1,11 +1,12 @@
 /**
  * markdownParser.js
  * Converts markdown text (with BrainDrop custom blocks) into structured output.
- * Extracted from index.legacy.html md(t) function.
+ * Includes KaTeX rendering for LaTeX math formulas.
  *
  * Returns { html, quizBlocks, flashcardBlocks, magicBlocks } so React can
  * render quiz/flashcard/magic blocks as dedicated components.
  */
+import katex from 'katex';
 
 /**
  * Parse markdown text that may contain <quiz-data>, <flashcard-data>, and
@@ -48,6 +49,27 @@ export function parseMarkdown(text) {
       return `%%MAGIC_${magicBlocks.length - 1}%%`;
     }
   );
+
+  // --- Render LaTeX math with KaTeX ---
+  // Display math: $$...$$ (block)
+  t = t.replace(/\$\$([\s\S]*?)\$\$/g, (_m, tex) => {
+    try { return katex.renderToString(tex.trim(), { displayMode: true, throwOnError: false }); }
+    catch { return `<code>${tex}</code>`; }
+  });
+  // Inline math: $...$ (not greedy, single line)
+  t = t.replace(/(?<!\$)\$(?!\$)([^\n$]+?)\$(?!\$)/g, (_m, tex) => {
+    try { return katex.renderToString(tex.trim(), { displayMode: false, throwOnError: false }); }
+    catch { return `<code>${tex}</code>`; }
+  });
+  // Also handle \[ ... \] and \( ... \) notation
+  t = t.replace(/\\\[([\s\S]*?)\\\]/g, (_m, tex) => {
+    try { return katex.renderToString(tex.trim(), { displayMode: true, throwOnError: false }); }
+    catch { return `<code>${tex}</code>`; }
+  });
+  t = t.replace(/\\\(([\s\S]*?)\\\)/g, (_m, tex) => {
+    try { return katex.renderToString(tex.trim(), { displayMode: false, throwOnError: false }); }
+    catch { return `<code>${tex}</code>`; }
+  });
 
   // --- Standard markdown → HTML conversion ---
   let html = t
