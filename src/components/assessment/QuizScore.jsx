@@ -9,7 +9,7 @@ export default function QuizScore({ correct, total, xpEarned }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
+      initial={{ opacity: 1, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: 'spring', stiffness: 300, damping: 25 }}
       style={{

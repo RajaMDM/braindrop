@@ -8,13 +8,12 @@ export default function ChapterCard({ chapter, index, unlocked }) {
   const { activeChapter } = useApp();
   const { selectChapter, completeLesson, selectLesson, getCourse } = useCourseProgress();
   const { triggerCertificate } = useApp();
-  const { loadMemory } = useMemory();
+  const { memory } = useMemory();
 
   const isActive = activeChapter === chapter.id;
 
-  // Get progress for this chapter
-  const mem = loadMemory();
-  const cp = mem.profile?.courseProgress?.[chapter.id];
+  // Get progress for this chapter (read from state, NOT loadMemory)
+  const cp = memory.profile?.courseProgress?.[chapter.id];
   const completedLessons = cp?.completed || [];
   const isDone = cp?.done || false;
   const lessonsDone = completedLessons.length;

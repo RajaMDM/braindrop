@@ -211,9 +211,11 @@ export function useMemory() {
   }, [grade, subject]);
 
   // Auto-load when grade or subject changes
+  // Load memory when grade/subject changes (not when loadMemory ref changes)
   useEffect(() => {
     loadMemory();
-  }, [loadMemory]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [grade, subject]);
 
   return {
     memory,

@@ -7,38 +7,28 @@ import { COURSES } from '../data/courses.js';
 /**
  * useCourseProgress — Course progression, unlock logic, lesson completion.
  *
- * Mirrors legacy getCourseProgress / isChapterUnlocked / completeLesson /
- * selectLesson / selectChapter.
+ * CRITICAL: read-only functions (getCourseProgress, isChapterUnlocked) must
+ * read from the `memory` state object, NOT call loadMemory() which triggers
+ * a setState and causes infinite re-renders.
  *
- * XP awards:
- *   20 per lesson
- *   50 per chapter completion
- *   100 per subject completion
+ * Only write functions (completeLesson) may call loadMemory() + saveMemory().
  */
 export function useCourseProgress() {
   const { grade, subject, activeChapter, setActiveChapter } = useApp();
   const { memory, loadMemory, saveMemory } = useMemory();
   const { addXP } = useXP();
 
-  /** Get course data for the current grade/subject (or null). */
   const getCourse = useCallback(() => {
     return COURSES[grade]?.[subject] || null;
   }, [grade, subject]);
 
-  /**
-   * getCourseProgress — Returns summary stats:
-   * { totalLessons, completedLessons, pct, chaptersComplete, totalChapters }
-   */
+  /** Read-only: uses memory state, no setState call. */
   const getCourseProgress = useCallback(() => {
     const course = getCourse();
     if (!course) return null;
 
-    const mem = loadMemory();
-    const cp = mem.profile.courseProgress || {};
-
-    let totalLessons = 0;
-    let completedLessons = 0;
-    let chaptersComplete = 0;
+    const cp = memory.profile?.courseProgress || {};
+    let totalLessons = 0, completedLessons = 0, chaptersComplete = 0;
 
     course.chapters.forEach((ch) => {
       totalLessons += ch.lessons.length;
@@ -49,124 +39,65 @@ export function useCourseProgress() {
     });
 
     return {
-      totalLessons,
-      completedLessons,
-      pct: totalLessons
-        ? Math.round((completedLessons / totalLessons) * 100)
-        : 0,
-      chaptersComplete,
-      totalChapters: course.chapters.length,
+      totalLessons, completedLessons,
+      pct: totalLessons ? Math.round((completedLessons / totalLessons) * 100) : 0,
+      chaptersComplete, totalChapters: course.chapters.length,
     };
-  }, [getCourse, loadMemory]);
+  }, [getCourse, memory]);
 
-  /**
-   * isChapterUnlocked — First 2 chapters always unlocked.
-   * After that, previous chapter must be fully completed.
-   */
-  const isChapterUnlocked = useCallback(
-    (chapterIndex) => {
-      if (chapterIndex < 2) return true;
-      const course = getCourse();
-      if (!course) return false;
+  /** Read-only: uses memory state, no setState call. */
+  const isChapterUnlocked = useCallback((chapterIndex) => {
+    if (chapterIndex < 2) return true;
+    const course = getCourse();
+    if (!course) return false;
 
-      const mem = loadMemory();
-      const cp = mem.profile.courseProgress || {};
-      const prevCh = course.chapters[chapterIndex - 1];
-      const prevProg = cp[prevCh.id];
+    const cp = memory.profile?.courseProgress || {};
+    const prevCh = course.chapters[chapterIndex - 1];
+    const prevProg = cp[prevCh.id];
+    return prevProg && prevProg.completed && prevProg.completed.length >= prevCh.lessons.length;
+  }, [getCourse, memory]);
 
-      return (
-        prevProg &&
-        prevProg.completed &&
-        prevProg.completed.length >= prevCh.lessons.length
-      );
-    },
-    [getCourse, loadMemory]
-  );
+  /** Write: calls loadMemory + saveMemory (only triggered by user action, not render). */
+  const completeLesson = useCallback((chId, lessonName) => {
+    const mem = loadMemory();
+    if (!mem.profile.courseProgress) mem.profile.courseProgress = {};
+    if (!mem.profile.courseProgress[chId]) {
+      mem.profile.courseProgress[chId] = { completed: [], started: new Date().toISOString().split('T')[0], done: false };
+    }
 
-  /**
-   * completeLesson — Mark a lesson as done, award XP, check for chapter/subject
-   * completion.  Returns the subject name if a certificate should be shown.
-   */
-  const completeLesson = useCallback(
-    (chId, lessonName) => {
-      const mem = loadMemory();
-      if (!mem.profile.courseProgress) mem.profile.courseProgress = {};
-      if (!mem.profile.courseProgress[chId]) {
-        mem.profile.courseProgress[chId] = {
-          completed: [],
-          started: new Date().toISOString().split('T')[0],
-          done: false,
-        };
-      }
+    const cp = mem.profile.courseProgress[chId];
+    if (!cp.completed.includes(lessonName)) { cp.completed.push(lessonName); addXP(20); }
 
-      const cp = mem.profile.courseProgress[chId];
-
-      // Mark lesson
-      if (!cp.completed.includes(lessonName)) {
-        cp.completed.push(lessonName);
-        addXP(20);
-      }
-
-      // Check chapter completion
-      const course = getCourse();
-      let showCert = null;
-
-      if (course) {
-        const ch = course.chapters.find((c) => c.id === chId);
-        if (ch && cp.completed.length >= ch.lessons.length && !cp.done) {
-          cp.done = true;
-          addXP(50);
-
-          // Check full subject completion
-          const prog = getCourseProgress();
-          if (prog && prog.chaptersComplete >= prog.totalChapters) {
-            addXP(100);
-            showCert = subject;
-          }
-        }
-      }
-
-      saveMemory(mem);
-      return showCert;
-    },
-    [loadMemory, saveMemory, getCourse, getCourseProgress, addXP, subject]
-  );
-
-  /**
-   * selectLesson — Picks a lesson from a chapter and returns the prompt text
-   * for the AI.  The caller should trigger the AI call with this text and
-   * then call completeLesson after the reply.
-   */
-  const selectLesson = useCallback(
-    (chId, lessonIdx) => {
-      const course = getCourse();
-      if (!course) return null;
+    const course = getCourse();
+    let showCert = null;
+    if (course) {
       const ch = course.chapters.find((c) => c.id === chId);
-      if (!ch) return null;
-      const lesson = ch.lessons[lessonIdx];
-      if (!lesson) return null;
-      return { chId, lesson };
-    },
-    [getCourse]
-  );
+      if (ch && cp.completed.length >= ch.lessons.length && !cp.done) {
+        cp.done = true;
+        addXP(50);
+        // Check full subject completion
+        const allCp = mem.profile.courseProgress;
+        const allDone = course.chapters.every(c => allCp[c.id]?.done);
+        if (allDone) { addXP(100); showCert = subject; }
+      }
+    }
+    saveMemory(mem);
+    return showCert;
+  }, [loadMemory, saveMemory, getCourse, addXP, subject]);
 
-  /**
-   * selectChapter — Toggle active chapter in sidebar.
-   */
-  const selectChapter = useCallback(
-    (chId) => {
-      // Toggle: if clicking the already-active chapter, close it
-      setActiveChapter(activeChapter === chId ? null : chId);
-    },
-    [activeChapter, setActiveChapter]
-  );
+  const selectLesson = useCallback((chId, lessonIdx) => {
+    const course = getCourse();
+    if (!course) return null;
+    const ch = course.chapters.find((c) => c.id === chId);
+    if (!ch) return null;
+    const lesson = ch.lessons[lessonIdx];
+    if (!lesson) return null;
+    return { chId, lesson };
+  }, [getCourse]);
 
-  return {
-    getCourse,
-    getCourseProgress,
-    isChapterUnlocked,
-    completeLesson,
-    selectLesson,
-    selectChapter,
-  };
+  const selectChapter = useCallback((chId) => {
+    setActiveChapter(activeChapter === chId ? null : chId);
+  }, [activeChapter, setActiveChapter]);
+
+  return { getCourse, getCourseProgress, isChapterUnlocked, completeLesson, selectLesson, selectChapter };
 }

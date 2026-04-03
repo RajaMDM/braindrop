@@ -54,28 +54,19 @@ function LoginScreen() {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+    <div
       style={{
         position:'fixed', inset:0, background:'var(--bg)', display:'flex',
         alignItems:'center', justifyContent:'center', flexDirection:'column', zIndex:500
       }}
     >
       <div className="bgfx" /><div className="pgrid" />
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
+      <div
         style={{ maxWidth:460, padding:'40px 30px', textAlign:'center', position:'relative', zIndex:1 }}
       >
-        <motion.div
-          animate={{ y: [0, -8, 0, -4, 0] }}
-          transition={{ duration: 3, ease: 'easeInOut', repeat: Infinity }}
-          style={{ fontSize:'4rem', marginBottom:16, filter:'drop-shadow(0 0 30px rgba(180,74,255,.5))' }}
-        >
+        <div style={{ fontSize:'4rem', marginBottom:16, filter:'drop-shadow(0 0 30px rgba(180,74,255,.5))' }}>
           ⚡
-        </motion.div>
+        </div>
         <div style={{
           fontSize:'2rem', fontWeight:700,
           background:'linear-gradient(135deg,#ff6b9d,#b44aff)',
@@ -124,9 +115,7 @@ function LoginScreen() {
               color:'var(--t1)', fontFamily:'Fredoka,sans-serif', fontSize:'.88rem', outline:'none', marginBottom:10
             }}
           />
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+          <button
             onClick={handleGuest}
             style={{
               width:'100%', padding:11, borderRadius:8, border:'1px solid var(--np)',
@@ -135,7 +124,7 @@ function LoginScreen() {
             }}
           >
             Start Learning →
-          </motion.button>
+          </button>
         </div>
 
         <div style={{ fontSize:'.65rem', color:'var(--t3)', marginTop:20, lineHeight:1.6 }}>
@@ -144,7 +133,7 @@ function LoginScreen() {
           <a href="https://www.linkedin.com/in/raja-shahnawaz/" target="_blank" rel="noreferrer" style={{color:'var(--nb)'}}>LinkedIn</a> ·{' '}
           <a href="https://github.com/RajaMDM" target="_blank" rel="noreferrer" style={{color:'var(--ng)'}}>GitHub</a>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   )
 }

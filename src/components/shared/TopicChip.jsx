@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 export default function TopicChip({ label, onClick, delay = 0 }) {
   return (
     <motion.button
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 1, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.3 }}
       whileHover={{

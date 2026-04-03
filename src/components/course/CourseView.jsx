@@ -50,7 +50,7 @@ export default function CourseView() {
         {courseData.chapters.map((ch, idx) => (
           <motion.div
             key={ch.id}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 1, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.04 }}
           >

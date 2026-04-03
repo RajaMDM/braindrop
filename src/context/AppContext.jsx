@@ -4,6 +4,7 @@ import React, {
   useReducer,
   useEffect,
   useCallback,
+  useMemo,
 } from 'react';
 
 const AppContext = createContext(null);
@@ -193,7 +194,7 @@ export function AppProvider({ children }) {
     []
   );
 
-  const value = {
+  const value = useMemo(() => ({
     ...state,
     dispatch,
     setGrade,
@@ -208,7 +209,7 @@ export function AppProvider({ children }) {
     hideCertificate,
     setActiveChapter,
     setPreferences,
-  };
+  }), [state, dispatch, setGrade, setSubject, setMode, addMessage, clearMessages, setBusy, openModal, closeModal, triggerCertificate, hideCertificate, setActiveChapter, setPreferences]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

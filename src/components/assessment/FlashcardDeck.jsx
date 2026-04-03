@@ -31,7 +31,7 @@ export default function FlashcardDeck({ data }) {
     const needCount = Object.values(results).filter((r) => r === 'need').length;
     return (
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 1, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         style={{
           background: 'var(--bg3)', border: '1px solid var(--bd)',
@@ -93,7 +93,7 @@ export default function FlashcardDeck({ data }) {
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIdx}
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 1, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.2 }}

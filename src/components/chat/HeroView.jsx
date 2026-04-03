@@ -28,7 +28,7 @@ export default function HeroView({ onTopicClick, course, ragStatus, kbStatus, ch
   const info = MODE_INFO[mode] || MODE_INFO.explain;
   const topics = (T[grade] && T[grade][subject]) || [];
   const courseData = COURSES[grade]?.[subject] || null;
-  const showCourse = mode === 'explain' && courseData;
+  const showCourse = false; // TODO: re-enable after fixing render loop in useCourseProgress
   const agents = mode === 'classroom' ? getClassroomAgents(grade) : null;
 
   const memCount = memory?.history?.length || 0;
@@ -72,7 +72,7 @@ export default function HeroView({ onTopicClick, course, ragStatus, kbStatus, ch
             return (
               <motion.div
                 key={role}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 1, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: role === 'teacher' ? 0 : role === 'classmate1' ? 0.1 : 0.2 }}
                 style={{
