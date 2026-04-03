@@ -60,22 +60,7 @@ export default function MessageBubble({ message, onGenerateSim }) {
                 via {message.ai}
               </div>
             )}
-            {/* Generate Simulation button */}
-            <motion.button
-              whileHover={{ scale: 1.03, borderColor: 'var(--np)', y: -1 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => onGenerateSim(message.text)}
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: 5,
-                marginTop: 8, padding: '5px 12px', borderRadius: 7,
-                border: '1px solid rgba(180,74,255,.2)',
-                background: 'rgba(180,74,255,.06)',
-                color: 'var(--np)', fontFamily: "'Fredoka',sans-serif",
-                fontSize: '.7rem', fontWeight: 500, cursor: 'pointer',
-              }}
-            >
-              &#x26A1; Generate Simulation
-            </motion.button>
+            {/* Simulation button removed — simulations come from AI auto-detect or /sim command */}
           </>
         )}
       </div>
