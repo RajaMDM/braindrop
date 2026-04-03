@@ -152,9 +152,18 @@ export function useAI() {
       let reply = '';
       let usedAI = '';
 
+      // For quiz/flashcard modes, inject format reminder directly into the user message
+      // so the AI sees it in the conversation, not just in system instructions (Gemini ignores system_instruction for structured output)
+      let enhancedMsg = userMsg;
+      if (mode === 'quiz') {
+        enhancedMsg = userMsg + '\n\n[IMPORTANT: Respond with a <quiz-data> JSON block containing exactly 5 MCQ questions. Format: <quiz-data>[{"q":"...","options":["A)...","B)...","C)...","D)..."],"answer":0,"explanation":"...","difficulty":"easy","topic":"..."}]</quiz-data>]';
+      } else if (mode === 'flashcard') {
+        enhancedMsg = userMsg + '\n\n[IMPORTANT: Respond with a <flashcard-data> JSON block containing 8-10 flashcards. Format: <flashcard-data>[{"front":"...","back":"...","topic":"..."}]</flashcard-data>]';
+      }
+
       for (const provider of tryOrder) {
         try {
-          reply = await callProvider(provider, userMsg, systemPrompt, history);
+          reply = await callProvider(provider, enhancedMsg, systemPrompt, history);
           usedAI = AI_PROVIDERS[provider].name;
           lastAIRef.current = provider;
           usage[provider] = (usage[provider] || 0) + 1;
