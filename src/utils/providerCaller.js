@@ -58,6 +58,24 @@ export async function callProvider(
   const ollamaModel = config.ollamaModel || 'llama3.2';
   const msgs = history.slice(-16);
 
+  // Truncate system prompt to prevent oversized requests on free-tier providers
+  const maxPromptLen = provider === 'claude' ? 40000 : 20000;
+  const sysPrompt = systemPrompt.length > maxPromptLen ? systemPrompt.substring(0, maxPromptLen) + '\n[Context truncated for token limits]' : systemPrompt;
+
+  // Helper: fetch with 30s timeout
+  async function fetchWithTimeout(url, opts) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 30000);
+    try {
+      const res = await fetch(url, { ...opts, signal: controller.signal });
+      clearTimeout(timer);
+      return res;
+    } catch (err) {
+      clearTimeout(timer);
+      throw err;
+    }
+  }
+
   switch (provider) {
     case 'claude': {
       const messages = msgs.map((m) => ({
@@ -65,13 +83,13 @@ export async function callProvider(
         content: m.text,
       }));
       messages.push({ role: 'user', content: userMsg });
-      const res = await fetch(`${proxy}/claude`, {
+      const res = await fetchWithTimeout(`${proxy}/claude`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
           max_tokens: 4096,
-          system: systemPrompt,
+          system: sysPrompt,
           messages,
         }),
       });
@@ -86,11 +104,11 @@ export async function callProvider(
         parts: [{ text: m.text }],
       }));
       contents.push({ role: 'user', parts: [{ text: userMsg }] });
-      const res = await fetch(`${proxy}/gemini`, {
+      const res = await fetchWithTimeout(`${proxy}/gemini`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
-          system_instruction: { parts: [{ text: systemPrompt }] },
+          system_instruction: { parts: [{ text: sysPrompt }] },
           contents,
           generationConfig: { temperature: 0.75, maxOutputTokens: 4096, topP: 0.95 },
           safetySettings: [
@@ -108,14 +126,14 @@ export async function callProvider(
 
     case 'openai': {
       const messages = [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: sysPrompt },
         ...msgs.map((m) => ({
           role: m.role === 'model' ? 'assistant' : 'user',
           content: m.text,
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetch(`${proxy}/openai`, {
+      const res = await fetchWithTimeout(`${proxy}/openai`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({ model: 'gpt-4o-mini', max_tokens: 4096, messages }),
@@ -127,14 +145,14 @@ export async function callProvider(
 
     case 'groq': {
       const messages = [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: sysPrompt },
         ...msgs.map((m) => ({
           role: m.role === 'model' ? 'assistant' : 'user',
           content: m.text,
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetch(`${proxy}/groq`, {
+      const res = await fetchWithTimeout(`${proxy}/groq`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
@@ -150,14 +168,14 @@ export async function callProvider(
 
     case 'deepseek': {
       const messages = [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: sysPrompt },
         ...msgs.map((m) => ({
           role: m.role === 'model' ? 'assistant' : 'user',
           content: m.text,
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetch(`${proxy}/deepseek`, {
+      const res = await fetchWithTimeout(`${proxy}/deepseek`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({ model: 'deepseek-chat', max_tokens: 4096, messages }),
@@ -169,14 +187,14 @@ export async function callProvider(
 
     case 'mistral': {
       const messages = [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: sysPrompt },
         ...msgs.map((m) => ({
           role: m.role === 'model' ? 'assistant' : 'user',
           content: m.text,
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetch(`${proxy}/mistral`, {
+      const res = await fetchWithTimeout(`${proxy}/mistral`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
@@ -192,14 +210,14 @@ export async function callProvider(
 
     case 'nvidia': {
       const messages = [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: sysPrompt },
         ...msgs.map((m) => ({
           role: m.role === 'model' ? 'assistant' : 'user',
           content: m.text,
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetch(`${proxy}/nvidia`, {
+      const res = await fetchWithTimeout(`${proxy}/nvidia`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
@@ -217,7 +235,7 @@ export async function callProvider(
 
     case 'ollama': {
       const messages = [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: sysPrompt },
         ...msgs.map((m) => ({
           role: m.role === 'model' ? 'assistant' : 'user',
           content: m.text,
@@ -266,6 +284,18 @@ export async function callProviderWithSys(
   const ollamaModel = config.ollamaModel || 'llama3.2';
   const msgs = formattedMsgs;
 
+  // Truncate system prompt for free-tier limits
+  const maxLen = provider === 'claude' ? 40000 : 20000;
+  const sysPrompt = systemPrompt.length > maxLen ? systemPrompt.substring(0, maxLen) + '\n[Context truncated]' : systemPrompt;
+
+  // Timeout helper
+  async function fetchWithTimeout(url, opts) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 30000);
+    try { const res = await fetch(url, { ...opts, signal: controller.signal }); clearTimeout(timer); return res; }
+    catch (err) { clearTimeout(timer); throw err; }
+  }
+
   switch (provider) {
     case 'claude': {
       const messages = msgs.map((m) => ({
@@ -273,13 +303,13 @@ export async function callProviderWithSys(
         content: m.text,
       }));
       messages.push({ role: 'user', content: userMsg });
-      const res = await fetch(`${proxy}/claude`, {
+      const res = await fetchWithTimeout(`${proxy}/claude`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
           max_tokens: 4096,
-          system: systemPrompt,
+          system: sysPrompt,
           messages,
         }),
       });
@@ -294,11 +324,11 @@ export async function callProviderWithSys(
         parts: [{ text: m.text }],
       }));
       contents.push({ role: 'user', parts: [{ text: userMsg }] });
-      const res = await fetch(`${proxy}/gemini`, {
+      const res = await fetchWithTimeout(`${proxy}/gemini`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
-          system_instruction: { parts: [{ text: systemPrompt }] },
+          system_instruction: { parts: [{ text: sysPrompt }] },
           contents,
           generationConfig: { temperature: 0.75, maxOutputTokens: 4096, topP: 0.95 },
           safetySettings: [
@@ -316,14 +346,14 @@ export async function callProviderWithSys(
 
     case 'openai': {
       const messages = [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: sysPrompt },
         ...msgs.map((m) => ({
           role: m.role === 'assistant' ? 'assistant' : 'user',
           content: m.text,
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetch(`${proxy}/openai`, {
+      const res = await fetchWithTimeout(`${proxy}/openai`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({ model: 'gpt-4o-mini', max_tokens: 4096, messages }),
@@ -335,14 +365,14 @@ export async function callProviderWithSys(
 
     case 'groq': {
       const messages = [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: sysPrompt },
         ...msgs.map((m) => ({
           role: m.role === 'assistant' ? 'assistant' : 'user',
           content: m.text,
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetch(`${proxy}/groq`, {
+      const res = await fetchWithTimeout(`${proxy}/groq`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
@@ -358,14 +388,14 @@ export async function callProviderWithSys(
 
     case 'deepseek': {
       const messages = [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: sysPrompt },
         ...msgs.map((m) => ({
           role: m.role === 'assistant' ? 'assistant' : 'user',
           content: m.text,
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetch(`${proxy}/deepseek`, {
+      const res = await fetchWithTimeout(`${proxy}/deepseek`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({ model: 'deepseek-chat', max_tokens: 4096, messages }),
@@ -377,14 +407,14 @@ export async function callProviderWithSys(
 
     case 'mistral': {
       const messages = [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: sysPrompt },
         ...msgs.map((m) => ({
           role: m.role === 'assistant' ? 'assistant' : 'user',
           content: m.text,
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetch(`${proxy}/mistral`, {
+      const res = await fetchWithTimeout(`${proxy}/mistral`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
@@ -400,14 +430,14 @@ export async function callProviderWithSys(
 
     case 'nvidia': {
       const messages = [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: sysPrompt },
         ...msgs.map((m) => ({
           role: m.role === 'assistant' ? 'assistant' : 'user',
           content: m.text,
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetch(`${proxy}/nvidia`, {
+      const res = await fetchWithTimeout(`${proxy}/nvidia`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
@@ -425,7 +455,7 @@ export async function callProviderWithSys(
 
     case 'ollama': {
       const messages = [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: sysPrompt },
         ...msgs.map((m) => ({
           role: m.role === 'assistant' ? 'assistant' : 'user',
           content: m.text,
