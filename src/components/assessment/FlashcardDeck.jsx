@@ -11,9 +11,9 @@ export default function FlashcardDeck({ data }) {
   const [results, setResults] = useState({}); // { idx: 'got' | 'need' }
   const [showSummary, setShowSummary] = useState(false);
 
-  if (!data || !data.cards || data.cards.length === 0) return null;
-
-  const cards = data.cards;
+  // Accept both array and {cards:[...]} shapes
+  const cards = Array.isArray(data) ? data : (data?.cards || data?.flashcards || data?.items || []);
+  if (!cards || cards.length === 0) return null;
   const card = cards[currentIdx];
   const totalDone = Object.keys(results).length;
 

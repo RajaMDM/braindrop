@@ -16,16 +16,19 @@ export default function QuizCard({ data }) {
   const [answered, setAnswered] = useState({});
   const [showScore, setShowScore] = useState(false);
 
-  if (!data || !data.questions || data.questions.length === 0) return null;
+  // Accept both array and {questions:[...]} shapes
+  const questions = Array.isArray(data) ? data : (data?.questions || data?.items || []);
+  if (!questions || questions.length === 0) return null;
 
-  const questions = data.questions;
   const totalAnswered = Object.keys(answered).length;
   const allDone = totalAnswered === questions.length;
 
   const handleAnswer = (qIdx, optIdx) => {
     if (answered[qIdx] !== undefined) return;
     const q = questions[qIdx];
-    const isCorrect = optIdx === q.correct;
+    // Accept: answer, correct, correctAnswer — all normalized to a number
+    const correctIdx = q.answer ?? q.correct ?? q.correctAnswer ?? 0;
+    const isCorrect = optIdx === correctIdx;
 
     setAnswered((prev) => ({ ...prev, [qIdx]: { selected: optIdx, correct: isCorrect } }));
 
@@ -100,7 +103,7 @@ export default function QuizCard({ data }) {
                 const letter = String.fromCharCode(65 + optIdx);
                 const isDone = answer !== undefined;
                 const isSelected = answer?.selected === optIdx;
-                const isCorrectOpt = optIdx === q.correct;
+                const isCorrectOpt = optIdx === (q.answer ?? q.correct ?? q.correctAnswer ?? 0);
 
                 let borderColor = 'var(--bd)';
                 let bg = 'var(--bg)';
