@@ -2,6 +2,10 @@ name = "braindrop-ai-proxy"
 main = "cloudflare-worker-proxy.js"
 compatibility_date = "2026-03-17"
 
+[[r2_buckets]]
+binding = "PDF_BUCKET"
+bucket_name = "braindrop-library"
+
 [observability]
 enabled = true
 
@@ -13,6 +17,4 @@ enabled = true
 #   ANTHROPIC_API_KEY
 #   GEMINI_API_KEY
 #   GROQ_API_KEY
-#   OPENAI_API_KEY
-#   DEEPSEEK_API_KEY
-#   MISTRAL_API_KEY
+#   NVIDIA_API_KEY

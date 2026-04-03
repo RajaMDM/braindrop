@@ -96,6 +96,29 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
+    // ─── PDF serving from R2 ───
+    if (path.startsWith('/pdf/') && request.method === 'GET') {
+      const key = path.slice(5); // Remove '/pdf/' prefix → 'grade10/hindi.pdf'
+      if (!key || key.includes('..')) {
+        return json({ error: 'Invalid path' }, 400);
+      }
+      try {
+        const object = await env.PDF_BUCKET.get(key);
+        if (!object) {
+          return json({ error: 'Not found' }, 404);
+        }
+        return new Response(object.body, {
+          headers: {
+            ...CORS_HEADERS,
+            'Content-Type': 'application/pdf',
+            'Cache-Control': 'public, max-age=86400',
+          },
+        });
+      } catch (err) {
+        return json({ error: `R2 error: ${err.message}` }, 500);
+      }
+    }
+
     // ─── Health check ───
     if (path === '/' || path === '/health') {
       const status = {};
