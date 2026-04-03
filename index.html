@@ -186,7 +186,7 @@
     <div class="kbct">Knowledge Base</div>
     <div class="kbcv no" id="kbs">Loading PDFs...</div>
     <div class="aibadge">
-      <span class="aib cl">Claude</span><span class="aib gm">Gemini</span><span class="aib" style="background:rgba(118,185,0,.12);color:#76b900">NVIDIA</span><span class="aib gpt">GPT</span><span class="aib gq">Groq</span><span class="aib ds">DeepSeek</span><span class="aib ms">Mistral</span>
+      <span class="aib" style="background:rgba(118,185,0,.12);color:#76b900">NVIDIA</span><span class="aib gq">Groq</span><span class="aib gm">Gemini</span><span class="aib cl">Claude</span>
     </div>
     <div class="membadge" id="memBadge">🧠 Memory: loading...</div>
   </div>
@@ -226,20 +226,17 @@
   <p style="color:var(--t2);font-size:.8rem;margin-bottom:14px">Customize your BrainDrop experience. All AI engines are ready to go — no setup needed!</p>
 
   <div style="padding:12px;background:rgba(57,255,20,.06);border:1px solid rgba(57,255,20,.15);border-radius:10px;margin-bottom:16px;font-size:.78rem;color:var(--ng);display:flex;align-items:center;gap:8px">
-    <span style="font-size:1.2rem">✓</span> <span>7 AI engines active — Claude, Gemini, NVIDIA, GPT, Groq, DeepSeek, Mistral</span>
+    <span style="font-size:1.2rem">✓</span> <span>4 AI engines active — NVIDIA, Groq, Gemini, Claude</span>
   </div>
 
   <div class="fg"><label class="fl">Your Name</label><input type="text" class="fi" id="nI" placeholder="What should I call you?"></div>
   <div class="fg"><label class="fl">Preferred AI Engine</label>
     <select class="fi" id="prefSel">
-      <option value="auto">🔄 Auto (free engines first)</option>
-      <option value="nvidia">🟢 NVIDIA Llama 3.3 (free)</option>
-      <option value="groq">🟠 Groq Llama 3.3 (free, ultra-fast)</option>
-      <option value="gemini">🟢 Gemini 2.5 Flash (free)</option>
-      <option value="deepseek">🔵 DeepSeek (cheap, great at maths)</option>
-      <option value="mistral">🔴 Mistral (free, strong Hindi)</option>
-      <option value="openai">🟩 GPT-4o-mini (free tier)</option>
-      <option value="claude">🟣 Claude (best teaching)</option>
+      <option value="auto">🔄 Auto (smart fallback)</option>
+      <option value="nvidia">🟢 NVIDIA Llama 3.3 70B</option>
+      <option value="groq">🟠 Groq Llama 3.3 (ultra-fast)</option>
+      <option value="gemini">🟢 Gemini 2.5 Flash</option>
+      <option value="claude">🟣 Claude Haiku (best teaching)</option>
     </select>
     <div class="fh">Auto mode picks the best available engine. Switch manually if you prefer a specific AI.</div>
   </div>
@@ -328,7 +325,7 @@ function getClassroomProviders(){
 
 const Z = {
   g:10, s:'mathematics', m:'explain',
-  ck:'PROXY', gk:'PROXY', ok:'PROXY', qk:'PROXY', dk:'PROXY', mk:'PROXY', nv:'PROXY', ol:'', olURL:'http://localhost:11434', olModel:'llama3.2',
+  ck:'PROXY', gk:'PROXY', ok:'', qk:'PROXY', dk:'', mk:'', nv:'PROXY', ol:'', olURL:'http://localhost:11434', olModel:'llama3.2',
   n:'', pref:'auto', h:[], kb:{}, pdfKB:{}, busy:false, xp:0, str:0, qc:0, activeChapter:null, _pendingLesson:null,
   usage:{ claude:0, gemini:0, openai:0, groq:0, deepseek:0, mistral:0, ollama:0, date:new Date().toDateString() },
   dailyLimit:50, user:null, lastAI:''
@@ -336,7 +333,7 @@ const Z = {
 
 try {
   const sv = JSON.parse(localStorage.getItem('bd2')||'{}');
-  Object.assign(Z,{ck:sv.ck||'PROXY',gk:sv.gk||'PROXY',ok:sv.ok||'PROXY',qk:sv.qk||'PROXY',dk:sv.dk||'PROXY',mk:sv.mk||'PROXY',nv:sv.nv||'PROXY',ol:sv.ol||'',olURL:sv.olURL||'http://localhost:11434',olModel:sv.olModel||'llama3.2',n:sv.n||'',pref:sv.pref||'auto',xp:sv.xp||0,str:sv.str||0,qc:sv.qc||0,dailyLimit:sv.dailyLimit||50});
+  Object.assign(Z,{ck:sv.ck||'PROXY',gk:sv.gk||'PROXY',ok:sv.ok||'',qk:sv.qk||'PROXY',dk:sv.dk||'',mk:sv.mk||'',nv:sv.nv||'PROXY',ol:sv.ol||'',olURL:sv.olURL||'http://localhost:11434',olModel:sv.olModel||'llama3.2',n:sv.n||'',pref:sv.pref||'auto',xp:sv.xp||0,str:sv.str||0,qc:sv.qc||0,dailyLimit:sv.dailyLimit||50});
   if(sv.usage){if(sv.usage.date===new Date().toDateString())Z.usage=sv.usage;else Z.usage={claude:0,gemini:0,nvidia:0,openai:0,groq:0,deepseek:0,mistral:0,date:new Date().toDateString()};}
 } catch(e){}
 
