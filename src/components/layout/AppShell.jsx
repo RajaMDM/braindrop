@@ -90,7 +90,7 @@ export default function AppShell() {
         addMessage({ role: 'assistant', text: result.classmate2Reply, ai: result.classmate2AI, agent: 'classmate2', ts: Date.now() });
       }
       if (!result.teacherReply) {
-        addMessage({ role: 'assistant', text: 'No AI providers available. Please add an API key in Settings.', ai: '', ts: Date.now() });
+        addMessage({ role: 'assistant', text: 'AI is temporarily unavailable. Please try again in a moment.', ai: '', ts: Date.now() });
       }
     } else {
       const result = await ai.callAI(text);
@@ -98,7 +98,7 @@ export default function AppShell() {
         addMessage({ role: 'assistant', text: result.reply, ai: result.usedAI, ts: Date.now() });
         setLastAIName(result.usedAI || '');
       } else {
-        addMessage({ role: 'assistant', text: result.error === 'no_providers' ? 'No AI providers configured. Please add an API key in Settings.' : 'All AI providers failed. Please try again.', ai: '', ts: Date.now() });
+        addMessage({ role: 'assistant', text: 'AI engines are busy right now. Please try again in a moment.', ai: '', ts: Date.now() });
       }
     }
     setBusy(false);

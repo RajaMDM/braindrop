@@ -41,19 +41,14 @@ function writeUsage(usage) {
 }
 
 /**
- * Get available providers — those whose stateKey has a truthy value in
- * localStorage('bd2').  This mirrors legacy getAvailableProviders().
+ * Get available providers.
+ * All API keys are server-side in the Cloudflare Worker — no localStorage check needed.
+ * Returns the providers that have keys configured in the Worker.
  */
 function getAvailableProviders() {
-  try {
-    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    return PROVIDER_ORDER.filter((p) => {
-      const key = AI_PROVIDERS[p].stateKey;
-      return !!stored[key];
-    });
-  } catch {
-    return [];
-  }
+  // These 4 providers have keys configured in braindrop-ai-proxy Worker.
+  // Groq is included but may fail if key expired — fallback chain handles it.
+  return ['nvidia', 'groq', 'gemini', 'claude'];
 }
 
 /**
