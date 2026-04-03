@@ -155,9 +155,13 @@ EXACT format — copy this structure:
 
 Rules:
 - Generate 8-10 flashcards.
-- Front: concise question/term (1-2 lines). Back: clear answer (1-3 lines).
+- KEEP IT SHORT: Front = max 10 words (a question or term). Back = max 15 words (the answer or formula).
+- For math: use LaTeX like $\\frac{2}{3}\\pi r^3$ — it renders beautifully.
+- NO long explanations. NO paragraphs. If the answer needs a sentence, make it ONE sentence.
+- Good example: front "Volume of hemisphere?" back "$V = \\frac{2}{3}\\pi r^3$"
+- Bad example: front "What is..." back "The volume of a hemisphere is calculated by taking two-thirds of pi times the cube of the radius which is exactly half the volume of a full sphere"
 - After the </flashcard-data> closing tag, add 1 line study tip.
-- If you do NOT output <flashcard-data> tags, the flashcards WILL NOT RENDER. This breaks the app.`,
+- If you do NOT output <flashcard-data> tags, the flashcards WILL NOT RENDER.`,
 
     examprep: '\n\nMODE: Exam Prep\n- Board patterns from last 10 years\n- Cheat sheets, traps, full-marks format\n- Time management + HOTS practice',
     tutor: '\n\nMODE: AI Tutor\n- Answer anything. Adapt to level.\n- Suggest next topics based on memory\n- Connect related concepts',
