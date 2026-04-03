@@ -300,19 +300,30 @@ const AI_PROVIDERS = {
 };
 const PROVIDER_ORDER = ['claude','gemini','nvidia','groq','openai','deepseek','mistral','ollama'];
 
-const CLASSROOM_AGENTS = {
-  teacher: { name:'Ms. Sharma', role:'teacher', emoji:'\u{1F469}\u200D\u{1F3EB}', color:'#b44aff', personality:'Patient, methodical, uses NCERT examples, connects to real life' },
-  classmate: { name:'Arjun', role:'classmate', emoji:'\u{1F64B}\u200D\u2642\uFE0F', color:'#00f5d4', personality:'Curious, sometimes confused, asks the questions students are afraid to ask' }
+const CLASSROOM_AGENTS_BY_GRADE = {
+  10: {
+    teacher: { name:'Sunita Ma\'am', role:'teacher', emoji:'\u{1F469}\u200D\u{1F3EB}', color:'#b44aff', personality:'Warm, structured, expert CBSE teacher who connects concepts to real life and exam patterns' },
+    classmate1: { name:'Aabha', role:'classmate1', emoji:'\u{1F64B}\u200D\u2640\uFE0F', color:'#00f5d4', personality:'Studious and curious, asks thoughtful questions, sometimes overthinks, wants to understand the "why" behind everything' },
+    classmate2: { name:'Optimus Prime', role:'classmate2', emoji:'\u{1F916}', color:'#ff6d00', personality:'Bold and dramatic, makes wild analogies (compares maths to battle strategies, science to superpowers), funny but surprisingly insightful, says "Autobots, let\'s learn!" and "That formula is our weapon!"' }
+  },
+  7: {
+    teacher: { name:'Rupa Ma\'am', role:'teacher', emoji:'\u{1F469}\u200D\u{1F3EB}', color:'#b44aff', personality:'Gentle, encouraging, uses lots of stories and fun examples, perfect for younger students' },
+    classmate1: { name:'Buffy', role:'classmate1', emoji:'\u{1F43E}', color:'#00f5d4', personality:'Energetic and playful, often confused but not afraid to ask "silly" questions, uses funny comparisons to food and games' },
+    classmate2: { name:'BumbleBee', role:'classmate2', emoji:'\u{1F41D}', color:'#fee440', personality:'Shy at first but buzzes with excitement when something clicks, speaks in short bursts, loves fun facts, says "Bzzt! I get it now!" and "Wait wait wait..."' }
+  }
 };
+
+function getClassroomAgents(){ return CLASSROOM_AGENTS_BY_GRADE[Z.g] || CLASSROOM_AGENTS_BY_GRADE[10]; }
 
 function getClassroomProviders(){
   const avail=getAvailableProviders();
-  if(avail.length===0) return {teacher:null,classmate:null};
-  if(avail.length===1) return {teacher:avail[0],classmate:avail[0]};
+  if(avail.length===0) return {teacher:null,classmate1:null,classmate2:null};
+  if(avail.length===1) return {teacher:avail[0],classmate1:avail[0],classmate2:avail[0]};
   let teacherProv = Z.pref!=='auto'&&avail.includes(Z.pref) ? Z.pref : avail[0];
-  const freeTiers=['gemini','groq','ollama'];
-  let classmateProv = avail.find(p=>p!==teacherProv&&freeTiers.includes(p)) || avail.find(p=>p!==teacherProv) || teacherProv;
-  return {teacher:teacherProv, classmate:classmateProv};
+  const freeTiers=['gemini','nvidia','groq','ollama'];
+  let cm1Prov = avail.find(p=>p!==teacherProv&&freeTiers.includes(p)) || avail.find(p=>p!==teacherProv) || teacherProv;
+  let cm2Prov = avail.find(p=>p!==teacherProv&&p!==cm1Prov&&freeTiers.includes(p)) || avail.find(p=>p!==teacherProv&&p!==cm1Prov) || cm1Prov;
+  return {teacher:teacherProv, classmate1:cm1Prov, classmate2:cm2Prov};
 }
 
 const Z = {
@@ -682,38 +693,53 @@ function classroomSysP(agentRole){
   const nm=Z.n||'Student';const kbc=getKBForCurrentSubject(Z._ragQuery||'');
   const kbi=kbc?`\n\nKNOWLEDGE BASE (NCERT — PRIMARY source):\n---\n${kbc.substring(0,35000)}\n---`:'';
   const sn={mathematics:'Mathematics',science:'Science',english:'English','social-science':'Social Science',hindi:'Hindi'};
+  const subjectName=sn[Z.s]||Z.s;
   const ep=EP[Z.s];const epb=(Z.g===10&&ep)?`\n\nEXAM PATTERNS (2015-2024):\nHigh-freq: ${ep.hot.map(h=>`${h.t} (${h.f}, ${h.m} marks)`).join('; ')}.\nTraps: ${ep.tr.join('; ')}.`:'';
   const memCtx=getMemoryContext();
-  const t=CLASSROOM_AGENTS.teacher;const c=CLASSROOM_AGENTS.classmate;
+  const agents=getClassroomAgents();
+  const t=agents.teacher;const c1=agents.classmate1;const c2=agents.classmate2;
+  const subjectLock=`\nCRITICAL: You are in a ${subjectName} class. ALL your responses MUST be about ${subjectName} ONLY. Never drift into other subjects. If asked about another subject, say "That's not what we're covering today — let's focus on ${subjectName}!"`;
   if(agentRole==='teacher'){
-    return `You are ${t.name}, a warm and expert CBSE ${sn[Z.s]} teacher for Grade ${Z.g}. You are teaching in a classroom with a student named ${nm} and a classmate named ${c.name}.
-Personality: ${t.personality}.
+    return `You are ${t.name}, a warm and expert CBSE ${subjectName} teacher for Grade ${Z.g}. You are teaching in a classroom with student ${nm}, and two classmates: ${c1.name} and ${c2.name}.
+Personality: ${t.personality}.${subjectLock}
 Rules:
-- Deliver clear, structured explanations using NCERT content as primary source.
+- Deliver clear, structured explanations using NCERT ${subjectName} content as primary source.
 - Use Indian examples (cricket scores for maths, festivals for science, Bollywood for English).
 - Break concepts into small steps. Use mnemonics and memory tricks.
 - For formulas: explain WHY, not just HOW.
-- After explaining, naturally invite questions: "Any doubts, ${nm}?" or "What do you think, ${c.name}?"
-- When ${c.name} asks a question or gets confused, respond warmly and clarify.
-- When ${c.name} says something wrong, gently correct with encouragement.
+- After explaining, invite questions: "Any doubts, ${nm}?" or "What do you think, ${c1.name}?" or "${c2.name}, any thoughts?"
+- When classmates ask questions or get confused, respond warmly and clarify.
+- When classmates say something wrong, gently correct with encouragement.
 - Use Markdown: **bold** key terms, bullets, > callouts, \`code\` for formulas.
 - For Hindi subject: respond in Devanagari.
 - Emojis sparingly. Match Hindi/Hinglish if student uses it.
 - Keep responses focused but thorough (not too long).${kbi}${epb}${memCtx}`;
-  } else {
-    return `You are ${c.name}, a Grade ${Z.g} CBSE student sitting in ${t.name}'s ${sn[Z.s]} class alongside your classmate ${nm}.
-Personality: ${c.personality}.
+  } else if(agentRole==='classmate1'){
+    return `You are ${c1.name}, a Grade ${Z.g} CBSE student sitting in ${t.name}'s ${subjectName} class alongside classmate ${nm} and ${c2.name}.
+Personality: ${c1.personality}.${subjectLock}
 Rules:
-- You are a STUDENT, not a teacher. React naturally to what ${t.name} just explained.
-- Ask questions that students genuinely wonder about but are shy to ask.
-- Sometimes get confused or make small mistakes — this helps everyone learn when ${t.name} corrects you.
-- Be relatable: mention exam stress, board prep anxiety, "will this come in boards?", cricket/Bollywood references.
-- Keep responses SHORT: 2-4 sentences max. You're a student commenting, not lecturing.
-- Sometimes say things like "Oh wait, so that means..." or "But ma'am, what if..." or "Bro ${nm}, did you get that part?"
-- If ${nm} asks something, you can chime in with your own understanding (right or wrong).
-- Use casual tone. Hinglish is fine if the student uses it.
-- For Hindi subject: respond in Devanagari with casual student tone.
-- NEVER repeat what ${t.name} already said. Add your own perspective or doubt.`;
+- You are a STUDENT, not a teacher. React to what ${t.name} just explained about ${subjectName}.
+- Ask thoughtful questions that students genuinely wonder about.
+- Sometimes get confused or make small mistakes — this helps everyone learn.
+- Keep responses SHORT: 2-3 sentences max.
+- Be relatable: mention exam stress, "will this come in boards?", real-life connections.
+- Sometimes say things like "Oh wait, so that means..." or "But ma'am, what if..."
+- Use casual tone. Hinglish is fine.
+- For Hindi subject: respond in Devanagari with student tone.
+- NEVER repeat what ${t.name} already said. Add your own perspective or doubt.
+- You can also react to what ${c2.name} says.`;
+  } else {
+    return `You are ${c2.name}, a Grade ${Z.g} CBSE student sitting in ${t.name}'s ${subjectName} class alongside classmate ${nm} and ${c1.name}.
+Personality: ${c2.personality}.${subjectLock}
+Rules:
+- You are a STUDENT with a unique personality. React to what ${t.name} and ${c1.name} just said about ${subjectName}.
+- Stay in character! Your personality is what makes this classroom fun.
+- Keep responses SHORT: 1-3 sentences max. Punchy and in-character.
+- Sometimes get things hilariously wrong, sometimes have surprising insights.
+- React to ${c1.name}'s comments too — agree, disagree, or build on them.
+- Use casual tone. Be entertaining but educational.
+- For Hindi subject: respond in Devanagari with your character's energy.
+- NEVER just repeat what others said. Bring YOUR unique angle.`;
   }
 }
 
@@ -802,70 +828,71 @@ async function callAI(userMsg){
 
 async function callClassroom(userMsg){
   const provs=getClassroomProviders();
+  const agents=getClassroomAgents();
   if(!provs.teacher){addM('ai','⚙️ **Hey!** AI engines are not available right now. Please try again shortly.');return}
   if(Z.usage.date!==new Date().toDateString())Z.usage={claude:0,gemini:0,nvidia:0,openai:0,groq:0,deepseek:0,mistral:0,ollama:0,date:new Date().toDateString()};
 
   Z.h.push({role:'user',text:userMsg,agent:'student'});Z._ragQuery=userMsg;
   showT('teacher');Z.busy=true;document.getElementById('sb').disabled=true;
 
-  // Teacher responds
-  let teacherReply='',classmateReply='';
-  const teacherMsgs=Z.h.slice(-16).map(m=>{
-    if(m.agent==='teacher') return {role:'assistant',text:m.text};
-    if(m.agent==='classmate') return {role:'user',text:`[${CLASSROOM_AGENTS.classmate.name}]: ${m.text}`};
-    return {role:'user',text:m.text};
-  });
+  // Helper to format history for a given agent role
+  function fmtMsgs(forRole){
+    return Z.h.slice(-16).map(m=>{
+      if(m.agent===forRole) return {role:'assistant',text:m.text};
+      const label=m.agent==='teacher'?agents.teacher.name:m.agent==='classmate1'?agents.classmate1.name:m.agent==='classmate2'?agents.classmate2.name:(Z.n||'Student');
+      return {role:'user',text:`[${label}]: ${m.text}`};
+    });
+  }
 
+  // Teacher responds
+  let teacherReply='';
   try{
-    const oldSysP=sysP;
-    const tSys=classroomSysP('teacher');
-    // Temporarily override sysP for teacher call
-    window._crSysOverride=tSys;
-    teacherReply=await callProviderWithSys(provs.teacher,userMsg,tSys,teacherMsgs);
+    teacherReply=await callProviderWithSys(provs.teacher,userMsg,classroomSysP('teacher'),fmtMsgs('teacher'));
     Z.usage[provs.teacher]=(Z.usage[provs.teacher]||0)+1;
     Z.lastAI=provs.teacher;
-  }catch(err){
-    console.log('Teacher failed:',err.message);
-    teacherReply='';
-  }
+  }catch(err){console.warn('[Classroom] Teacher failed:',err.message)}
   hideT();
 
-  if(teacherReply){
-    Z.h.push({role:'model',text:teacherReply,agent:'teacher'});
-    addM('teacher',teacherReply,AI_PROVIDERS[provs.teacher]?.name);
-    updateLearningProfile(userMsg,teacherReply);
-    gXP(12);Z.qc++;
+  if(!teacherReply){hideT();addM('ai','❌ **Teacher couldn\'t respond.** Please try again shortly.');Z.busy=false;document.getElementById('sb').disabled=false;return}
 
-    // Classmate reacts after short delay
-    showT('classmate');
-    await new Promise(r=>setTimeout(r,600));
+  Z.h.push({role:'model',text:teacherReply,agent:'teacher'});
+  addM('teacher',teacherReply,AI_PROVIDERS[provs.teacher]?.name);
+  updateLearningProfile(userMsg,teacherReply);
+  gXP(12);Z.qc++;
 
-    const classmateMsgs=Z.h.slice(-16).map(m=>{
-      if(m.agent==='classmate') return {role:'assistant',text:m.text};
-      if(m.agent==='teacher') return {role:'user',text:`[${CLASSROOM_AGENTS.teacher.name}]: ${m.text}`};
-      return {role:'user',text:`[${Z.n||'Student'}]: ${m.text}`};
-    });
+  // Classmate 1 reacts
+  showT('classmate1');
+  await new Promise(r=>setTimeout(r,500));
+  let cm1Reply='';
+  try{
+    cm1Reply=await callProviderWithSys(provs.classmate1,`[${agents.teacher.name}] just explained: "${teacherReply.substring(0,400)}"\n\nReact naturally as a student in ${({mathematics:'Mathematics',science:'Science',english:'English','social-science':'Social Science',hindi:'Hindi'})[Z.s]} class.`,classroomSysP('classmate1'),fmtMsgs('classmate1'));
+    Z.usage[provs.classmate1]=(Z.usage[provs.classmate1]||0)+1;
+  }catch(err){console.warn('[Classroom] Classmate1 failed:',err.message)}
+  hideT();
 
-    try{
-      classmateReply=await callProviderWithSys(provs.classmate,`[${CLASSROOM_AGENTS.teacher.name}] just said: "${teacherReply.substring(0,500)}"\n\nReact naturally as a student.`,classroomSysP('classmate'),classmateMsgs);
-      Z.usage[provs.classmate]=(Z.usage[provs.classmate]||0)+1;
-    }catch(err){
-      console.log('Classmate failed:',err.message);
-      classmateReply='';
-    }
-    hideT();
-
-    if(classmateReply){
-      Z.h.push({role:'model',text:classmateReply,agent:'classmate'});
-      addM('classmate',classmateReply,AI_PROVIDERS[provs.classmate]?.name);
-    }
-
-    logEvent('chat',{subject:Z.s,mode:'classroom',ai:provs.teacher,grade:Z.g});
-    saveZ();
-  } else {
-    hideT();
-    addM('ai','❌ **Teacher couldn\'t respond.** Please try again shortly.');
+  if(cm1Reply){
+    Z.h.push({role:'model',text:cm1Reply,agent:'classmate1'});
+    addM('classmate1',cm1Reply,AI_PROVIDERS[provs.classmate1]?.name);
   }
+
+  // Classmate 2 reacts to both teacher and classmate 1
+  showT('classmate2');
+  await new Promise(r=>setTimeout(r,400));
+  let cm2Reply='';
+  const cm2Context=cm1Reply?`[${agents.teacher.name}] explained something, then [${agents.classmate1.name}] said: "${cm1Reply.substring(0,300)}"\n\nReact in character.`:`[${agents.teacher.name}] just explained: "${teacherReply.substring(0,400)}"\n\nReact in character.`;
+  try{
+    cm2Reply=await callProviderWithSys(provs.classmate2,cm2Context,classroomSysP('classmate2'),fmtMsgs('classmate2'));
+    Z.usage[provs.classmate2]=(Z.usage[provs.classmate2]||0)+1;
+  }catch(err){console.warn('[Classroom] Classmate2 failed:',err.message)}
+  hideT();
+
+  if(cm2Reply){
+    Z.h.push({role:'model',text:cm2Reply,agent:'classmate2'});
+    addM('classmate2',cm2Reply,AI_PROVIDERS[provs.classmate2]?.name);
+  }
+
+  logEvent('chat',{subject:Z.s,mode:'classroom',ai:provs.teacher,grade:Z.g});
+  saveZ();
   Z.busy=false;document.getElementById('sb').disabled=false;
 }
 
@@ -1260,7 +1287,8 @@ function md(t){
 
 function showW(){
   const topics=(T[Z.g]&&T[Z.g][Z.s])||[];
-  const md_={explain:{i:'📖',t:'Ready to learn?',s:"Pick a topic — I'll break it down with examples & memory hacks!"},socratic:{i:'🧠',t:"Let's think together!",s:"I won't give answers — I'll guide you to discover them!"},quiz:{i:'🎮',t:'Quiz Time!',s:'5 MCQs per round with auto-grading. Pick a topic to start!'},flashcard:{i:'🃏',t:'Flashcard Deck',s:'Flip through cards to master key concepts. Pick a topic!'},examprep:{i:'🎯',t:'Exam mode: ON',s:"10 years of boards, common traps & cheat sheets."},tutor:{i:'🤖',t:'Your AI tutor is here!',s:'Ask anything. No judgement, just knowledge.'},classroom:{i:'🏫',t:'Welcome to your Classroom!',s:'Ms. Sharma is your teacher. Arjun is your classmate. Pick a topic to start the lesson!'}};
+  const _crAgents=getClassroomAgents();
+  const md_={explain:{i:'📖',t:'Ready to learn?',s:"Pick a topic — I'll break it down with examples & memory hacks!"},socratic:{i:'🧠',t:"Let's think together!",s:"I won't give answers — I'll guide you to discover them!"},quiz:{i:'🎮',t:'Quiz Time!',s:'5 MCQs per round with auto-grading. Pick a topic to start!'},flashcard:{i:'🃏',t:'Flashcard Deck',s:'Flip through cards to master key concepts. Pick a topic!'},examprep:{i:'🎯',t:'Exam mode: ON',s:"10 years of boards, common traps & cheat sheets."},tutor:{i:'🤖',t:'Your AI tutor is here!',s:'Ask anything. No judgement, just knowledge.'},classroom:{i:'🏫',t:'Welcome to your Classroom!',s:`${_crAgents.teacher.name} is your teacher. ${_crAgents.classmate1.name} and ${_crAgents.classmate2.name} are your classmates. Pick a topic!`}};
   const m=md_[Z.m]||md_.explain;
   const pdfLoaded=!!Z.pdfKB[`${Z.g}_${Z.s}`];
   const ragKey=`${Z.g}_${Z.s}`;const ragReady=!!_ragIndex[ragKey];
@@ -1270,15 +1298,20 @@ function showW(){
   const avail=getAvailableProviders();
   let aiNote='';
   if(Z.m==='classroom'){
+    const agents=getClassroomAgents();
     const provs=getClassroomProviders();
     const tAI=provs.teacher?AI_PROVIDERS[provs.teacher]:null;
-    const cAI=provs.classmate?AI_PROVIDERS[provs.classmate]:null;
+    const c1AI=provs.classmate1?AI_PROVIDERS[provs.classmate1]:null;
+    const c2AI=provs.classmate2?AI_PROVIDERS[provs.classmate2]:null;
     aiNote=`<div style="margin-top:12px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
       <div style="padding:8px 14px;border-radius:10px;background:rgba(180,74,255,.08);border:1px solid rgba(180,74,255,.2);font-size:.75rem">
-        ${CLASSROOM_AGENTS.teacher.emoji} <strong style="color:#b44aff">${CLASSROOM_AGENTS.teacher.name}</strong> <span style="color:var(--t3)">Teacher</span>${tAI?` <span style="font-size:.6rem;color:${tAI.color};font-family:\'Space Mono\',monospace">(${tAI.name})</span>`:''}
+        ${agents.teacher.emoji} <strong style="color:#b44aff">${agents.teacher.name}</strong> <span style="color:var(--t3)">Teacher</span>${tAI?` <span style="font-size:.6rem;color:${tAI.color};font-family:\'Space Mono\',monospace">(${tAI.name})</span>`:''}
       </div>
       <div style="padding:8px 14px;border-radius:10px;background:rgba(0,245,212,.06);border:1px solid rgba(0,245,212,.15);font-size:.75rem">
-        ${CLASSROOM_AGENTS.classmate.emoji} <strong style="color:#00f5d4">${CLASSROOM_AGENTS.classmate.name}</strong> <span style="color:var(--t3)">Classmate</span>${cAI?` <span style="font-size:.6rem;color:${cAI.color};font-family:\'Space Mono\',monospace">(${cAI.name})</span>`:''}
+        ${agents.classmate1.emoji} <strong style="color:${agents.classmate1.color}">${agents.classmate1.name}</strong> <span style="color:var(--t3)">Classmate</span>${c1AI?` <span style="font-size:.6rem;color:${c1AI.color};font-family:\'Space Mono\',monospace">(${c1AI.name})</span>`:''}
+      </div>
+      <div style="padding:8px 14px;border-radius:10px;background:rgba(255,109,0,.06);border:1px solid rgba(255,109,0,.15);font-size:.75rem">
+        ${agents.classmate2.emoji} <strong style="color:${agents.classmate2.color}">${agents.classmate2.name}</strong> <span style="color:var(--t3)">Classmate</span>${c2AI?` <span style="font-size:.6rem;color:${c2AI.color};font-family:\'Space Mono\',monospace">(${c2AI.name})</span>`:''}
       </div>
     </div>`;
   } else {
@@ -1297,12 +1330,17 @@ function showW(){
 function addM(role,text,aiLabel){
   const c=document.getElementById('ch');const h=c.querySelector('.hero');if(h)h.remove();
   // Classroom agent roles
-  if(role==='teacher'||role==='classmate'){
-    const agent=CLASSROOM_AGENTS[role];
-    const d=document.createElement('div');d.className=`msg ${role}`;
-    const aiBadge=aiLabel?` (${aiLabel})`:'';
-    d.innerHTML=`<div class="av">${agent.emoji}</div><div class="bb">${md(text)}<div class="agent-label">${agent.name} — ${role==='teacher'?'Teacher':'Classmate'}${aiBadge}</div></div>`;
-    c.appendChild(d);c.scrollTop=c.scrollHeight;return;
+  if(role==='teacher'||role==='classmate1'||role==='classmate2'){
+    const agents=getClassroomAgents();
+    const agent=agents[role];
+    if(agent){
+      const d=document.createElement('div');d.className=`msg ${role==='teacher'?'teacher':'classmate'}`;
+      const roleLabel=role==='teacher'?'Teacher':'Classmate';
+      const aiBadge=aiLabel?` (${aiLabel})`:'';
+      const agentColor=agent.color||'#b44aff';
+      d.innerHTML=`<div class="av" style="background:${role==='classmate2'?'linear-gradient(135deg,'+agentColor+',#ff6d00)':''}">${agent.emoji}</div><div class="bb">${md(text)}<div class="agent-label" style="color:${agentColor}">${agent.name} — ${roleLabel}${aiBadge}</div></div>`;
+      c.appendChild(d);c.scrollTop=c.scrollHeight;return;
+    }
   }
   const d=document.createElement('div');d.className=`msg ${role==='user'?'u':'a'}`;
   const aiColor=Z.lastAI?AI_PROVIDERS[Z.lastAI]?.color:'#b44aff';
@@ -1314,11 +1352,14 @@ function addM(role,text,aiLabel){
 
 function showT(agentRole){
   const c=document.getElementById('ch');
-  if(agentRole&&CLASSROOM_AGENTS[agentRole]){
-    const agent=CLASSROOM_AGENTS[agentRole];
-    const d=document.createElement('div');d.className=`msg ${agentRole}`;d.id='ty';
-    d.innerHTML=`<div class="av">${agent.emoji}</div><div class="bb typ"><div class="dt"></div><div class="dt"></div><div class="dt"></div></div>`;
-    c.appendChild(d);c.scrollTop=c.scrollHeight;return;
+  if(agentRole){
+    const agents=getClassroomAgents();
+    const agent=agents[agentRole];
+    if(agent){
+      const d=document.createElement('div');d.className=`msg ${agentRole==='teacher'?'teacher':'classmate'}`;d.id='ty';
+      d.innerHTML=`<div class="av">${agent.emoji}</div><div class="bb typ"><div class="dt"></div><div class="dt"></div><div class="dt"></div></div>`;
+      c.appendChild(d);c.scrollTop=c.scrollHeight;return;
+    }
   }
   const d=document.createElement('div');d.className='msg a';d.id='ty';d.innerHTML='<div class="av a">⚡</div><div class="bb typ"><div class="dt"></div><div class="dt"></div><div class="dt"></div></div>';c.appendChild(d);c.scrollTop=c.scrollHeight;
 }
