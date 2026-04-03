@@ -119,28 +119,57 @@ CRITICAL canvas rules:
 - Controls go DIRECTLY below canvas. No gaps. Total height under 450px.
 Do NOT always include a magic-block — only when visualization genuinely helps understanding.${kbi}${epb}${memoryContext}`;
 
-  const modePrompts = {
-    explain:
-      base +
-      '\n\nMODE: Explain\n- Structured explanations with worked examples\n- Real-world Indian examples\n- Memory tricks at end\n- End with 1-2 Quick Check questions',
-    socratic:
-      base +
-      '\n\nMODE: Socratic\n- NEVER give direct answers\n- Guide through questions ONE at a time\n- "What if..." "Think about..." "Can you connect..."',
-    quiz:
-      base +
-      '\n\nMODE: Quiz\nYou MUST respond with a JSON quiz block wrapped in <quiz-data>...</quiz-data> tags.\nFormat:\n<quiz-data>\n[{"q":"Question text?","options":["A) opt1","B) opt2","C) opt3","D) opt4"],"answer":0,"explanation":"Why the correct option is right...","difficulty":"easy","topic":"Topic name"}]\n</quiz-data>\n\nRules:\n- Generate exactly 5 questions per round\n- Mix: 2 easy, 2 medium, 1 hard/HOTS\n- "answer" is the 0-based index of the correct option\n- Target weak areas from student memory\n- Use NCERT content for accuracy\n- After the <quiz-data> block, add a brief encouraging message (1-2 lines)',
-    flashcard:
-      base +
-      '\n\nMODE: Flashcards\nYou MUST respond with flashcard data wrapped in <flashcard-data>...</flashcard-data> tags.\nFormat:\n<flashcard-data>\n[{"front":"Question, term, or concept","back":"Answer, definition, or explanation","topic":"Topic name"}]\n</flashcard-data>\n\nRules:\n- Generate 8-10 flashcards on the requested topic\n- Mix: definitions, formulas, key facts, conceptual questions\n- Keep front side concise (1-2 lines), back side clear but brief\n- Use NCERT content. For Hindi subject: use Devanagari\n- After the <flashcard-data> block, add a brief study tip (1-2 lines)',
-    examprep:
-      base +
-      '\n\nMODE: Exam Prep\n- Board patterns from last 10 years\n- Cheat sheets, traps, full-marks format\n- Time management + HOTS practice',
-    tutor:
-      base +
-      '\n\nMODE: AI Tutor\n- Answer anything. Adapt to level.\n- Suggest next topics based on memory\n- Connect related concepts',
+  // Mode-specific instructions — placed BEFORE base to avoid truncation
+  const modeInstructions = {
+    explain: '\n\nMODE: Explain\n- Structured explanations with worked examples\n- Real-world Indian examples\n- Memory tricks at end\n- End with 1-2 Quick Check questions',
+    socratic: '\n\nMODE: Socratic\n- NEVER give direct answers\n- Guide through questions ONE at a time\n- "What if..." "Think about..." "Can you connect..."',
+    quiz: `\n\n⚠️ CRITICAL MODE: Quiz — STRUCTURED OUTPUT REQUIRED ⚠️
+Your response MUST start with a <quiz-data> JSON block. This is NON-NEGOTIABLE.
+DO NOT write quiz questions as plain text. DO NOT describe the quiz. OUTPUT THE JSON.
+
+EXACT format — copy this structure:
+<quiz-data>
+[
+  {"q": "What is 2+2?", "options": ["A) 3", "B) 4", "C) 5", "D) 6"], "answer": 1, "explanation": "2+2 equals 4", "difficulty": "easy", "topic": "${subjectName}"},
+  {"q": "Second question?", "options": ["A) ...", "B) ...", "C) ...", "D) ..."], "answer": 0, "explanation": "Because...", "difficulty": "medium", "topic": "${subjectName}"}
+]
+</quiz-data>
+
+Rules:
+- Generate EXACTLY 5 questions. "answer" is 0-based index of correct option.
+- Mix: 2 easy, 2 medium, 1 hard.
+- After the </quiz-data> closing tag, add 1-2 lines of encouragement.
+- If you do NOT output <quiz-data> tags, the quiz WILL NOT RENDER. This breaks the app.`,
+
+    flashcard: `\n\n⚠️ CRITICAL MODE: Flashcards — STRUCTURED OUTPUT REQUIRED ⚠️
+Your response MUST start with a <flashcard-data> JSON block. This is NON-NEGOTIABLE.
+DO NOT describe flashcards as text. DO NOT explain the format. OUTPUT THE JSON.
+
+EXACT format — copy this structure:
+<flashcard-data>
+[
+  {"front": "What is photosynthesis?", "back": "The process by which plants convert sunlight into energy", "topic": "${subjectName}"},
+  {"front": "Formula for area of circle?", "back": "A = πr²", "topic": "${subjectName}"}
+]
+</flashcard-data>
+
+Rules:
+- Generate 8-10 flashcards.
+- Front: concise question/term (1-2 lines). Back: clear answer (1-3 lines).
+- After the </flashcard-data> closing tag, add 1 line study tip.
+- If you do NOT output <flashcard-data> tags, the flashcards WILL NOT RENDER. This breaks the app.`,
+
+    examprep: '\n\nMODE: Exam Prep\n- Board patterns from last 10 years\n- Cheat sheets, traps, full-marks format\n- Time management + HOTS practice',
+    tutor: '\n\nMODE: AI Tutor\n- Answer anything. Adapt to level.\n- Suggest next topics based on memory\n- Connect related concepts',
   };
 
-  return modePrompts[mode] || modePrompts.explain;
+  // For quiz and flashcard modes, put mode instructions FIRST (before KB/memory)
+  // to prevent truncation from cutting them off
+  if (mode === 'quiz' || mode === 'flashcard') {
+    return modeInstructions[mode] + '\n\n' + base;
+  }
+
+  return base + (modeInstructions[mode] || modeInstructions.explain);
 }
 
 /**
