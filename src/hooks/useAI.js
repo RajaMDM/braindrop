@@ -56,22 +56,18 @@ function getAvailableProviders() {
  */
 function getClassroomProviders(pref) {
   const avail = getAvailableProviders();
-  if (avail.length === 0) return { teacher: null, classmate1: null, classmate2: null };
-  if (avail.length === 1) return { teacher: avail[0], classmate1: avail[0], classmate2: avail[0] };
-
+  if (avail.length === 0) return { teacher: null, classmate1: null, classmate2: null, classmate3: null, classmate4: null };
   const teacherProv = pref !== 'auto' && avail.includes(pref) ? pref : avail[0];
-  const freeTiers = ['gemini', 'nvidia', 'groq', 'ollama'];
-
-  const cm1Prov =
-    avail.find((p) => p !== teacherProv && freeTiers.includes(p)) ||
-    avail.find((p) => p !== teacherProv) ||
-    teacherProv;
-  const cm2Prov =
-    avail.find((p) => p !== teacherProv && p !== cm1Prov && freeTiers.includes(p)) ||
-    avail.find((p) => p !== teacherProv && p !== cm1Prov) ||
-    cm1Prov;
-
-  return { teacher: teacherProv, classmate1: cm1Prov, classmate2: cm2Prov };
+  // Distribute classmates across available free-tier providers
+  const others = avail.filter(p => p !== teacherProv);
+  const pool = others.length > 0 ? others : [teacherProv];
+  return {
+    teacher: teacherProv,
+    classmate1: pool[0 % pool.length],
+    classmate2: pool[1 % pool.length],
+    classmate3: pool[2 % pool.length],
+    classmate4: pool[0 % pool.length], // cycle back
+  };
 }
 
 /**
@@ -199,14 +195,16 @@ export function useAI() {
    *
    * Returns {
    *   teacherReply, teacherAI,
-   *   classmate1Reply, classmate1AI,
-   *   classmate2Reply, classmate2AI
+   *   classmates: [{ role, reply, ai }]
    * }
    */
   const callClassroom = useCallback(
     async (userMsg) => {
       const provs = getClassroomProviders(preferences.pref);
-      const agents = getClassroomAgents(grade);
+      // Load custom student names from localStorage
+      let customNames = {};
+      try { customNames = JSON.parse(localStorage.getItem('bd_classroom_names') || '{}'); } catch {}
+      const agents = getClassroomAgents(grade, customNames);
 
       if (!provs.teacher) {
         return { teacherReply: null, error: 'no_providers' };
@@ -216,41 +214,27 @@ export function useAI() {
       const kbContent = getKBForCurrentSubject(userMsg);
       const memoryContext = getMemoryContext();
       const name = preferences.name || user?.name || 'Student';
+      const cmRoles = ['classmate1', 'classmate2', 'classmate3', 'classmate4'].filter(r => agents[r]);
 
-      // Build history formatted for classroom
+      // Format history with agent labels
       const fmtMsgs = (forRole) =>
         messages.slice(-16).map((m) => {
           if (m.agent === forRole) return { role: 'assistant', text: m.text };
-          const label =
-            m.agent === 'teacher' ? agents.teacher.name :
-            m.agent === 'classmate1' ? agents.classmate1.name :
-            m.agent === 'classmate2' ? agents.classmate2.name :
-            name;
+          const agentObj = agents[m.agent];
+          const label = agentObj ? agentObj.name : name;
           return { role: 'user', text: `[${label}]: ${m.text}` };
         });
 
-      const result = {
-        teacherReply: null, teacherAI: null,
-        classmate1Reply: null, classmate1AI: null,
-        classmate2Reply: null, classmate2AI: null,
-      };
+      const result = { teacherReply: null, teacherAI: null, classmates: [] };
 
       // ── Teacher ──
       const teacherSys = buildClassroomPrompt({
-        agentRole: 'teacher',
-        grade,
-        subject,
-        name,
-        agents,
-        kbContent,
-        examPatterns: EP[subject] || null,
-        memoryContext,
+        agentRole: 'teacher', grade, subject, name, agents,
+        kbContent, examPatterns: EP[subject] || null, memoryContext,
       });
 
       try {
-        result.teacherReply = await callProviderWithSys(
-          provs.teacher, userMsg, teacherSys, fmtMsgs('teacher')
-        );
+        result.teacherReply = await callProviderWithSys(provs.teacher, userMsg, teacherSys, fmtMsgs('teacher'));
         result.teacherAI = AI_PROVIDERS[provs.teacher]?.name;
         lastAIRef.current = provs.teacher;
         usage[provs.teacher] = (usage[provs.teacher] || 0) + 1;
@@ -260,77 +244,44 @@ export function useAI() {
         return result;
       }
 
-      if (!result.teacherReply) {
-        writeUsage(usage);
-        return result;
-      }
+      if (!result.teacherReply) { writeUsage(usage); return result; }
 
       updateLearningProfile(userMsg, result.teacherReply);
       addXP(12);
       incrementQueryCount();
 
-      // ── Classmate 1 ──
-      const cm1Sys = buildClassroomPrompt({
-        agentRole: 'classmate1',
-        grade,
-        subject,
-        name,
-        agents,
-        kbContent: '',
-        examPatterns: null,
-        memoryContext: '',
-      });
+      // ── Classmates (sequential, each builds on previous) ──
+      let lastReply = result.teacherReply;
+      let lastName = agents.teacher.name;
 
-      const subjectNames = {
-        mathematics: 'Mathematics', science: 'Science', english: 'English',
-        'social-science': 'Social Science', hindi: 'Hindi',
-      };
-      const cm1Prompt = `[${agents.teacher.name}] just explained: "${result.teacherReply.substring(0, 400)}"\n\nReact naturally as a student in ${subjectNames[subject] || subject} class.`;
+      for (const role of cmRoles) {
+        const agent = agents[role];
+        const prov = provs[role] || provs.classmate1;
 
-      try {
-        result.classmate1Reply = await callProviderWithSys(
-          provs.classmate1, cm1Prompt, cm1Sys, fmtMsgs('classmate1')
-        );
-        result.classmate1AI = AI_PROVIDERS[provs.classmate1]?.name;
-        usage[provs.classmate1] = (usage[provs.classmate1] || 0) + 1;
-      } catch (err) {
-        console.warn('[Classroom] Classmate1 failed:', err.message);
-      }
+        const cmSys = buildClassroomPrompt({
+          agentRole: role, grade, subject, name, agents,
+          kbContent: '', examPatterns: null, memoryContext: '',
+        });
 
-      // ── Classmate 2 ──
-      const cm2Sys = buildClassroomPrompt({
-        agentRole: 'classmate2',
-        grade,
-        subject,
-        name,
-        agents,
-        kbContent: '',
-        examPatterns: null,
-        memoryContext: '',
-      });
+        const prompt = `[${lastName}] just said: "${lastReply.substring(0, 350)}"\n\nReact in character as ${agent.name}.`;
 
-      const cm2Prompt = result.classmate1Reply
-        ? `[${agents.teacher.name}] explained something, then [${agents.classmate1.name}] said: "${result.classmate1Reply.substring(0, 300)}"\n\nReact in character.`
-        : `[${agents.teacher.name}] just explained: "${result.teacherReply.substring(0, 400)}"\n\nReact in character.`;
-
-      try {
-        result.classmate2Reply = await callProviderWithSys(
-          provs.classmate2, cm2Prompt, cm2Sys, fmtMsgs('classmate2')
-        );
-        result.classmate2AI = AI_PROVIDERS[provs.classmate2]?.name;
-        usage[provs.classmate2] = (usage[provs.classmate2] || 0) + 1;
-      } catch (err) {
-        console.warn('[Classroom] Classmate2 failed:', err.message);
+        try {
+          const reply = await callProviderWithSys(prov, prompt, cmSys, fmtMsgs(role));
+          const aiName = AI_PROVIDERS[prov]?.name;
+          usage[prov] = (usage[prov] || 0) + 1;
+          result.classmates.push({ role, reply, ai: aiName, agent });
+          lastReply = reply;
+          lastName = agent.name;
+        } catch (err) {
+          console.warn(`[Classroom] ${role} failed:`, err.message);
+        }
       }
 
       writeUsage(usage);
       logEvent('chat', {
         user: user?.name || preferences.name || 'Unknown',
         email: user?.email || 'guest',
-        subject,
-        mode: 'classroom',
-        ai: provs.teacher,
-        grade,
+        subject, mode: 'classroom', ai: provs.teacher, grade,
       });
 
       return result;

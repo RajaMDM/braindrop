@@ -83,11 +83,13 @@ export default function AppShell() {
         addMessage({ role: 'assistant', text: result.teacherReply, ai: result.teacherAI, agent: 'teacher', ts: Date.now() });
         setLastAIName(result.teacherAI || '');
       }
-      if (result.classmate1Reply) {
-        addMessage({ role: 'assistant', text: result.classmate1Reply, ai: result.classmate1AI, agent: 'classmate1', ts: Date.now() });
-      }
-      if (result.classmate2Reply) {
-        addMessage({ role: 'assistant', text: result.classmate2Reply, ai: result.classmate2AI, agent: 'classmate2', ts: Date.now() });
+      // Add all classmate replies (up to 4)
+      if (result.classmates) {
+        for (const cm of result.classmates) {
+          if (cm.reply) {
+            addMessage({ role: 'assistant', text: cm.reply, ai: cm.ai, agent: cm.role, ts: Date.now() });
+          }
+        }
       }
       if (!result.teacherReply) {
         addMessage({ role: 'assistant', text: 'AI is temporarily unavailable. Please try again in a moment.', ai: '', ts: Date.now() });

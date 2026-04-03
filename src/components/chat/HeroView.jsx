@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useApp } from '../../context/AppContext.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
@@ -29,7 +30,18 @@ export default function HeroView({ onTopicClick, course, ragStatus, kbStatus, ch
   const topics = (T[grade] && T[grade][subject]) || [];
   const courseData = COURSES[grade]?.[subject] || null;
   const showCourse = false; // TODO: re-enable after fixing render loop in useCourseProgress
-  const agents = mode === 'classroom' ? getClassroomAgents(grade) : null;
+  // Classroom: load custom names from localStorage
+  const [customNames, setCustomNames] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('bd_classroom_names') || '{}'); } catch { return {}; }
+  });
+  const agents = mode === 'classroom' ? getClassroomAgents(grade, customNames) : null;
+
+  // Save custom names when changed
+  function updateStudentName(role, name) {
+    const updated = { ...customNames, [role]: name };
+    setCustomNames(updated);
+    localStorage.setItem('bd_classroom_names', JSON.stringify(updated));
+  }
 
   const memCount = memory?.history?.length || 0;
 
@@ -64,29 +76,55 @@ export default function HeroView({ onTopicClick, course, ragStatus, kbStatus, ch
         {info.sub}
       </div>
 
-      {/* Classroom agent cards */}
+      {/* Classroom: Teacher + 4 students with editable names */}
       {agents && (
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginBottom: 24, flexWrap: 'wrap' }}>
-          {['teacher', 'classmate1', 'classmate2'].map((role) => {
-            const a = agents[role];
-            return (
-              <motion.div
-                key={role}
-                initial={{ opacity: 1, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: role === 'teacher' ? 0 : role === 'classmate1' ? 0.1 : 0.2 }}
-                style={{
-                  background: 'var(--bg3)', border: '1px solid var(--bd)',
-                  borderRadius: 12, padding: '14px 18px', textAlign: 'center',
-                  minWidth: 140,
-                }}
-              >
-                <div style={{ fontSize: '2rem', marginBottom: 6 }}>{a.emoji}</div>
-                <div style={{ fontWeight: 600, fontSize: '.85rem', color: a.color }}>{a.name}</div>
-                <div style={{ fontSize: '.65rem', color: 'var(--t3)', marginTop: 2, textTransform: 'capitalize' }}>{role === 'teacher' ? 'Teacher' : 'Classmate'}</div>
-              </motion.div>
-            );
-          })}
+        <div style={{ marginBottom: 24 }}>
+          {/* Teacher card */}
+          <div style={{
+            background: 'rgba(180,74,255,.06)', border: '1px solid rgba(180,74,255,.2)',
+            borderRadius: 14, padding: '14px 20px', textAlign: 'center', marginBottom: 16,
+          }}>
+            <div style={{ fontSize: '2.2rem', marginBottom: 4 }}>{agents.teacher.emoji}</div>
+            <div style={{ fontWeight: 700, fontSize: '1rem', color: agents.teacher.color }}>{agents.teacher.name}</div>
+            <div style={{ fontSize: '.68rem', color: 'var(--t3)', marginTop: 2 }}>Your Teacher</div>
+          </div>
+
+          {/* Student cards — names editable */}
+          <div style={{ fontSize: '.72rem', color: 'var(--t3)', marginBottom: 10, textTransform: 'uppercase', letterSpacing: 1.5 }}>
+            Your Classmates — click names to customize
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
+            {['classmate1', 'classmate2', 'classmate3', 'classmate4'].map((role) => {
+              const a = agents[role];
+              if (!a) return null;
+              const archetypeLabels = { shy: '🤫 The Quiet One', outgoing: '🎉 The Outgoing One', studious: '📖 The Topper', wildcard: '🎭 The Wildcard' };
+              return (
+                <div
+                  key={role}
+                  style={{
+                    background: 'var(--bg3)', border: `1px solid ${a.color}22`,
+                    borderRadius: 12, padding: '12px', textAlign: 'center',
+                  }}
+                >
+                  <div style={{ fontSize: '1.5rem', marginBottom: 4 }}>{a.emoji}</div>
+                  <input
+                    value={customNames[role] || a.name}
+                    onChange={(e) => updateStudentName(role, e.target.value)}
+                    placeholder={a.name}
+                    style={{
+                      background: 'var(--bg)', border: '1px solid var(--bd)', borderRadius: 6,
+                      color: a.color, fontFamily: 'Fredoka,sans-serif', fontSize: '.82rem',
+                      fontWeight: 600, textAlign: 'center', padding: '4px 8px', width: '100%',
+                      outline: 'none', marginBottom: 4,
+                    }}
+                    onFocus={(e) => { e.target.style.borderColor = a.color; }}
+                    onBlur={(e) => { e.target.style.borderColor = 'var(--bd)'; }}
+                  />
+                  <div style={{ fontSize: '.6rem', color: 'var(--t3)' }}>{archetypeLabels[a.archetype] || 'Classmate'}</div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
 
