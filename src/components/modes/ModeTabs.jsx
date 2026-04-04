@@ -5,7 +5,7 @@ const MODES = [
   { key: 'explain', icon: '\uD83D\uDCD6', label: 'Explain' },
   { key: 'socratic', icon: '\uD83E\uDDE0', label: 'Socratic' },
   { key: 'quiz', icon: '\uD83C\uDFAE', label: 'Quiz Me' },
-  { key: 'flashcard', icon: '\uD83C\uDCCF', label: 'Flashcards' },
+  // Flashcards removed — structured JSON output too unreliable across AI providers
   { key: 'examprep', icon: '\uD83C\uDFAF', label: 'Exam Prep' },
   { key: 'tutor', icon: '\uD83E\uDD16', label: 'AI Tutor' },
   { key: 'classroom', icon: '\uD83C\uDFEB', label: 'Classroom' },
