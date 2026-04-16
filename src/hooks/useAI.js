@@ -281,15 +281,27 @@ Output this EXACT format (valid JSON array):
         kbContent, examPatterns: EP[subject] || null, memoryContext,
       });
 
-      try {
-        result.teacherReply = await callProviderWithSys(provs.teacher, userMsg, teacherSys, fmtMsgs('teacher'));
-        result.teacherAI = AI_PROVIDERS[provs.teacher]?.name;
-        lastAIRef.current = provs.teacher;
-        usage[provs.teacher] = (usage[provs.teacher] || 0) + 1;
-      } catch (err) {
-        console.warn('[Classroom] Teacher failed:', err.message);
-        writeUsage(usage);
-        return result;
+      // Try the preferred teacher provider first, then fall back across all
+      // available providers — mirrors the fallback chain in callAI so one
+      // flaky provider doesn't kill the whole classroom session.
+      const teacherOrder = [
+        provs.teacher,
+        ...getAvailableProviders().filter((p) => p !== provs.teacher),
+      ];
+
+      let teacherProvUsed = null;
+      for (const prov of teacherOrder) {
+        try {
+          result.teacherReply = await callProviderWithSys(prov, userMsg, teacherSys, fmtMsgs('teacher'));
+          result.teacherAI = AI_PROVIDERS[prov]?.name;
+          lastAIRef.current = prov;
+          teacherProvUsed = prov;
+          usage[prov] = (usage[prov] || 0) + 1;
+          break;
+        } catch (err) {
+          console.warn(`[Classroom] Teacher via ${prov} failed:`, err.message);
+          continue;
+        }
       }
 
       if (!result.teacherReply) { writeUsage(usage); return result; }
@@ -329,7 +341,7 @@ Output this EXACT format (valid JSON array):
       logEvent('chat', {
         user: user?.name || preferences.name || 'Unknown',
         email: user?.email || 'guest',
-        subject, mode: 'classroom', ai: provs.teacher, grade,
+        subject, mode: 'classroom', ai: teacherProvUsed || provs.teacher, grade,
       });
 
       return result;
