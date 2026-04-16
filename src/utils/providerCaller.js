@@ -21,14 +21,42 @@ function getUserEmail() {
 }
 
 /**
+ * Get the stored Google ID token for Worker-side JWT verification.
+ * Apr 4 code doesn't populate this, so non-logged-in users (everyone) will
+ * get routed to /guest/* endpoints via proxyPath().
+ * @returns {string}
+ */
+function getGoogleToken() {
+  try {
+    return localStorage.getItem('bd_gtoken') || '';
+  } catch {
+    return '';
+  }
+}
+
+/**
+ * Return the proxy path for an AI endpoint.
+ * Authenticated users (with a Google token) hit the direct endpoint.
+ * Guest users hit /guest/* which skips JWT verification but is IP rate-limited.
+ * Required because the Cloudflare Worker was upgraded to require JWT on
+ * bare paths (/claude, /gemini, etc.) — hitting them without a token returns 401.
+ */
+function proxyPath(path) {
+  return getGoogleToken() ? path : `/guest${path}`;
+}
+
+/**
  * Build standard headers for proxy requests.
  * @returns {Object}
  */
 function proxyHeaders() {
-  return {
+  const headers = {
     'Content-Type': 'application/json',
     'X-User-Email': getUserEmail(),
   };
+  const token = getGoogleToken();
+  if (token) headers['X-Google-Token'] = token;
+  return headers;
 }
 
 /**
@@ -83,7 +111,7 @@ export async function callProvider(
         content: m.text,
       }));
       messages.push({ role: 'user', content: userMsg });
-      const res = await fetchWithTimeout(`${proxy}/claude`, {
+      const res = await fetchWithTimeout(`${proxy}${proxyPath('/claude')}`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
@@ -104,7 +132,7 @@ export async function callProvider(
         parts: [{ text: m.text }],
       }));
       contents.push({ role: 'user', parts: [{ text: userMsg }] });
-      const res = await fetchWithTimeout(`${proxy}/gemini`, {
+      const res = await fetchWithTimeout(`${proxy}${proxyPath('/gemini')}`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
@@ -133,7 +161,7 @@ export async function callProvider(
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetchWithTimeout(`${proxy}/openai`, {
+      const res = await fetchWithTimeout(`${proxy}${proxyPath('/openai')}`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({ model: 'gpt-4o-mini', max_tokens: 4096, messages }),
@@ -152,7 +180,7 @@ export async function callProvider(
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetchWithTimeout(`${proxy}/groq`, {
+      const res = await fetchWithTimeout(`${proxy}${proxyPath('/groq')}`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
@@ -175,7 +203,7 @@ export async function callProvider(
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetchWithTimeout(`${proxy}/deepseek`, {
+      const res = await fetchWithTimeout(`${proxy}${proxyPath('/deepseek')}`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({ model: 'deepseek-chat', max_tokens: 4096, messages }),
@@ -194,7 +222,7 @@ export async function callProvider(
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetchWithTimeout(`${proxy}/mistral`, {
+      const res = await fetchWithTimeout(`${proxy}${proxyPath('/mistral')}`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
@@ -217,7 +245,7 @@ export async function callProvider(
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetchWithTimeout(`${proxy}/nvidia`, {
+      const res = await fetchWithTimeout(`${proxy}${proxyPath('/nvidia')}`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
@@ -303,7 +331,7 @@ export async function callProviderWithSys(
         content: m.text,
       }));
       messages.push({ role: 'user', content: userMsg });
-      const res = await fetchWithTimeout(`${proxy}/claude`, {
+      const res = await fetchWithTimeout(`${proxy}${proxyPath('/claude')}`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
@@ -324,7 +352,7 @@ export async function callProviderWithSys(
         parts: [{ text: m.text }],
       }));
       contents.push({ role: 'user', parts: [{ text: userMsg }] });
-      const res = await fetchWithTimeout(`${proxy}/gemini`, {
+      const res = await fetchWithTimeout(`${proxy}${proxyPath('/gemini')}`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
@@ -353,7 +381,7 @@ export async function callProviderWithSys(
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetchWithTimeout(`${proxy}/openai`, {
+      const res = await fetchWithTimeout(`${proxy}${proxyPath('/openai')}`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({ model: 'gpt-4o-mini', max_tokens: 4096, messages }),
@@ -372,7 +400,7 @@ export async function callProviderWithSys(
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetchWithTimeout(`${proxy}/groq`, {
+      const res = await fetchWithTimeout(`${proxy}${proxyPath('/groq')}`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
@@ -395,7 +423,7 @@ export async function callProviderWithSys(
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetchWithTimeout(`${proxy}/deepseek`, {
+      const res = await fetchWithTimeout(`${proxy}${proxyPath('/deepseek')}`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({ model: 'deepseek-chat', max_tokens: 4096, messages }),
@@ -414,7 +442,7 @@ export async function callProviderWithSys(
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetchWithTimeout(`${proxy}/mistral`, {
+      const res = await fetchWithTimeout(`${proxy}${proxyPath('/mistral')}`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
@@ -437,7 +465,7 @@ export async function callProviderWithSys(
         })),
         { role: 'user', content: userMsg },
       ];
-      const res = await fetchWithTimeout(`${proxy}/nvidia`, {
+      const res = await fetchWithTimeout(`${proxy}${proxyPath('/nvidia')}`, {
         method: 'POST',
         headers: proxyHeaders(),
         body: JSON.stringify({
