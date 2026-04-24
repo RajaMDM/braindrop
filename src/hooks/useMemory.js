@@ -52,6 +52,8 @@ export function useMemory() {
         if (!parsed.profile) parsed.profile = { ...EMPTY_MEMORY.profile };
         if (!parsed.profile.quizResults) parsed.profile.quizResults = [];
         if (!parsed.profile.courseProgress) parsed.profile.courseProgress = {};
+        if (!parsed.profile.agentPerspectives) parsed.profile.agentPerspectives = { teacher: '', classmate1: '', classmate2: '', classmate3: '', classmate4: '' };
+        if (parsed.profile.confidence === undefined) parsed.profile.confidence = 'neutral';
         setMemory(parsed);
         return parsed;
       }
