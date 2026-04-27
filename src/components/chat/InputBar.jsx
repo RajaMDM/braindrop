@@ -1,5 +1,4 @@
 import { useState, useRef, useCallback } from 'react';
-import { motion } from 'framer-motion';
 
 export default function InputBar({ onSend, busy }) {
   const [text, setText] = useState('');
@@ -24,59 +23,47 @@ export default function InputBar({ onSend, busy }) {
   const handleInput = useCallback((e) => {
     const el = e.target;
     el.style.height = 'auto';
-    el.style.height = Math.min(el.scrollHeight, 140) + 'px';
+    el.style.height = Math.min(el.scrollHeight, 200) + 'px';
   }, []);
 
+  const disabled = busy || !text.trim();
+
   return (
-    <div style={{
-      padding: '12px 18px 16px',
-      background: 'rgba(18,18,31,.85)',
-      backdropFilter: 'blur(16px)',
-      borderTop: '1px solid var(--bd)',
-      flexShrink: 0,
-    }}>
-      <div style={{
-        display: 'flex', alignItems: 'flex-end', gap: 10,
-        maxWidth: 760, margin: '0 auto',
-      }}>
-        <textarea
-          ref={textareaRef}
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={handleKeyDown}
-          onInput={handleInput}
-          placeholder="Ask me anything..."
-          rows={1}
-          style={{
-            flex: 1, padding: '12px 16px',
-            background: 'var(--bg3)',
-            border: '1px solid var(--bd)',
-            borderRadius: 10, color: 'var(--t1)',
-            fontFamily: "'Fredoka',sans-serif", fontSize: '.88rem',
-            resize: 'none', outline: 'none',
-            minHeight: 44, maxHeight: 140, lineHeight: 1.5,
-            transition: 'border-color .2s',
-          }}
-          onFocus={(e) => { e.target.style.borderColor = 'var(--np)'; }}
-          onBlur={(e) => { e.target.style.borderColor = 'var(--bd)'; }}
-        />
-        <motion.button
-          whileHover={{ scale: 1.06, boxShadow: '0 0 18px rgba(180,74,255,.4)' }}
-          whileTap={{ scale: 0.94 }}
-          onClick={handleSend}
-          disabled={busy || !text.trim()}
-          style={{
-            width: 44, height: 44, borderRadius: 10,
-            background: 'linear-gradient(135deg,#ff6b9d,#b44aff)',
-            border: 'none', color: '#fff', fontSize: '1.1rem',
-            cursor: busy ? 'not-allowed' : 'pointer',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0,
-            opacity: busy || !text.trim() ? 0.35 : 1,
-          }}
-        >
-          &#x27A4;
-        </motion.button>
+    <div className="w-full bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent pt-6 pb-4 md:pb-6 px-4">
+      <div className="max-w-3xl mx-auto">
+        <div className="relative flex items-end gap-2 bg-slate-800/70 border border-slate-700 focus-within:border-indigo-400/60 rounded-2xl p-2 shadow-lg shadow-black/30 transition-colors">
+          <textarea
+            ref={textareaRef}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onInput={handleInput}
+            placeholder="Ask a question, request a quiz, or paste a problem…"
+            rows={1}
+            className="flex-1 bg-transparent text-slate-100 text-[15px] leading-6 px-3 py-2.5 outline-none resize-none min-h-[44px] max-h-[200px] placeholder:text-slate-500"
+          />
+          <button
+            onClick={handleSend}
+            disabled={disabled}
+            aria-label="Send"
+            className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all
+              ${disabled
+                ? 'bg-slate-700/50 text-slate-500 cursor-not-allowed'
+                : 'bg-indigo-500 hover:bg-indigo-400 text-white shadow-md shadow-indigo-500/30 active:scale-95'}`}
+          >
+            {busy ? (
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="12" y1="19" x2="12" y2="5" />
+                <polyline points="5 12 12 5 19 12" />
+              </svg>
+            )}
+          </button>
+        </div>
+        <div className="text-[11px] text-slate-500 mt-2 text-center hidden sm:block">
+          Press <kbd className="px-1 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-400">Enter</kbd> to send · <kbd className="px-1 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-400">Shift + Enter</kbd> for newline
+        </div>
       </div>
     </div>
   );

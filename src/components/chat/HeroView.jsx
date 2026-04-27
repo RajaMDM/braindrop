@@ -1,165 +1,210 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { useApp } from '../../context/AppContext.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
-import { useCharacter } from '../../hooks/useCharacter.js';
 import { useMemory } from '../../hooks/useMemory.js';
 import { T } from '../../data/topics.js';
-import { COURSES } from '../../data/courses.js';
 import { getClassroomAgents } from '../../data/classroomAgents.js';
-import TopicChip from '../shared/TopicChip.jsx';
-import CourseView from '../course/CourseView.jsx';
 
-const MODE_INFO = {
-  explain: { icon: '\uD83D\uDCD6', title: 'Explain Mode', sub: 'Ask anything — I\'ll break it down step by step with examples and visuals.' },
-  socratic: { icon: '\uD83E\uDDE0', title: 'Socratic Mode', sub: 'I\'ll guide you with questions instead of answers. Think deeper!' },
-  quiz: { icon: '\uD83C\uDFAE', title: 'Quiz Mode', sub: 'Test your knowledge with MCQs, get instant feedback and explanations.' },
-  flashcard: { icon: '\uD83C\uDCCF', title: 'Flashcards', sub: 'Study with flip cards. Front = question, back = answer.' },
-  examprep: { icon: '\uD83C\uDFAF', title: 'Exam Prep', sub: 'Focused preparation with exam-pattern questions and mark breakdowns.' },
-  tutor: { icon: '\uD83E\uDD16', title: 'AI Tutor', sub: 'Your personal tutor — adaptive learning that remembers your progress.' },
-  classroom: { icon: '\uD83C\uDFEB', title: 'Classroom', sub: 'Learn with a virtual teacher and two classmates — just like school!' },
+const MODE_META = {
+  explain:   { label: 'Explain',    hint: 'Break down any topic step by step.' },
+  socratic:  { label: 'Socratic',   hint: 'I ask, you answer. Think deeper.' },
+  quiz:      { label: 'Quiz',       hint: '5 MCQs with instant feedback.' },
+  flashcard: { label: 'Flashcards', hint: 'Flip cards for rapid review.' },
+  examprep:  { label: 'Exam Prep',  hint: 'Board-pattern questions and traps.' },
+  tutor:     { label: 'AI Tutor',   hint: 'Adaptive tutoring that remembers you.' },
+  classroom: { label: 'Classroom',  hint: 'Teacher + classmates, live.' },
 };
 
-export default function HeroView({ onTopicClick, course, ragStatus, kbStatus, chunkCount }) {
+const SUBJECT_LABEL = {
+  mathematics: 'Mathematics',
+  science: 'Science',
+  english: 'English',
+  'social-science': 'Social Science',
+  hindi: 'Hindi',
+};
+
+const STARTERS = {
+  explain:   (t) => `Explain "${t}" with a worked example`,
+  socratic:  (t) => `Challenge my understanding of "${t}"`,
+  quiz:      (t) => `Quiz me on "${t}"`,
+  flashcard: (t) => `Make flashcards for "${t}"`,
+  examprep:  (t) => `Give me board exam questions on "${t}"`,
+  tutor:     (t) => `I want to master "${t}" — where do I start?`,
+  classroom: (t) => `Let's discuss "${t}" in class`,
+};
+
+export default function HeroView({ onTopicClick }) {
   const { grade, subject, mode } = useApp();
   const { user } = useAuth();
-  const { character } = useCharacter();
   const { memory } = useMemory();
 
-  const info = MODE_INFO[mode] || MODE_INFO.explain;
+  const [showAllTopics, setShowAllTopics] = useState(false);
+
   const topics = (T[grade] && T[grade][subject]) || [];
-  const courseData = COURSES[grade]?.[subject] || null;
-  const showCourse = false; // TODO: re-enable after fixing render loop in useCourseProgress
-  // Classroom: load custom names from localStorage
+  const meta = MODE_META[mode] || MODE_META.explain;
+  const starterFn = STARTERS[mode] || STARTERS.explain;
+
+  // Compact greeting
+  const firstName = (user?.name || '').split(' ')[0] || 'there';
+
+  // Last user message for "resume" card
+  const lastUserMsg = memory?.history?.length > 0
+    ? [...memory.history].reverse().find((m) => m.role === 'user')
+    : null;
+
+  // Starter prompts from first 3 topics
+  const starters = topics.slice(0, 3).map((t) => ({ topic: t, prompt: starterFn(t) }));
+
+  // Classroom setup state
   const [customNames, setCustomNames] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('bd_classroom_names') || '{}'); } catch { return {}; }
+    try { return JSON.parse(localStorage.getItem('bd_classroom_names') || '{}'); }
+    catch { return {}; }
   });
   const agents = mode === 'classroom' ? getClassroomAgents(grade, customNames) : null;
 
-  // Save custom names when changed
   function updateStudentName(role, name) {
     const updated = { ...customNames, [role]: name };
     setCustomNames(updated);
     localStorage.setItem('bd_classroom_names', JSON.stringify(updated));
   }
 
-  const memCount = memory?.history?.length || 0;
+  const INITIAL_TOPIC_COUNT = 8;
+  const visibleTopics = showAllTopics ? topics : topics.slice(0, INITIAL_TOPIC_COUNT);
 
   return (
-    <div style={{
-      maxWidth: 640, margin: 'auto', textAlign: 'center',
-      padding: '32px 20px',
-    }}>
-      <motion.div
-        animate={{ y: [0, -8, 0, -4, 0] }}
-        transition={{ duration: 3, ease: 'easeInOut', repeat: Infinity }}
-        style={{
-          fontSize: '4rem', marginBottom: 16,
-          filter: 'drop-shadow(0 0 20px rgba(180,74,255,.4))',
-        }}
-      >
-        {info.icon}
-      </motion.div>
+    <div className="w-full max-w-2xl mx-auto px-6 py-10 md:py-14">
 
-      <div style={{
-        fontSize: '1.6rem', fontWeight: 700, marginBottom: 8,
-        background: 'linear-gradient(135deg,#ff6b9d,#b44aff)',
-        WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-      }}>
-        {info.title}
+      {/* Context strip — replaces the giant animated emoji */}
+      <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-slate-400 mb-5">
+        <span className="px-2 py-1 rounded-md bg-slate-800/60 border border-slate-700/50">
+          Grade {grade}
+        </span>
+        <span className="px-2 py-1 rounded-md bg-slate-800/60 border border-slate-700/50">
+          {SUBJECT_LABEL[subject] || subject}
+        </span>
+        <span className="px-2 py-1 rounded-md bg-indigo-500/10 border border-indigo-400/30 text-indigo-300">
+          {meta.label}
+        </span>
       </div>
 
-      <div style={{
-        color: 'var(--t2)', fontSize: '.92rem', lineHeight: 1.6,
-        marginBottom: 28, maxWidth: 480, marginLeft: 'auto', marginRight: 'auto',
-      }}>
-        {info.sub}
-      </div>
+      {/* Welcome */}
+      <h1 className="text-2xl md:text-3xl font-semibold text-slate-100 mb-2 tracking-tight">
+        Hi {firstName}. What are we learning today?
+      </h1>
+      <p className="text-sm md:text-base text-slate-400 mb-8 max-w-lg">
+        {meta.hint}
+      </p>
 
-      {/* Classroom: Teacher + 4 students with editable names */}
+      {/* Resume card */}
+      {lastUserMsg && (
+        <button
+          onClick={() => onTopicClick(lastUserMsg.text)}
+          className="w-full text-left mb-6 group bg-slate-800/40 hover:bg-slate-800/70 border border-slate-700/50 hover:border-indigo-400/40 rounded-xl px-4 py-3.5 transition-all"
+        >
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <div className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1">
+                Resume
+              </div>
+              <div className="text-sm text-slate-200 truncate">
+                {lastUserMsg.text}
+              </div>
+            </div>
+            <span className="shrink-0 text-slate-500 group-hover:text-indigo-300 text-lg transition-colors">
+              →
+            </span>
+          </div>
+        </button>
+      )}
+
+      {/* Classroom agent setup */}
       {agents && (
-        <div style={{ marginBottom: 24 }}>
-          {/* Teacher card */}
-          <div style={{
-            background: 'rgba(180,74,255,.06)', border: '1px solid rgba(180,74,255,.2)',
-            borderRadius: 14, padding: '14px 20px', textAlign: 'center', marginBottom: 16,
-          }}>
-            <div style={{ fontSize: '2.2rem', marginBottom: 4 }}>{agents.teacher.emoji}</div>
-            <div style={{ fontWeight: 700, fontSize: '1rem', color: agents.teacher.color }}>{agents.teacher.name}</div>
-            <div style={{ fontSize: '.68rem', color: 'var(--t3)', marginTop: 2 }}>Your Teacher</div>
+        <div className="mb-8 space-y-3">
+          <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+            Your classroom
           </div>
-
-          {/* Student cards — names editable */}
-          <div style={{ fontSize: '.72rem', color: 'var(--t3)', marginBottom: 10, textTransform: 'uppercase', letterSpacing: 1.5 }}>
-            Your Classmates — click names to customize
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
-            {['classmate1', 'classmate2', 'classmate3', 'classmate4'].map((role) => {
-              const a = agents[role];
-              if (!a) return null;
-              const archetypeLabels = { shy: '🤫 The Quiet One', outgoing: '🎉 The Outgoing One', studious: '📖 The Topper', wildcard: '🎭 The Wildcard' };
-              return (
-                <div
-                  key={role}
-                  style={{
-                    background: 'var(--bg3)', border: `1px solid ${a.color}22`,
-                    borderRadius: 12, padding: '12px', textAlign: 'center',
-                  }}
-                >
-                  <div style={{ fontSize: '1.5rem', marginBottom: 4 }}>{a.emoji}</div>
-                  <input
-                    value={customNames[role] || a.name}
-                    onChange={(e) => updateStudentName(role, e.target.value)}
-                    placeholder={a.name}
-                    style={{
-                      background: 'var(--bg)', border: '1px solid var(--bd)', borderRadius: 6,
-                      color: a.color, fontFamily: 'Fredoka,sans-serif', fontSize: '.82rem',
-                      fontWeight: 600, textAlign: 'center', padding: '4px 8px', width: '100%',
-                      outline: 'none', marginBottom: 4,
-                    }}
-                    onFocus={(e) => { e.target.style.borderColor = a.color; }}
-                    onBlur={(e) => { e.target.style.borderColor = 'var(--bd)'; }}
-                  />
-                  <div style={{ fontSize: '.6rem', color: 'var(--t3)' }}>{archetypeLabels[a.archetype] || 'Classmate'}</div>
+          <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4">
+            <div className="flex items-center gap-3 pb-3 border-b border-slate-700/40 mb-3">
+              <div className="text-2xl">{agents.teacher.emoji}</div>
+              <div>
+                <div className="text-sm font-semibold" style={{ color: agents.teacher.color }}>
+                  {agents.teacher.name}
                 </div>
-              );
-            })}
+                <div className="text-[10px] text-slate-500 uppercase tracking-wider">Teacher</div>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+              {['classmate1', 'classmate2', 'classmate3', 'classmate4'].map((role) => {
+                const a = agents[role];
+                if (!a) return null;
+                const isEditable = Number(grade) !== 10 || role === 'classmate4';
+                return (
+                  <div key={role} className="flex items-center gap-2 px-2 py-2 bg-slate-900/40 rounded-lg border border-slate-700/30">
+                    <span className="text-lg shrink-0">{a.emoji}</span>
+                    {isEditable ? (
+                      <input
+                        value={customNames[role] || a.name}
+                        onChange={(e) => updateStudentName(role, e.target.value)}
+                        placeholder={a.name}
+                        className="bg-transparent text-xs font-medium outline-none flex-1 min-w-0"
+                        style={{ color: a.color }}
+                      />
+                    ) : (
+                      <div className="text-xs font-medium truncate" style={{ color: a.color }}>
+                        {a.name}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}
 
-      {/* Course view or topic chips */}
-      {showCourse ? (
-        <CourseView />
-      ) : (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}>
-          {topics.map((t, i) => (
-            <TopicChip key={t} label={t} onClick={onTopicClick} delay={i * 0.04} />
+      {/* Starter prompts */}
+      {starters.length > 0 && !agents && (
+        <div className="mb-8 space-y-2">
+          <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-3">
+            Try one of these
+          </div>
+          {starters.map(({ prompt }) => (
+            <button
+              key={prompt}
+              onClick={() => onTopicClick(prompt)}
+              className="w-full text-left bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/40 hover:border-slate-600 rounded-lg px-4 py-3 text-sm text-slate-300 hover:text-slate-100 transition-all"
+            >
+              {prompt}
+            </button>
           ))}
         </div>
       )}
 
-      {/* Status notes */}
-      {kbStatus === 'ready' && (
-        <div style={{
-          marginTop: 18, fontSize: '.75rem', color: 'var(--t3)',
-          padding: '8px 16px', background: 'var(--bg3)', borderRadius: 10,
-          display: 'inline-block', border: '1px solid var(--bd)',
-        }}>
-          {ragStatus === 'ready'
-            ? `\uD83D\uDCDA RAG Active — ${chunkCount} chunks indexed for smart retrieval`
-            : '\uD83D\uDCDA NCERT PDFs loaded — knowledge base ready'}
-        </div>
-      )}
-
-      {memCount > 0 && (
-        <div style={{
-          marginTop: 8, fontSize: '.7rem', color: 'var(--nb)',
-          padding: '5px 12px', background: 'rgba(76,201,240,.06)',
-          borderRadius: 8, display: 'inline-block',
-          border: '1px solid rgba(76,201,240,.15)',
-        }}>
-          {'\uD83E\uDDE0'} Memory active — {memCount} entries from past sessions
+      {/* Topic chips */}
+      {topics.length > 0 && (
+        <div className="space-y-3">
+          <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+            All topics · {SUBJECT_LABEL[subject] || subject}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {visibleTopics.map((t) => (
+              <button
+                key={t}
+                onClick={() => onTopicClick(t)}
+                className="text-xs px-3 py-1.5 bg-slate-800/40 hover:bg-slate-700/60 text-slate-300 hover:text-slate-100 border border-slate-700/40 hover:border-slate-600 rounded-full transition-all"
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+          {topics.length > INITIAL_TOPIC_COUNT && (
+            <button
+              onClick={() => setShowAllTopics((v) => !v)}
+              className="text-[11px] text-slate-500 hover:text-slate-300 transition-colors"
+            >
+              {showAllTopics ? '— show fewer' : `+ show ${topics.length - INITIAL_TOPIC_COUNT} more`}
+            </button>
+          )}
         </div>
       )}
     </div>
