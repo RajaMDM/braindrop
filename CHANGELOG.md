@@ -4,6 +4,38 @@
 
 ---
 
+## April 28, 2026 — v7 Course/Chapter Design Refresh
+
+### Variant F — "Warm Dashboard" theme on chapter detail
+- New `ChapterDetailView.jsx` replaces inline lesson expansion with a dedicated page
+- Hero with kicker ("chapter four"), highlighted-word title, plain-English subtitle
+- Four stat cards: Mastery %, Lessons (X/Y), Status (Locked/New/In progress/Done), XP earned
+- Animated mastery ring (SVG, framer-motion)
+- "Next up" Resume card auto-targets the first incomplete lesson
+- Lesson rows with mini progress bars, yellow highlighter shadow on the active row, red doodled stars on completed lessons
+- Friendly footer microcopy ("2 down, 2 to go → finish this chapter, earn the badge")
+- **Impact:** Chapter detail finally has its own design language; warmer voice without losing data density
+
+### Theme scoping (`.theme-paper`)
+- New CSS variable namespace `--p-*` for the warm cream palette
+- Scoped to course/chapter surfaces only via wrapper class
+- Chat, classroom, modals, and AI surfaces remain on the original dark synthwave
+- **Impact:** Theme switch becomes a wayfinding cue ("you're entering study mode") without forcing a brand-wide change
+
+### Inline lesson expansion removed
+- `ChapterCard.jsx` no longer expands AnimatePresence with an inline lesson list
+- `selectChapter(chId)` now navigates to `ChapterDetailView` via `activeChapter` state
+- `CourseView.jsx` conditionally renders detail or list based on `activeChapter`
+- **Impact:** One source of truth for chapter content; eliminates the visual paradigm mismatch between the inline tile and the full-page expansion
+
+### New fonts
+- Caveat (handwriting, used in 4 narrative spots)
+- Inter (replaces Fredoka for course-surface body and headings)
+- Both added to existing Google Fonts link in `index.html`
+- **Impact:** Type system supports a separate visual register without removing any existing fonts
+
+---
+
 ## April 3, 2026 — v6 Platform Upgrade
 
 ### Classroom Mode

@@ -69,6 +69,16 @@ Added NVIDIA (Llama 3.3 70B) as an AI provider via their OpenAI-compatible API. 
 
 ---
 
+## April 2026 — Course/Chapter Design Refresh (v7)
+
+**Why this happened.** The chapter detail experience had been the same since the original v6 release: tightly packed dark synthwave tiles where clicking a chapter expanded an inline lesson list. Functionally complete, but visually it treated students like users of an app rather than students of a chapter. With Grade 10 boards as the primary use case, the surface where students live the longest deserved its own design language.
+
+**The exploration.** Five distinct design directions were generated through a /design-shotgun visual brainstorm — Editorial Magazine, Mission Control Dashboard, Student Notebook, Brutalist Big Type, and Aurora Glassmorphism. Two resonated: the dashboard for its information density and motivating data, and the notebook for its warmth and disarming voice. A sixth fusion direction ("Variant F — Warm Dashboard") was generated to combine the dashboard's data backbone with the notebook's friendlier voice, dropping the parts that felt cold or noisy. F was approved on first showing.
+
+**What shipped.** A theme-scoped re-skin of the course/chapter surface. Cream paper background, white cards, Inter for legibility, Caveat handwriting only at four narrative moments (kicker, section header, "next up" label, footer). The previous inline lesson-expansion UX was replaced by a dedicated ChapterDetailView with a hero, four stat cards (Mastery, Lessons, Status, XP earned), an animated mastery ring, a "next up" Resume card, and a clean lesson list with mini progress bars and red doodled stars on completed lessons. The active lesson gets a yellow highlighter shadow. Chat, classroom, and AI surfaces remain on the original dark synthwave — the warm theme is scoped to course-detail surfaces only, used as a wayfinding cue for "you're entering study mode."
+
+---
+
 ## Current State (April 2026)
 
 ### What Students See
@@ -90,4 +100,4 @@ See ROADMAP.md for planned features.
 
 ---
 
-*Last updated: April 3, 2026*
+*Last updated: April 28, 2026*

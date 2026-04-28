@@ -89,4 +89,32 @@ The data structure allows both — courses for structured learning, topic chips 
 
 ---
 
-*Last updated: April 3, 2026*
+## "Why a warm cream theme on chapter detail when the rest of the app is dark synthwave?"
+
+**Answer:** Two reasons — context-switching as wayfinding, and study-mode as a distinct mental space.
+
+When a student is chatting with the AI, the dark synthwave signals "this is the conversational, AI-native part of the app." When they enter a chapter to actually study, switching to a warm paper background signals "you're entering study mode, settle in, this is for reading and remembering." It's the digital equivalent of moving from a coffee shop to a library — the lighting changes, your posture changes.
+
+**Trade-off:** Theme transitions can feel jarring. We tested by approving the cream design before applying it; the user explicitly approved the contrast as intentional. If feedback shows it's disorienting, we can ease the transition with a 200ms cross-fade or apply the cream theme more broadly.
+
+**Why scoped, not global:** Going global would require re-skinning chat (dark synthwave is core to the AI conversation aesthetic), classroom (Optimus Prime's neon vibe is part of the magic), MagicBlocks (sandboxed simulations expect dark canvas), and 30+ modals. That's a separate decision with much larger blast radius. Scoping to course/chapter only is fully reversible — to make it global, drop one wrapper class and promote the CSS variables to `:root`.
+
+## "Why drop the inline chapter expansion in favour of a dedicated detail page?"
+
+**Answer:** Two views fighting for the same job (showing chapter content) led to duplicated lesson-completion logic, visual inconsistency, and a paradigm mismatch — the inline expansion was a *list element* that grew, while the new design treats a chapter as a *destination*. One source of truth is cleaner code and clearer information hierarchy.
+
+**Trade-off:** Students lose the at-a-glance "see what's in chapter X without leaving the list" affordance. We mitigate by keeping the chapter card visually rich (title, mini progress bar, lessons-done count) so the list still answers "where am I in each chapter."
+
+**Why this design fits the data model:** `useCourseProgress.selectChapter(chId)` already toggled `activeChapter` between `chId` and `null`. We didn't change the state machine — only the rendering. Reverting if needed is a small CourseView change, no schema migration.
+
+## "Why use a handwriting font (Caveat) at all? Doesn't it look unprofessional?"
+
+**Answer:** Caveat appears in exactly four narrative spots — chapter kicker, section header, "next up →" label, and footer microcopy. Body text, lesson titles, stat values, and metadata all use Inter (a clean sans) or Space Mono (for numerics). The handwriting carries warmth; it never carries data.
+
+**Why this scoped use:** A 15-year-old student at 9pm prepping for boards is not in a corporate meeting — they're in their bedroom. The handwriting telegraphs "this surface is for you, not for graders or HR." But everywhere data needs to be read accurately (mastery %, time, lesson titles), legible sans wins.
+
+**Risk if it fatigues across 63 chapters:** The four spots are fixed; only the highlighter color could feel repetitive. If feedback shows fatigue, we vary the highlighter color by subject (yellow for Math, mint for Science, pink for Social) so each subject has its own accent without changing the structure.
+
+---
+
+*Last updated: April 28, 2026*

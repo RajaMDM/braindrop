@@ -62,3 +62,31 @@ body {
   background-image:linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);
   background-size:24px 24px;
 }
+
+/* F theme — warm paper, scoped to course/chapter surfaces */
+.theme-paper {
+  --p-paper:#fbf6e8;
+  --p-paper2:#f3edd9;
+  --p-card:#ffffff;
+  --p-line:#e6dcc0;
+  --p-line2:#d6c89f;
+  --p-ink:#1f2c4a;
+  --p-ink2:#3a496f;
+  --p-pencil:#7d7460;
+  --p-hl:#fde366;
+  --p-red:#c0392b;
+  --p-green:#2c8a4a;
+  --p-blue:#3b6cc4;
+  background:var(--p-paper);
+  color:var(--p-ink);
+  font-family:'Inter',sans-serif;
+  min-height:100%;
+  position:relative;
+}
+.theme-paper::before {
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+  background-image:repeating-linear-gradient(0deg,transparent 0,transparent 32px,rgba(120,150,180,.06) 32px,rgba(120,150,180,.06) 33px);
+}
+.theme-paper > * { position:relative; z-index:1; }
+.font-hand { font-family:'Caveat',cursive; }
+.font-mono-p { font-family:'Space Mono','JetBrains Mono',monospace; }

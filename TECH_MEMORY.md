@@ -129,4 +129,52 @@ The `BOOKS` object in `index.html` only has entries for Grade 10 (mathematics, s
 
 ---
 
-*Last updated: April 3, 2026*
+## Course/Chapter Design System (April 2026)
+
+### Theme Scoping — `.theme-paper` namespace
+The course/chapter surfaces use a warm cream theme that does NOT apply globally. The dark synthwave (`--bg`, `--np`, etc.) remains the default for chat, classroom, modals, and AI surfaces. The warm theme is wrapped in a `.theme-paper` class scope inside `CourseView.jsx`, with all variables namespaced as `--p-*` (`--p-paper`, `--p-card`, `--p-ink`, etc.) defined in `src/styles/index.css`.
+
+**Why scoped, not global:** F was approved as a chapter-detail design, not a brand overhaul. Going global would touch chat, classroom, MagicBlocks, modals — much larger blast radius, separate decision. The scoped approach is fully reversible — to make it global later, drop the `.theme-paper` wrapper and promote `--p-*` to `:root`.
+
+**Two helper utility classes:** `.font-hand` (Caveat) and `.font-mono-p` (Space Mono / JetBrains Mono fallback). Both safe to use globally; they only set font-family, no theme assumptions.
+
+### F Design Tokens
+| Token | Value | Purpose |
+|---|---|---|
+| `--p-paper` | `#fbf6e8` | Warm cream background |
+| `--p-paper2` | `#f3edd9` | Slightly deeper paper for empty/locked states |
+| `--p-card` | `#ffffff` | White card surface |
+| `--p-line` | `#e6dcc0` | Soft cream-tinted border |
+| `--p-line2` | `#d6c89f` | Stronger border for emphasis |
+| `--p-ink` | `#1f2c4a` | Primary deep-ink text |
+| `--p-ink2` | `#3a496f` | Secondary ink |
+| `--p-pencil` | `#7d7460` | Tertiary muted (metadata) |
+| `--p-hl` | `#fde366` | Yellow highlighter (active state) |
+| `--p-red` | `#c0392b` | Doodled stars, footer arrow accents |
+| `--p-green` | `#2c8a4a` | Completed lesson, mastery ring at 100% |
+| `--p-blue` | `#3b6cc4` | Active mastery ring, kicker labels |
+
+### ChapterCard inline expansion REMOVED
+Previously, clicking a chapter in `ChapterCard.jsx` expanded an inline `AnimatePresence` lesson list within the same card. F replaces this with a dedicated `ChapterDetailView.jsx` rendered at the top of `CourseView` when `activeChapter` is set.
+
+**Why:** Two views fighting for the same job (chapter content) led to duplicated lesson-completion logic and visual paradigm mismatch (F is page-level, expansion was inline). One source of truth is cleaner.
+
+**Side effect:** `useCourseProgress.selectChapter(chId)` still toggles `activeChapter` between `chId` and `null`, but `null` now means "show the chapter list" and `chId` means "show the detail page for that chapter." The semantics didn't change; only the rendering did.
+
+### Quiz scores NOT TRACKED — schema gap
+The F mockup originally had a "Quiz avg" stat card. Implementation could not honour that because `memory.profile.courseProgress[chapterId]` only tracks `{ completed: [], started, done }` — no per-chapter or per-lesson quiz scores. The shipped stat card replaces "Quiz avg" with "Status" (Locked / New / In progress / Done), which is real data.
+
+**To wire quiz tracking:** add `quizScores: { [chapterId]: { [lessonName]: number[] } }` to the memory schema. Then update the assessment engine to push results into this map after grading. Then update `ChapterDetailView`'s `Stat` row to compute and show the per-chapter average.
+
+### Caveat font scope
+Caveat is used in **exactly four places** to prevent visual fatigue across 63 chapters:
+1. Chapter kicker ("chapter four")
+2. Section header ("What's in here", "Chapters")
+3. "next up →" label inside the progress card
+4. Footer microcopy ("2 down, 2 to go")
+
+Body, lesson titles, stat values, and metadata all use Inter or Space Mono. The handwriting carries narrative warmth, never load-bearing data.
+
+---
+
+*Last updated: April 28, 2026*
