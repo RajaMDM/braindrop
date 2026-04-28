@@ -81,7 +81,7 @@ export default function QuizCard({ data }) {
           }}>
             {/* Question header */}
             <div style={{
-              fontSize: '.65rem', fontFamily: "'Space Mono',monospace",
+              fontSize: '.65rem', fontFamily: "'Geist Mono',monospace",
               color: 'var(--np)', textTransform: 'uppercase', letterSpacing: 1,
               marginBottom: 6, display: 'flex', alignItems: 'center', gap: 8,
             }}>
@@ -134,14 +134,14 @@ export default function QuizCard({ data }) {
                     style={{
                       padding: '10px 14px', border: `1px solid ${borderColor}`,
                       borderRadius: 8, background: bg, color,
-                      fontFamily: "'Fredoka',sans-serif", fontSize: '.84rem',
+                      fontFamily: "'Geist',sans-serif", fontSize: '.84rem',
                       cursor: isDone ? 'default' : 'pointer', textAlign: 'left',
                       display: 'flex', alignItems: 'center', gap: 8,
                       opacity, transition: 'all .2s',
                     }}
                   >
                     <span style={{
-                      fontFamily: "'Space Mono',monospace", fontWeight: 700,
+                      fontFamily: "'Geist Mono',monospace", fontWeight: 700,
                       fontSize: '.75rem', opacity: 0.6,
                     }}>{letter}.</span>
                     {opt}

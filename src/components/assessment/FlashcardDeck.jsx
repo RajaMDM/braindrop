@@ -52,7 +52,7 @@ export default function FlashcardDeck({ data }) {
           style={{
             padding: '9px 20px', borderRadius: 8, border: '1px solid var(--np)',
             background: 'rgba(180,74,255,.08)', color: 'var(--np)',
-            fontFamily: "'Fredoka',sans-serif", fontSize: '.82rem',
+            fontFamily: "'Geist',sans-serif", fontSize: '.82rem',
             fontWeight: 600, cursor: 'pointer',
           }}
         >
@@ -111,7 +111,7 @@ export default function FlashcardDeck({ data }) {
           style={{
             padding: '9px 20px', borderRadius: 8, border: '1px solid rgba(57,255,20,.2)',
             background: 'rgba(57,255,20,.12)', color: 'var(--ng)',
-            fontFamily: "'Fredoka',sans-serif", fontSize: '.82rem',
+            fontFamily: "'Geist',sans-serif", fontSize: '.82rem',
             fontWeight: 600, cursor: 'pointer',
           }}
         >
@@ -124,7 +124,7 @@ export default function FlashcardDeck({ data }) {
           style={{
             padding: '9px 20px', borderRadius: 8, border: '1px solid rgba(255,23,68,.2)',
             background: 'rgba(255,23,68,.1)', color: 'var(--nr)',
-            fontFamily: "'Fredoka',sans-serif", fontSize: '.82rem',
+            fontFamily: "'Geist',sans-serif", fontSize: '.82rem',
             fontWeight: 600, cursor: 'pointer',
           }}
         >

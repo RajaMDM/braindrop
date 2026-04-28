@@ -86,7 +86,7 @@ export default function Header() {
               onClick={() => setGrade(g)}
               style={{
                 padding: '6px 16px', border: 'none', borderRadius: 7,
-                fontFamily: "'Space Mono',monospace", fontSize: '.72rem',
+                fontFamily: "'Geist Mono',monospace", fontSize: '.72rem',
                 fontWeight: 700, cursor: 'pointer',
                 textTransform: 'uppercase', letterSpacing: 1,
                 background: grade === g ? 'linear-gradient(135deg,#ff6b9d,#b44aff)' : 'none',

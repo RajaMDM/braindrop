@@ -97,7 +97,7 @@ export default function AnalyticsModal({ onClose }) {
           }}>
             <div style={{
               fontSize: '1.4rem', fontWeight: 700,
-              fontFamily: "'Space Mono',monospace", color: s.color,
+              fontFamily: "'Geist Mono',monospace", color: s.color,
             }}>{s.value}</div>
             <div style={{ fontSize: '.6rem', color: 'var(--t3)', marginTop: 3 }}>{s.label}</div>
           </div>
@@ -136,7 +136,7 @@ export default function AnalyticsModal({ onClose }) {
                   />
                 </div>
                 <span style={{
-                  width: 32, fontFamily: "'Space Mono',monospace",
+                  width: 32, fontFamily: "'Geist Mono',monospace",
                   fontSize: '.65rem', color: 'var(--t3)',
                 }}>{s.count}</span>
               </div>
@@ -231,7 +231,7 @@ export default function AnalyticsModal({ onClose }) {
                   />
                 </div>
                 <span style={{
-                  width: 32, fontFamily: "'Space Mono',monospace",
+                  width: 32, fontFamily: "'Geist Mono',monospace",
                   fontSize: '.65rem', color: 'var(--t3)',
                 }}>{s.count}</span>
               </div>
@@ -252,7 +252,7 @@ export default function AnalyticsModal({ onClose }) {
           style={{
             padding: '9px 18px', borderRadius: 8, border: 'none',
             background: 'linear-gradient(135deg,#ff6b9d,#b44aff)', color: '#fff',
-            fontFamily: "'Fredoka',sans-serif", fontSize: '.82rem',
+            fontFamily: "'Geist',sans-serif", fontSize: '.82rem',
             fontWeight: 600, cursor: 'pointer',
           }}
         >

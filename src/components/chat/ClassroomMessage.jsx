@@ -64,7 +64,7 @@ export default function ClassroomMessage({ message, grade }) {
         <MarkdownRenderer text={message.text} />
         <div style={{
           fontSize: '.62rem', marginTop: 6,
-          fontFamily: "'Space Mono',monospace", fontWeight: 600,
+          fontFamily: "'Geist Mono',monospace", fontWeight: 600,
           color: styles.labelColor,
         }}>
           {agent?.name || role}

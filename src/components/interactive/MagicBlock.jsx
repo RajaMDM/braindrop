@@ -24,7 +24,7 @@ export default function MagicBlock({ title, html }) {
           borderBottom: '1px solid rgba(180,74,255,.15)',
         }}>
           <span style={{
-            fontSize: '.65rem', fontFamily: "'Space Mono',monospace",
+            fontSize: '.65rem', fontFamily: "'Geist Mono',monospace",
             fontWeight: 700, color: 'var(--np)', display: 'flex',
             alignItems: 'center', gap: 6, textTransform: 'uppercase', letterSpacing: 1.5,
           }}>
@@ -35,7 +35,7 @@ export default function MagicBlock({ title, html }) {
             style={{
               background: 'linear-gradient(135deg,#ff6b9d,#b44aff)', border: 'none',
               borderRadius: 6, color: '#fff', fontSize: '.65rem', padding: '5px 12px',
-              cursor: 'pointer', fontFamily: "'Space Mono',monospace", fontWeight: 600,
+              cursor: 'pointer', fontFamily: "'Geist Mono',monospace", fontWeight: 600,
             }}
           >
             ⛶ Open Full Screen
@@ -70,7 +70,7 @@ export default function MagicBlock({ title, html }) {
             flexShrink: 0,
           }}>
             <span style={{
-              fontSize: '.8rem', fontFamily: "'Space Mono',monospace",
+              fontSize: '.8rem', fontFamily: "'Geist Mono',monospace",
               fontWeight: 700, color: 'var(--np)', display: 'flex',
               alignItems: 'center', gap: 8,
             }}>
@@ -81,7 +81,7 @@ export default function MagicBlock({ title, html }) {
               style={{
                 background: 'var(--bg3)', border: '1px solid var(--bd)',
                 borderRadius: 8, color: 'var(--t2)', fontSize: '.82rem',
-                padding: '8px 18px', cursor: 'pointer', fontFamily: 'Fredoka,sans-serif',
+                padding: '8px 18px', cursor: 'pointer', fontFamily: 'Geist,sans-serif',
                 fontWeight: 600,
               }}
             >

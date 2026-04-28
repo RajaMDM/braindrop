@@ -54,7 +54,7 @@ export default function SettingsModal({ onClose }) {
           style={{
             width: '100%', padding: '10px 14px', background: 'var(--bg)',
             border: '1px solid var(--bd)', borderRadius: 8,
-            color: 'var(--t1)', fontFamily: "'Fredoka',sans-serif",
+            color: 'var(--t1)', fontFamily: "'Geist',sans-serif",
             fontSize: '.88rem', outline: 'none',
           }}
           onFocus={(e) => { e.target.style.borderColor = 'var(--np)'; }}
@@ -73,7 +73,7 @@ export default function SettingsModal({ onClose }) {
           style={{
             width: '100%', padding: '10px 14px', background: 'var(--bg)',
             border: '1px solid var(--bd)', borderRadius: 8,
-            color: 'var(--t1)', fontFamily: "'Fredoka',sans-serif",
+            color: 'var(--t1)', fontFamily: "'Geist',sans-serif",
             fontSize: '.88rem', outline: 'none',
           }}
         >
@@ -95,7 +95,7 @@ export default function SettingsModal({ onClose }) {
           style={{
             padding: '9px 18px', borderRadius: 8, border: '1px solid var(--bd)',
             background: 'var(--bg)', color: 'var(--t2)',
-            fontFamily: "'Fredoka',sans-serif", fontSize: '.82rem',
+            fontFamily: "'Geist',sans-serif", fontSize: '.82rem',
             fontWeight: 600, cursor: 'pointer',
           }}
         >
@@ -108,7 +108,7 @@ export default function SettingsModal({ onClose }) {
           style={{
             padding: '9px 18px', borderRadius: 8, border: 'none',
             background: 'linear-gradient(135deg,#ff6b9d,#b44aff)', color: '#fff',
-            fontFamily: "'Fredoka',sans-serif", fontSize: '.82rem',
+            fontFamily: "'Geist',sans-serif", fontSize: '.82rem',
             fontWeight: 600, cursor: 'pointer',
           }}
         >

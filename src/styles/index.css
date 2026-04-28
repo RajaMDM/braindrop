@@ -1,92 +1,178 @@
 @import "tailwindcss";
 @import "katex/dist/katex.min.css";
 
+/* ───────────────────────────────────────────────────────────────────────
+   BrainDrop — "Quiet Competence" design system, DARK as default.
+   Source of truth: DESIGN.md.
+   Strategy: keep legacy variable NAMES so 21+ components cascade into
+   the new tokens without code changes. Map old neon palette → muted
+   Quiet Competence dark equivalents.
+   ─────────────────────────────────────────────────────────────────────── */
+
 @theme {
-  --color-bg: #0b0b14;
-  --color-bg2: #12121f;
-  --color-bg3: #1a1a2e;
-  --color-bgH: #1f1f3a;
-  --color-np: #b44aff;
-  --color-nk: #ff6b9d;
-  --color-nc: #00f5d4;
-  --color-ny: #fee440;
-  --color-nb: #4cc9f0;
-  --color-no: #ff6d00;
-  --color-ng: #39ff14;
-  --color-nr: #ff1744;
-  --color-t1: #eef0ff;
-  --color-t2: #a0a4c4;
-  --color-t3: #5c5f80;
-  --color-bd: rgba(255,255,255,0.05);
+  /* tailwind theme bridge */
+  --color-bg: #0c0c0a;
+  --color-bg2: #171716;
+  --color-bg3: #252523;
+  --color-bgH: #2e2e2b;
+  --color-np: #2dd4bf;       /* primary accent → lifted teal (was neon purple) */
+  --color-nk: #a8a29e;       /* secondary muted (was neon pink) */
+  --color-nc: #2dd4bf;       /* one-accent rule (was neon cyan) */
+  --color-ny: #fbbf24;       /* warning amber (was neon yellow) */
+  --color-nb: #2dd4bf;       /* one-accent rule (was neon blue) */
+  --color-no: #fb923c;       /* muted orange */
+  --color-ng: #4ade80;       /* success forest (was neon green) */
+  --color-nr: #f87171;       /* error brick (was neon red) */
+  --color-t1: #fafaf9;       /* primary text on dark */
+  --color-t2: #d6d3d1;       /* secondary muted */
+  --color-t3: #a1a1aa;       /* tertiary */
+  --color-bd: rgba(255,255,255,0.08);
 }
 
 :root {
-  --bg:#0b0b14;--bg2:#12121f;--bg3:#1a1a2e;--bgH:#1f1f3a;
-  --np:#b44aff;--nk:#ff6b9d;--nc:#00f5d4;--ny:#fee440;--nb:#4cc9f0;
-  --no:#ff6d00;--ng:#39ff14;--nr:#ff1744;
-  --t1:#eef0ff;--t2:#a0a4c4;--t3:#5c5f80;
-  --bd:rgba(255,255,255,0.05);
-  --gf:linear-gradient(135deg,#ff6b9d,#b44aff);
-  --gi:linear-gradient(135deg,#4cc9f0,#00f5d4);
-  --gg:linear-gradient(135deg,#fee440,#ff6d00);
-  --xp:linear-gradient(90deg,#b44aff,#ff6b9d,#00f5d4);
+  /* === New tokens (preferred for new code) === */
+  --bg-base:      #0c0c0a;
+  --surface:      #171716;
+  --subtle:       #252523;
+  --border:       #2e2e2b;
+  --border-strong:#3d3d39;
+  --text:         #fafaf9;
+  --text-muted:   #d6d3d1;
+  --text-tert:    #a1a1aa;
+  --accent:       #2dd4bf;
+  --accent-hover: #5eead4;
+  --accent-fg:    #0c0c0a;
+  --accent-soft:  rgba(45, 212, 191, 0.12);
+  --success:      #4ade80;
+  --warning:      #fbbf24;
+  --error:        #f87171;
+
+  /* === Legacy tokens — same names, new dark values ===
+     21+ .jsx files use these. Keeping the names means they cascade
+     into the new palette without code changes. */
+  --bg:   #0c0c0a;
+  --bg2:  #171716;
+  --bg3:  #252523;
+  --bgH:  #2e2e2b;
+  --np:   var(--accent);
+  --nk:   var(--text-tert);
+  --nc:   var(--accent);
+  --ny:   var(--warning);
+  --nb:   var(--accent);
+  --no:   #fb923c;
+  --ng:   var(--success);
+  --nr:   var(--error);
+  --t1:   var(--text);
+  --t2:   var(--text-muted);
+  --t3:   var(--text-tert);
+  --bd:   rgba(255, 255, 255, 0.08);
+
+  /* Gradients — subdued vs the old neon ones */
+  --gf: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  --gi: linear-gradient(135deg, var(--accent), var(--success));
+  --gg: linear-gradient(135deg, var(--warning), #fb923c);
+  --xp: linear-gradient(90deg, var(--accent), var(--accent-hover));
+
+  /* spacing */
+  --s-2: 2px; --s-4: 4px; --s-8: 8px; --s-12: 12px; --s-16: 16px;
+  --s-24: 24px; --s-32: 32px; --s-48: 48px; --s-64: 64px; --s-96: 96px;
+
+  /* radius */
+  --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-full: 9999px;
+
+  /* shadows — soft, on dark */
+  --shadow-subtle:   0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-medium:   0 4px 12px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-elevated: 0 12px 32px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
+
+  /* motion */
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --d-micro: 150ms; --d-short: 250ms; --d-medium: 400ms; --d-long: 600ms;
 }
 
-* { margin:0; padding:0; box-sizing:border-box; }
-html { height:100%; }
+/* === Optional light theme (opt-in via <html data-theme="light">) === */
+[data-theme="light"] {
+  --bg:           #fafaf9;
+  --bg2:          #f4f4f1;
+  --bg3:          #ffffff;
+  --bgH:          #f4f4f1;
+  --bg-base:      #fafaf9;
+  --surface:      #ffffff;
+  --subtle:       #f4f4f1;
+  --border:       #e7e5e1;
+  --border-strong:#cdc9c0;
+  --text:         #1c1917;
+  --text-muted:   #44403c;
+  --text-tert:    #78716c;
+  --accent:       #0d4d4a;
+  --accent-hover: #0a3a37;
+  --accent-fg:    #ffffff;
+  --accent-soft:  #ddeae8;
+  --success:      #15803d;
+  --warning:      #b45309;
+  --error:        #b91c1c;
+  --bd:           rgba(0, 0, 0, 0.08);
+  --shadow-subtle:   0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-medium:   0 4px 12px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-elevated: 0 12px 32px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* === Base === */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { height: 100%; }
 body {
-  font-family:'Fredoka',sans-serif;
-  background:var(--bg);
-  color:var(--t1);
-  height:100%;
-  overflow:hidden;
+  font-family: 'Geist', system-ui, sans-serif;
+  font-weight: 500;          /* Geist 500 visually matches Fredoka 400 weight */
+  background: var(--bg);
+  color: var(--text);
+  height: 100%;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.005em;
+}
+strong, b { font-weight: 700; }
+button, input, select, textarea { font-family: inherit; font-weight: 500; }
+::selection { background: var(--accent); color: var(--accent-fg); }
+
+/* Utility classes referenced by F's components */
+.font-hand {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-variation-settings: 'opsz' 18;
+  font-weight: 400;
+}
+.font-mono-p {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-feature-settings: 'tnum';
 }
 
-/* Background effects */
-.bgfx { position:fixed; inset:0; z-index:0; pointer-events:none; }
-.bgfx::before {
-  content:''; position:absolute; width:500px; height:500px;
-  background:radial-gradient(circle,rgba(180,74,255,.12),transparent 70%);
-  top:-100px; left:-100px; animation:drift1 20s ease-in-out infinite;
-}
-.bgfx::after {
-  content:''; position:absolute; width:600px; height:600px;
-  background:radial-gradient(circle,rgba(0,245,212,.08),transparent 70%);
-  bottom:-150px; right:-150px; animation:drift2 25s ease-in-out infinite;
-}
-@keyframes drift1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(100px,80px)} }
-@keyframes drift2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-80px,-60px)} }
-
-.pgrid {
-  position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.03;
-  background-image:linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);
-  background-size:24px 24px;
-}
-
-/* F theme — warm paper, scoped to course/chapter surfaces */
+/* theme-paper alias — F's components were wrapped in this; now inherits root tokens */
 .theme-paper {
-  --p-paper:#fbf6e8;
-  --p-paper2:#f3edd9;
-  --p-card:#ffffff;
-  --p-line:#e6dcc0;
-  --p-line2:#d6c89f;
-  --p-ink:#1f2c4a;
-  --p-ink2:#3a496f;
-  --p-pencil:#7d7460;
-  --p-hl:#fde366;
-  --p-red:#c0392b;
-  --p-green:#2c8a4a;
-  --p-blue:#3b6cc4;
-  background:var(--p-paper);
-  color:var(--p-ink);
-  font-family:'Inter',sans-serif;
-  min-height:100%;
-  position:relative;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Geist', system-ui, sans-serif;
+  min-height: 100%;
+  position: relative;
 }
-.theme-paper::before {
-  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
-  background-image:repeating-linear-gradient(0deg,transparent 0,transparent 32px,rgba(120,150,180,.06) 32px,rgba(120,150,180,.06) 33px);
+
+/* === Background effects ===
+   Synthwave purple/cyan radial blobs retired — kept as inert classes
+   for back-compat. .pgrid kept as a very subtle 24px grid for texture. */
+.bgfx { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.pgrid {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0.025;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
-.theme-paper > * { position:relative; z-index:1; }
-.font-hand { font-family:'Caveat',cursive; }
-.font-mono-p { font-family:'Space Mono','JetBrains Mono',monospace; }
+
+/* Reduce motion respected app-wide */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

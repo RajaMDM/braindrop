@@ -3,7 +3,7 @@ export const CHARACTERS = [
     id: 'rocket',
     name: 'Rocket',
     emoji: '\u{1F680}',
-    color: '#b44aff',
+    color: '#a78bfa',
     catchphrase: 'To the stars and beyond — let\'s blast through this chapter!',
     description: 'Always zooming ahead, Rocket loves speed-learning and finishing homework at light speed.'
   },
@@ -11,7 +11,7 @@ export const CHARACTERS = [
     id: 'panda',
     name: 'Panda',
     emoji: '\u{1F43C}',
-    color: '#00f5d4',
+    color: '#5eead4',
     catchphrase: 'Slow and steady wins the quiz... but snacks help too!',
     description: 'Chill and cuddly, Panda believes every hard problem just needs a calm mind and some bamboo breaks.'
   },
@@ -19,7 +19,7 @@ export const CHARACTERS = [
     id: 'lightning-fox',
     name: 'Lightning Fox',
     emoji: '\u26A1\u{1F98A}',
-    color: '#ff6d00',
+    color: '#fb923c',
     catchphrase: 'Quick thinking, quick answers — let\'s outsmart this exam!',
     description: 'Sharp and sneaky-smart, Lightning Fox spots tricks in questions before anyone else.'
   },
@@ -27,7 +27,7 @@ export const CHARACTERS = [
     id: 'star-ninja',
     name: 'Star Ninja',
     emoji: '\u2B50\u{1F977}',
-    color: '#fee440',
+    color: '#fde047',
     catchphrase: 'Silent focus, deadly accuracy — no question escapes my blade!',
     description: 'Moves through chapters like a shadow, mastering topics with ninja-level discipline.'
   },
@@ -35,7 +35,7 @@ export const CHARACTERS = [
     id: 'pixel-cat',
     name: 'Pixel Cat',
     emoji: '\u{1F431}',
-    color: '#ff6b9d',
+    color: '#f9a8d4',
     catchphrase: 'Curiosity didn\'t hurt this cat — it made me smarter!',
     description: 'Endlessly curious and a little mischievous, Pixel Cat pounces on every new concept.'
   },
@@ -43,7 +43,7 @@ export const CHARACTERS = [
     id: 'brainy-bot',
     name: 'Brainy Bot',
     emoji: '\u{1F916}',
-    color: '#4cc9f0',
+    color: '#60a5fa',
     catchphrase: 'Processing... processing... GOT IT! That was easy!',
     description: 'Part student, part supercomputer — Brainy Bot crunches formulas and facts for breakfast.'
   },
@@ -51,7 +51,7 @@ export const CHARACTERS = [
     id: 'phoenix',
     name: 'Phoenix',
     emoji: '\u{1F525}',
-    color: '#ff1744',
+    color: '#fb7185',
     catchphrase: 'Failed a quiz? No worries — I rise from the ashes every time!',
     description: 'Never gives up, never stays down. Phoenix turns every mistake into a comeback story.'
   },
@@ -59,7 +59,7 @@ export const CHARACTERS = [
     id: 'dragon',
     name: 'Dragon',
     emoji: '\u{1F409}',
-    color: '#39ff14',
+    color: '#86efac',
     catchphrase: 'Breathe fire on those doubts — we\'re conquering this subject TODAY!',
     description: 'Fierce and fearless, Dragon charges into the toughest chapters with roaring confidence.'
   }

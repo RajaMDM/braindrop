@@ -36,7 +36,7 @@ export default function ModeTabs() {
               borderRadius: 9,
               background: active ? 'rgba(180,74,255,.08)' : 'var(--bg3)',
               color: active ? 'var(--np)' : 'var(--t3)',
-              fontFamily: "'Fredoka',sans-serif", fontSize: '.78rem',
+              fontFamily: "'Geist',sans-serif", fontSize: '.78rem',
               fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap',
               boxShadow: active ? '0 0 12px rgba(180,74,255,.1)' : 'none',
               position: 'relative',

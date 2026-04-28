@@ -61,7 +61,7 @@ export default function Sidebar() {
               padding: '10px 12px', border: 'none', borderRadius: 9,
               background: active ? 'rgba(180,74,255,.1)' : 'none',
               color: active ? 'var(--np)' : 'var(--t2)',
-              fontFamily: "'Fredoka',sans-serif", fontSize: '.85rem',
+              fontFamily: "'Geist',sans-serif", fontSize: '.85rem',
               fontWeight: 500, cursor: 'pointer', textAlign: 'left',
               width: '100%', position: 'relative',
               transition: 'all .2s',
@@ -103,7 +103,7 @@ export default function Sidebar() {
           {AI_BADGES.map((b) => (
             <span key={b.label} style={{
               fontSize: '.55rem', padding: '2px 6px', borderRadius: 5,
-              fontWeight: 600, fontFamily: "'Space Mono',monospace",
+              fontWeight: 600, fontFamily: "'Geist Mono',monospace",
               background: b.bg, color: b.color,
             }}>{b.label}</span>
           ))}

@@ -13,7 +13,7 @@ class ErrorBoundary extends Component {
         <div style={{
           position:'fixed', inset:0, background:'#0b0b14', color:'#eef0ff',
           display:'flex', alignItems:'center', justifyContent:'center',
-          flexDirection:'column', padding:40, textAlign:'center', fontFamily:'Fredoka,sans-serif'
+          flexDirection:'column', padding:40, textAlign:'center', fontFamily:'Geist,sans-serif'
         }}>
           <div style={{ fontSize:'3rem', marginBottom:16 }}>⚡</div>
           <h2 style={{ fontSize:'1.3rem', marginBottom:8, color:'#ff6b9d' }}>Something went wrong</h2>
@@ -29,7 +29,7 @@ class ErrorBoundary extends Component {
           <button onClick={() => { localStorage.removeItem('bd_user'); location.reload(); }} style={{
             padding:'10px 24px', borderRadius:8, border:'1px solid #b44aff',
             background:'transparent', color:'#b44aff', cursor:'pointer',
-            fontFamily:'Fredoka,sans-serif', fontSize:'.85rem', fontWeight:600
+            fontFamily:'Geist,sans-serif', fontSize:'.85rem', fontWeight:600
           }}>
             Reset & Refresh
           </button>

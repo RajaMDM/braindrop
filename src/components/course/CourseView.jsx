@@ -15,13 +15,13 @@ export default function CourseView() {
   const progress = getCourseProgress();
   const pct = progress?.pct || 0;
 
-  // If a chapter is selected, render the detail view (F design)
+  // If a chapter is selected, render the detail view
   if (activeChapter) {
     const chapterIndex = courseData.chapters.findIndex((c) => c.id === activeChapter);
     const chapter = courseData.chapters[chapterIndex];
     if (chapter) {
       return (
-        <div className="theme-paper" style={{ minHeight: '100%', width: '100%' }}>
+        <div style={{ minHeight: '100%', width: '100%', background: 'var(--bg)' }}>
           <ChapterDetailView
             chapter={chapter}
             chapterIndex={chapterIndex}
@@ -32,35 +32,43 @@ export default function CourseView() {
     }
   }
 
-  // Default: course overview (chapter list, F-themed)
+  // Default: course overview (chapter list)
   return (
-    <div className="theme-paper" style={{ minHeight: '100%', width: '100%' }}>
+    <div style={{ minHeight: '100%', width: '100%', background: 'var(--bg)' }}>
       <div style={{ maxWidth: 760, margin: '0 auto', padding: '24px 18px 60px', textAlign: 'left' }}>
         {/* Header */}
         <div style={{ marginBottom: 18 }}>
-          <div className="font-hand" style={{
-            fontSize: 24, color: 'var(--p-blue)', lineHeight: 1, marginBottom: 2,
-            transform: 'rotate(-.5deg)', display: 'inline-block',
-          }}>{courseData.name.toLowerCase()} · grade {grade}</div>
+          <div style={{
+            fontFamily: "'Geist Mono', monospace", fontSize: 11,
+            letterSpacing: '0.16em', textTransform: 'uppercase',
+            color: 'var(--accent)', fontWeight: 500, marginBottom: 16,
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+          }}>
+            <span style={{ width: 18, height: 1.5, background: 'var(--accent)' }} />
+            {courseData.name.toLowerCase()} · grade {grade}
+          </div>
           <div style={{
             display: 'flex', alignItems: 'baseline', justifyContent: 'space-between',
             gap: 16, flexWrap: 'wrap', marginTop: 4,
           }}>
             <h1 style={{
-              fontFamily: 'Inter,sans-serif', fontWeight: 700,
-              fontSize: 'clamp(28px, 5vw, 40px)', letterSpacing: '-0.02em',
-              color: 'var(--p-ink)', margin: 0, lineHeight: 1.05,
+              fontFamily: "'Fraunces', serif", fontWeight: 400,
+              fontSize: 'clamp(28px, 5vw, 42px)', letterSpacing: '-0.025em',
+              color: 'var(--text)', margin: 0, lineHeight: 1.05,
+              fontVariationSettings: "'opsz' 36",
             }}>{courseData.name} Course</h1>
-            <div className="font-mono-p" style={{
-              fontSize: 14, fontWeight: 700, color: pct >= 100 ? 'var(--p-green)' : 'var(--p-blue)',
+            <div style={{
+              fontFamily: "'Geist Mono', monospace", fontSize: 13,
+              fontWeight: 600, color: pct >= 100 ? 'var(--success)' : 'var(--accent)',
+              fontFeatureSettings: '"tnum"',
             }}>{pct}%</div>
           </div>
         </div>
 
         {/* Progress bar */}
         <div style={{
-          height: 8, borderRadius: 4, background: 'var(--p-paper2)',
-          marginBottom: 22, overflow: 'hidden', border: '1px solid var(--p-line)',
+          height: 6, borderRadius: 3, background: 'var(--subtle)',
+          marginBottom: 22, overflow: 'hidden', border: '1px solid var(--border)',
         }}>
           <motion.div
             initial={{ width: 0 }}
@@ -68,7 +76,7 @@ export default function CourseView() {
             transition={{ duration: 0.6, ease: 'easeOut' }}
             style={{
               height: '100%',
-              background: pct >= 100 ? 'var(--p-green)' : 'var(--p-blue)',
+              background: pct >= 100 ? 'var(--success)' : 'var(--accent)',
             }}
           />
         </div>
@@ -78,23 +86,26 @@ export default function CourseView() {
           display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end',
           margin: '4px 0 10px',
         }}>
-          <h3 className="font-hand" style={{
-            margin: 0, fontSize: 28, fontWeight: 700, color: 'var(--p-ink)',
-            lineHeight: 1, transform: 'rotate(-.3deg)', display: 'inline-block',
+          <h3 style={{
+            margin: 0, fontFamily: "'Fraunces', serif", fontWeight: 400,
+            fontStyle: 'italic', fontSize: 22, color: 'var(--text)',
+            lineHeight: 1, letterSpacing: '-0.01em',
+            fontVariationSettings: "'opsz' 24",
           }}>Chapters</h3>
-          <div className="font-mono-p" style={{
-            fontSize: 12, color: 'var(--p-pencil)', letterSpacing: '0.04em',
+          <div style={{
+            fontFamily: "'Geist Mono', monospace", fontSize: 11,
+            color: 'var(--text-tert)', letterSpacing: '0.04em',
           }}>{String(progress?.chaptersComplete || 0).padStart(2, '0')} / {String(progress?.totalChapters || 0).padStart(2, '0')} done</div>
         </div>
 
         {/* Chapter list */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           {courseData.chapters.map((ch, idx) => (
             <motion.div
               key={ch.id}
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.03 }}
+              transition={{ delay: idx * 0.025 }}
             >
               <ChapterCard
                 chapter={ch}

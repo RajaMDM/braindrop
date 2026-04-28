@@ -52,7 +52,7 @@ export default function StatsModal({ onClose }) {
           }}>
             <div style={{
               fontSize: '1.5rem', fontWeight: 700,
-              fontFamily: "'Space Mono',monospace", color: s.color,
+              fontFamily: "'Geist Mono',monospace", color: s.color,
             }}>{s.value}</div>
             <div style={{ fontSize: '.68rem', color: 'var(--t3)', marginTop: 4 }}>{s.label}</div>
           </div>
@@ -103,7 +103,7 @@ export default function StatsModal({ onClose }) {
           style={{
             padding: '9px 18px', borderRadius: 8, border: '1px solid var(--bd)',
             background: 'var(--bg)', color: 'var(--t2)',
-            fontFamily: "'Fredoka',sans-serif", fontSize: '.82rem',
+            fontFamily: "'Geist',sans-serif", fontSize: '.82rem',
             fontWeight: 600, cursor: 'pointer',
           }}
         >
@@ -116,7 +116,7 @@ export default function StatsModal({ onClose }) {
           style={{
             padding: '9px 18px', borderRadius: 8, border: 'none',
             background: 'linear-gradient(135deg,#ff6b9d,#b44aff)', color: '#fff',
-            fontFamily: "'Fredoka',sans-serif", fontSize: '.82rem',
+            fontFamily: "'Geist',sans-serif", fontSize: '.82rem',
             fontWeight: 600, cursor: 'pointer',
           }}
         >

@@ -34,7 +34,7 @@ export default function BottomNav() {
               gap: 2, background: 'none', border: 'none',
               color: active ? 'var(--np)' : 'var(--t3)',
               fontSize: '.58rem', padding: '4px 6px', borderRadius: 8,
-              cursor: 'pointer', fontFamily: "'Fredoka',sans-serif", fontWeight: 500,
+              cursor: 'pointer', fontFamily: "'Geist',sans-serif", fontWeight: 500,
             }}
           >
             <span style={{ fontSize: '1.2rem' }}>{s.icon}</span>

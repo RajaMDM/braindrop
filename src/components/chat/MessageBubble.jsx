@@ -55,7 +55,7 @@ export default function MessageBubble({ message, onGenerateSim }) {
             {message.ai && (
               <div style={{
                 fontSize: '.62rem', color: 'var(--t3)', marginTop: 6,
-                fontFamily: "'Space Mono',monospace",
+                fontFamily: "'Geist Mono',monospace",
               }}>
                 via {message.ai}
               </div>

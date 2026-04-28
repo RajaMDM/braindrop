@@ -37,7 +37,7 @@ export default function ScoresModal({ onClose }) {
           }}>
             <div style={{
               fontSize: '1.3rem', fontWeight: 700,
-              fontFamily: "'Space Mono',monospace", color: s.color,
+              fontFamily: "'Geist Mono',monospace", color: s.color,
             }}>{s.value}</div>
             <div style={{ fontSize: '.65rem', color: 'var(--t3)', marginTop: 4 }}>{s.label}</div>
           </div>
@@ -89,7 +89,7 @@ export default function ScoresModal({ onClose }) {
           style={{
             padding: '9px 18px', borderRadius: 8, border: 'none',
             background: 'linear-gradient(135deg,#ff6b9d,#b44aff)', color: '#fff',
-            fontFamily: "'Fredoka',sans-serif", fontSize: '.82rem',
+            fontFamily: "'Geist',sans-serif", fontSize: '.82rem',
             fontWeight: 600, cursor: 'pointer',
           }}
         >

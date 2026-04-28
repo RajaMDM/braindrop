@@ -21,7 +21,7 @@ export default function TopicChip({ label, onClick, delay = 0 }) {
         background: 'var(--bg3)',
         border: '1px solid var(--bd)',
         color: 'var(--t2)', fontSize: '.8rem', fontWeight: 500,
-        cursor: 'pointer', fontFamily: "'Fredoka',sans-serif",
+        cursor: 'pointer', fontFamily: "'Geist',sans-serif",
         transition: 'all .2s',
       }}
     >

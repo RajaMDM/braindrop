@@ -73,7 +73,7 @@ export default function CertificateOverlay({ subject, userName, onClose }) {
         </div>
         <div style={{
           fontSize: '.72rem', color: 'var(--t3)',
-          fontFamily: "'Space Mono',monospace",
+          fontFamily: "'Geist Mono',monospace",
         }}>
           {new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}
         </div>
@@ -86,7 +86,7 @@ export default function CertificateOverlay({ subject, userName, onClose }) {
             marginTop: 24, padding: '10px 24px', borderRadius: 8,
             border: 'none',
             background: 'linear-gradient(135deg,#fee440,#ff6d00)',
-            color: '#0b0b14', fontFamily: "'Fredoka',sans-serif",
+            color: '#0b0b14', fontFamily: "'Geist',sans-serif",
             fontSize: '.85rem', fontWeight: 700, cursor: 'pointer',
           }}
         >

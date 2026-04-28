@@ -34,7 +34,7 @@ export default function KnowledgeBaseModal({ onClose }) {
       <p style={{ color: 'var(--t2)', fontSize: '.82rem', marginBottom: 12 }}>
         NCERT PDFs auto-load from <code style={{
           background: 'rgba(180,74,255,.1)', padding: '2px 6px', borderRadius: 4,
-          fontFamily: "'Space Mono',monospace", fontSize: '.82em', color: 'var(--nc)',
+          fontFamily: "'Geist Mono',monospace", fontSize: '.82em', color: 'var(--nc)',
         }}>/books/</code>. Use this for extra notes or sample papers.
       </p>
 
@@ -49,7 +49,7 @@ export default function KnowledgeBaseModal({ onClose }) {
           style={{
             width: '100%', padding: '10px 14px', background: 'var(--bg)',
             border: '1px solid var(--bd)', borderRadius: 8,
-            color: 'var(--t1)', fontFamily: "'Fredoka',sans-serif",
+            color: 'var(--t1)', fontFamily: "'Geist',sans-serif",
             fontSize: '.88rem', outline: 'none',
           }}
         >
@@ -71,7 +71,7 @@ export default function KnowledgeBaseModal({ onClose }) {
           style={{
             width: '100%', height: 150, padding: 12, background: 'var(--bg)',
             border: '1px solid var(--bd)', borderRadius: 8,
-            color: 'var(--t1)', fontFamily: "'Space Mono',monospace",
+            color: 'var(--t1)', fontFamily: "'Geist Mono',monospace",
             fontSize: '.78rem', resize: 'vertical', outline: 'none',
           }}
         />
@@ -96,7 +96,7 @@ export default function KnowledgeBaseModal({ onClose }) {
           style={{
             padding: '9px 18px', borderRadius: 8, border: '1px solid var(--bd)',
             background: 'var(--bg)', color: 'var(--t2)',
-            fontFamily: "'Fredoka',sans-serif", fontSize: '.82rem',
+            fontFamily: "'Geist',sans-serif", fontSize: '.82rem',
             fontWeight: 600, cursor: 'pointer',
           }}
         >
@@ -109,7 +109,7 @@ export default function KnowledgeBaseModal({ onClose }) {
           style={{
             padding: '9px 18px', borderRadius: 8, border: 'none',
             background: 'linear-gradient(135deg,#ff6b9d,#b44aff)', color: '#fff',
-            fontFamily: "'Fredoka',sans-serif", fontSize: '.82rem',
+            fontFamily: "'Geist',sans-serif", fontSize: '.82rem',
             fontWeight: 600, cursor: 'pointer',
           }}
         >

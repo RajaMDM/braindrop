@@ -124,7 +124,7 @@ export default function MarkdownRenderer({ text }) {
         .bb li { margin-bottom:3px; }
         .bb strong { color:var(--ny); font-weight:600; }
         .bb em { color:var(--nc); }
-        .bb code { background:rgba(180,74,255,.1); padding:2px 6px; border-radius:4px; font-family:'Space Mono',monospace; font-size:.82em; color:var(--nc); }
+        .bb code { background:rgba(180,74,255,.1); padding:2px 6px; border-radius:4px; font-family:'Geist Mono',monospace; font-size:.82em; color:var(--nc); }
         .bb pre { background:var(--bg); padding:12px; border-radius:8px; overflow-x:auto; margin:8px 0; border:1px solid var(--bd); }
         .bb pre code { background:none; padding:0; }
         .bb blockquote { border-left:3px solid var(--np); padding:8px 12px; margin:8px 0; background:rgba(180,74,255,.04); border-radius:0 8px 8px 0; color:var(--t2); font-style:italic; }

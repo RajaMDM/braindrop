@@ -68,7 +68,7 @@ export default function CharacterPicker() {
             <div style={{ fontSize: '.82rem', color: 'var(--t2)', marginBottom: 6 }}>
               {selected.description}
             </div>
-            <div style={{ fontSize: '.75rem', color: 'var(--t3)', fontStyle: 'italic', fontFamily: "'Space Mono', monospace" }}>
+            <div style={{ fontSize: '.75rem', color: 'var(--t3)', fontStyle: 'italic', fontFamily: "'Geist Mono', monospace" }}>
               "{selected.catchphrase}"
             </div>
           </div>
@@ -81,7 +81,7 @@ export default function CharacterPicker() {
             width: '100%', padding: 14, borderRadius: 12, border: 'none',
             background: selected ? 'linear-gradient(135deg,#ff6b9d,#b44aff)' : 'var(--bg3)',
             color: selected ? '#fff' : 'var(--t3)',
-            fontFamily: 'Fredoka,sans-serif', fontSize: '1rem', fontWeight: 700,
+            fontFamily: 'Geist,sans-serif', fontSize: '1rem', fontWeight: 700,
             cursor: selected ? 'pointer' : 'not-allowed',
             opacity: selected ? 1 : 0.5
           }}

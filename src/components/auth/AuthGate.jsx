@@ -102,7 +102,7 @@ function LoginScreen() {
             style={{
               width:'100%', padding:'10px 14px', background:'var(--bg)',
               border:`1px solid ${errors.name?'var(--nr)':'var(--bd)'}`, borderRadius:8,
-              color:'var(--t1)', fontFamily:'Fredoka,sans-serif', fontSize:'.88rem', outline:'none', marginBottom:10
+              color:'var(--t1)', fontFamily:'Geist,sans-serif', fontSize:'.88rem', outline:'none', marginBottom:10
             }}
           />
           <label style={{ fontSize:'.78rem', color:'var(--t2)', display:'block', marginBottom:6 }}>Your email *</label>
@@ -112,14 +112,14 @@ function LoginScreen() {
             style={{
               width:'100%', padding:'10px 14px', background:'var(--bg)',
               border:`1px solid ${errors.email?'var(--nr)':'var(--bd)'}`, borderRadius:8,
-              color:'var(--t1)', fontFamily:'Fredoka,sans-serif', fontSize:'.88rem', outline:'none', marginBottom:10
+              color:'var(--t1)', fontFamily:'Geist,sans-serif', fontSize:'.88rem', outline:'none', marginBottom:10
             }}
           />
           <button
             onClick={handleGuest}
             style={{
               width:'100%', padding:11, borderRadius:8, border:'1px solid var(--np)',
-              background:'var(--bg3)', color:'var(--np)', fontFamily:'Fredoka,sans-serif',
+              background:'var(--bg3)', color:'var(--np)', fontFamily:'Geist,sans-serif',
               fontSize:'.85rem', fontWeight:600, cursor:'pointer'
             }}
           >

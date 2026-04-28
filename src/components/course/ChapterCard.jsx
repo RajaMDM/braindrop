@@ -20,17 +20,17 @@ export default function ChapterCard({ chapter, index, unlocked }) {
 
   return (
     <motion.div
-      whileHover={unlocked ? { y: -1 } : {}}
-      whileTap={unlocked ? { scale: 0.995 } : {}}
+      whileHover={unlocked ? { borderColor: 'var(--border-strong)' } : {}}
+      whileTap={unlocked ? { scale: 0.997 } : {}}
       onClick={handleClick}
       style={{
-        background: 'var(--p-card)',
-        border: `1px solid ${isDone ? 'var(--p-green)' : 'var(--p-line)'}`,
-        borderRadius: 12,
+        background: 'var(--surface)',
+        border: `1px solid ${isDone ? 'var(--accent)' : 'var(--border)'}`,
+        borderRadius: 'var(--r-md)',
         padding: '14px 16px',
         cursor: unlocked ? 'pointer' : 'not-allowed',
         opacity: unlocked ? 1 : 0.55,
-        transition: 'border-color .2s, transform .15s',
+        transition: 'border-color var(--d-micro) var(--ease)',
         display: 'grid',
         gridTemplateColumns: 'auto 1fr auto',
         columnGap: 14,
@@ -39,12 +39,12 @@ export default function ChapterCard({ chapter, index, unlocked }) {
     >
       {/* Chapter number badge */}
       <div style={{
-        flexShrink: 0, width: 36, height: 36, borderRadius: 10,
-        background: isDone ? 'var(--p-green)' : 'var(--p-paper2)',
-        border: `1.5px solid ${isDone ? 'var(--p-green)' : 'var(--p-line2)'}`,
+        flexShrink: 0, width: 36, height: 36, borderRadius: 'var(--r-sm)',
+        background: isDone ? 'var(--accent)' : 'var(--subtle)',
+        border: `1px solid ${isDone ? 'var(--accent)' : 'var(--border)'}`,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontFamily: 'Inter,sans-serif', fontWeight: 700, fontSize: 14,
-        color: isDone ? '#fff' : 'var(--p-ink)',
+        fontFamily: "'Geist', sans-serif", fontWeight: 600, fontSize: 13,
+        color: isDone ? 'var(--accent-fg)' : 'var(--text)',
       }}>
         {!unlocked ? '🔒' : isDone ? '✓' : String(index + 1).padStart(2, '0')}
       </div>
@@ -52,25 +52,27 @@ export default function ChapterCard({ chapter, index, unlocked }) {
       {/* Title + progress */}
       <div style={{ minWidth: 0 }}>
         <div style={{
-          fontSize: 15, fontWeight: 600, color: unlocked ? 'var(--p-ink)' : 'var(--p-pencil)',
+          fontSize: 15, fontWeight: 500, color: unlocked ? 'var(--text)' : 'var(--text-tert)',
           letterSpacing: '-0.005em', marginBottom: 4,
         }}>
           {chapter.title}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{
-            flex: 1, height: 4, borderRadius: 2,
-            background: 'var(--p-paper2)', overflow: 'hidden', minWidth: 60, maxWidth: 200,
+            flex: 1, height: 3, borderRadius: 2,
+            background: 'var(--subtle)', overflow: 'hidden',
+            minWidth: 60, maxWidth: 200,
           }}>
             <div style={{
               height: '100%',
-              background: isDone ? 'var(--p-green)' : 'var(--p-blue)',
+              background: isDone ? 'var(--success)' : 'var(--accent)',
               width: `${progressPct}%`,
-              transition: 'width .4s',
+              transition: 'width var(--d-medium) var(--ease)',
             }} />
           </div>
-          <span className="font-mono-p" style={{
-            fontSize: 11, color: 'var(--p-pencil)', letterSpacing: '0.02em', whiteSpace: 'nowrap',
+          <span style={{
+            fontFamily: "'Geist Mono', monospace", fontSize: 11,
+            color: 'var(--text-tert)', letterSpacing: '0.02em', whiteSpace: 'nowrap',
           }}>
             {lessonsDone}/{totalLessons}
           </span>
@@ -79,8 +81,8 @@ export default function ChapterCard({ chapter, index, unlocked }) {
 
       {/* Right-side affordance */}
       <div style={{
-        fontSize: 16, color: isDone ? 'var(--p-green)' : 'var(--p-pencil)',
-        flexShrink: 0, fontFamily: 'Inter,sans-serif', fontWeight: 500,
+        fontSize: 14, color: isDone ? 'var(--accent)' : 'var(--text-tert)',
+        flexShrink: 0, fontFamily: "'Geist', sans-serif", fontWeight: 500,
       }}>
         {!unlocked ? '' : '›'}
       </div>

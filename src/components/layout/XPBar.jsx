@@ -30,7 +30,7 @@ export default function XPBar({ lastAI }) {
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: 'var(--t3)' }}>
         <span>{'\uD83D\uDD25'}</span>
-        <span style={{ color: 'var(--ny)', fontWeight: 700, fontFamily: "'Space Mono',monospace" }}>{streak}</span>
+        <span style={{ color: 'var(--ny)', fontWeight: 700, fontFamily: "'Geist Mono',monospace" }}>{streak}</span>
       </div>
       <motion.div
         animate={justGained ? { scale: [1, 1.2, 1] } : {}}
@@ -38,7 +38,7 @@ export default function XPBar({ lastAI }) {
         style={{ display: 'flex', alignItems: 'center', gap: 5, color: 'var(--t3)' }}
       >
         <span>&#x26A1;</span>
-        <span style={{ color: 'var(--ny)', fontWeight: 700, fontFamily: "'Space Mono',monospace" }}>{xp}</span>
+        <span style={{ color: 'var(--ny)', fontWeight: 700, fontFamily: "'Geist Mono',monospace" }}>{xp}</span>
         <span>XP</span>
       </motion.div>
       <div style={{
@@ -52,18 +52,18 @@ export default function XPBar({ lastAI }) {
         }} />
       </div>
       <div style={{
-        fontFamily: "'Space Mono',monospace", fontSize: '.65rem', color: 'var(--t3)',
+        fontFamily: "'Geist Mono',monospace", fontSize: '.65rem', color: 'var(--t3)',
       }}>
         Lvl {level.l} — {level.n}
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: 'var(--t3)', marginLeft: 'auto' }}>
         <span>{'\uD83D\uDCCA'}</span>
-        <span style={{ color: 'var(--ny)', fontWeight: 700, fontFamily: "'Space Mono',monospace" }}>{queryCount}</span>
+        <span style={{ color: 'var(--ny)', fontWeight: 700, fontFamily: "'Geist Mono',monospace" }}>{queryCount}</span>
         <span>Qs</span>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: 'var(--t3)' }}>
         <span>{'\uD83E\uDD16'}</span>
-        <span style={{ color: 'var(--ny)', fontWeight: 700, fontFamily: "'Space Mono',monospace" }}>
+        <span style={{ color: 'var(--ny)', fontWeight: 700, fontFamily: "'Geist Mono',monospace" }}>
           {lastAI || '\u2014'}
         </span>
       </div>

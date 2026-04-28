@@ -21,7 +21,7 @@ export default function QuizScore({ correct, total, xpEarned }) {
     >
       <div style={{
         fontSize: '2rem', fontWeight: 700,
-        fontFamily: "'Space Mono',monospace", color,
+        fontFamily: "'Geist Mono',monospace", color,
       }}>
         {correct}/{total}
       </div>
