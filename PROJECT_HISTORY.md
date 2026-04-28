@@ -69,6 +69,18 @@ Added NVIDIA (Llama 3.3 70B) as an AI provider via their OpenAI-compatible API. 
 
 ---
 
+## April 28, 2026 — First Formal Design System ("Quiet Competence")
+
+**Why this happened.** Twenty-four hours after shipping the F-themed chapter detail page, the founder reviewed the broader app and concluded the rest of BrainDrop "looks substandard, like a school project." The dark synthwave aesthetic from v6 worked when BrainDrop was four AI engines and a chat box, but no longer fit the multi-modal study companion the product had grown into. The decision: stop iterating surface-by-surface and establish a formal design system that every future surface can defend against.
+
+**The exploration.** /design-consultation was invoked with Apple Education + Notion + Linear/Vercel as brand references and "I can see myself getting better" as the emotional anchor — chosen over alternative anchors like "treats me like I'm smart" or "calm place to study." Three voices proposed independently (Claude main, an indie-studio Claude subagent in the background, and an attempted Codex consult that wasn't installed locally). The subagent independently arrived at the same emotional thesis ("older than they expected to feel") and contributed two genuinely novel ideas that were adopted: no streak counter on the home screen (sparkline one tap deeper) and a typographic Study Receipt replacing celebration screens.
+
+**What shipped.** DESIGN.md committed to repo root as the source of truth. CLAUDE.md updated to require future skills to read it before any visual decision. Visual preview page generated in `~/.gstack/projects/RajaMDM-braindrop/designs/design-system-20260428/preview.html` showing the system applied to four real BrainDrop surfaces (chapter detail, study receipt, AI tutor chat, progress dashboard) in both light and dark themes. The system: Fraunces variable serif for display, Geist for body and UI, Geist Mono for numerics; deep teal `#0d4d4a` as the only accent (lifted to `#2dd4bf` in dark mode); 4px spacing scale; soft shadows in three levels; one easing curve and four duration tokens. The four deliberate "risks" — no streak counter, serif display in kid-EdTech, one accent only, and typographic Study Receipts — are where BrainDrop earns its face vs. category convention.
+
+**The F resolution.** Yesterday's F-themed chapter detail design (cream paper, Caveat handwriting, doodled red stars, yellow highlighter sweeps) was approved at a moment when no system existed. Today's system retires F's decorative layer while preserving its information architecture (mastery ring, 4 stat cards, lesson rows with mini progress charts, next-up CTA). The codebase still runs the old F components — converting them to the Quiet Competence tokens is a separate engineering pass.
+
+---
+
 ## April 2026 — Course/Chapter Design Refresh (v7)
 
 **Why this happened.** The chapter detail experience had been the same since the original v6 release: tightly packed dark synthwave tiles where clicking a chapter expanded an inline lesson list. Functionally complete, but visually it treated students like users of an app rather than students of a chapter. With Grade 10 boards as the primary use case, the surface where students live the longest deserved its own design language.

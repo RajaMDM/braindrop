@@ -129,6 +129,50 @@ The `BOOKS` object in `index.html` only has entries for Grade 10 (mathematics, s
 
 ---
 
+## Brand Design System — "Quiet Competence" (April 28, 2026)
+
+### Source of truth: DESIGN.md
+All visual decisions across BrainDrop now defer to `DESIGN.md` at repo root. CLAUDE.md instructs future skills to read it before designing. Established by `/design-consultation` with brand references Apple Education / Notion / Linear / Vercel.
+
+### Why it exists
+Twenty-four hours after shipping F (the warm cream chapter-detail design), Raja audited the broader app and concluded the rest looks "substandard, like a school project." Surface-by-surface design wouldn't fix that — only a system would. /design-consultation produced DESIGN.md and a visual preview.
+
+### What it overrides
+- The legacy `--bg #0b0b14` synthwave dark + neon palette (purple, cyan, yellow, green, red) is officially deprecated.
+- Fredoka body font is replaced by Geist.
+- F's `.theme-paper` cream-and-handwriting scope is replaced by the new theme tokens (light + dark).
+- Caveat handwriting is retired — Fraunces italic carries narrative warmth instead.
+
+### What's kept from F
+- F's information architecture for chapter detail (mastery ring, 4 stat cards, lesson rows with mini progress bars, next-up CTA).
+- F's "study mode" wayfinding intuition (different visual register for course/chapter vs. chat) — but achieved via the unified light/dark theme system, not a scoped class.
+
+### Token namespace
+Quiet Competence ships its tokens directly on `:root` (light) and a sibling `[data-theme="dark"]` selector. No more F-style scoped namespacing. Tokens follow the prefix-free convention (e.g. `--bg`, `--surface`, `--text`, `--accent`) — see DESIGN.md "Color" section for the full table.
+
+### The four risks (architectural decisions, not just design)
+1. **No streak counter on home** — affects gamification logic in `useXP.js` and any future `Home.jsx`. Streaks compute server-side (or in localStorage) but don't surface on home.
+2. **Fraunces serif as display** — adds 1 font family to the bundle. Mitigation: load only weights actually used (400 italic + 500). Variable axis used at runtime via `font-variation-settings`.
+3. **One accent color** — chart components must use luminance steps within the teal hue, not multi-hue palettes. Affects future analytics dashboard implementation.
+4. **Typographic Study Receipt** — a NEW component this system introduces. Triggered at end-of-session (lesson complete, quiz submit). Data sources: `useCourseProgress.completeLesson` return + a new sessionMetrics tracker.
+
+### Migration plan (separate work)
+The codebase still runs F + synthwave. Migrating to Quiet Competence is a multi-phase task:
+1. Update `src/styles/index.css` — replace `:root` synthwave with Quiet Competence light tokens, add `[data-theme="dark"]` block, load new fonts in `index.html`.
+2. Re-skin existing surfaces in waves: course/chapter detail (refactor F's React components in place), then chat hero, classroom, assessments, analytics.
+3. Build the Study Receipt component from scratch.
+4. Audit microcopy across the app and tighten per the voice rules in DESIGN.md.
+
+### Schema gaps DESIGN.md surfaces
+The Study Receipt and 30-day-sparkline streak view need data the current `useCourseProgress` schema doesn't track:
+- Per-session metrics (start/end timestamps, problems attempted, accuracy delta, time-to-first-correct)
+- Daily activity log (for sparkline rendering)
+- Quiz scores per lesson (for "quiz avg" stat — already flagged in the F TECH_MEMORY entry)
+
+These are storage schema additions, not design decisions. Plan them when migrating.
+
+---
+
 ## Course/Chapter Design System (April 2026)
 
 ### Theme Scoping — `.theme-paper` namespace

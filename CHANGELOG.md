@@ -4,6 +4,40 @@
 
 ---
 
+## April 28, 2026 — DESIGN.md Established ("Quiet Competence")
+
+### First formal design system
+- Created DESIGN.md at repo root as source of truth for all visual decisions
+- Updated CLAUDE.md to require future skills to read DESIGN.md before designing
+- System: "Quiet Competence" — editorial calm × data-as-aesthetic
+- **Anchor:** "I can see myself getting better"
+- **Type stack:** Fraunces (display) + Geist (body) + Geist Mono (numerics) — all free
+- **Accent:** deep teal `#0d4d4a` light / `#2dd4bf` dark — ONE color only
+- **Themes:** light + dark, both first-class
+- **Spacing:** 4px base scale
+- **Motion:** single Apple-spring easing curve, four duration tokens
+- **Impact:** every future design-shotgun, design-review, and component decision now has a rulebook to defend against. Surfaces stop drifting.
+
+### Four deliberate risks (where BrainDrop earns its face)
+- No streak counter on home screen (sparkline one tap deeper)
+- Fraunces serif display in kid-EdTech category (departure from sans-serif convention)
+- One accent color only (restraint as flex)
+- Typographic Study Receipt replaces celebration screens
+- **Impact:** anti-Duolingo posture. Treats students as serious readers, not players.
+
+### F resolution
+- F's information architecture survives (mastery ring, 4 stat cards, lesson rows with mini-charts, next-up CTA)
+- F's decorative layer retires (cream paper, Caveat handwriting, doodled stars, yellow highlighter sweep, rotated angles)
+- Component migration to new tokens is a separate engineering pass
+- **Impact:** F was a one-surface win at a moment when no system existed; now a system exists and F gets re-rendered to fit it
+
+### Visual preview
+- Preview page at `~/.gstack/projects/RajaMDM-braindrop/designs/design-system-20260428/preview.html`
+- Shows the system applied to 4 real surfaces (chapter detail, study receipt, AI tutor, progress dashboard) in both themes
+- **Impact:** any future stakeholder review (parents, beta students, Raja's daughters) can see the brand without reading code
+
+---
+
 ## April 28, 2026 — v7 Course/Chapter Design Refresh
 
 ### Variant F — "Warm Dashboard" theme on chapter detail

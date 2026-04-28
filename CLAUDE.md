@@ -57,6 +57,12 @@ API keys are managed server-side in Cloudflare Worker secrets.
 - Never add providers to the UI that don't have actual keys in the Worker.
 - Never introduce backend dependencies without discussing migration path and cost.
 
+## Design System
+Always read DESIGN.md before making any visual or UI decisions.
+The system is "Quiet Competence" — Fraunces serif display, Geist body+UI, Geist Mono numerics, deep teal `#0d4d4a` as the only accent. Light + dark themes both first-class.
+All font choices, color tokens, spacing, motion, microcopy voice, and the four deliberate risks are defined in DESIGN.md. Do not deviate without explicit user approval.
+The codebase is currently still on the legacy dark-synthwave + Fredoka palette; migration to Quiet Competence is a separate task. New surfaces should be built directly in the new system.
+
 ## Skill routing
 
 When the user's request matches an available skill, invoke it via the Skill tool. When in doubt, invoke the skill.

@@ -89,6 +89,52 @@ The data structure allows both — courses for structured learning, topic chips 
 
 ---
 
+## "Why establish a formal design system instead of just iterating surface by surface?"
+
+**Answer:** Without a system, every surface ships as a one-off. Yesterday's F-themed chapter detail was a one-off. Today's chat redesign was a one-off. Tomorrow's classroom redesign would be a one-off. The result is an app that looks like 8 different teams shipped 8 different visions — exactly what was making BrainDrop feel "like a school project."
+
+A design system is a **forcing function for coherence**. DESIGN.md gives every future design decision a rulebook to defend against. New surfaces inherit the type stack, color tokens, spacing, motion, and microcopy voice without rediscovering them. Design-shotgun sessions for new surfaces start from the system's constraints instead of blank canvas. Visual review (`/design-review`) has objective criteria.
+
+**Trade-off:** ~30 minutes of system design before any surface change ships. Feels like a delay. Pays for itself the second time someone asks "should this button be pill-shaped or rounded square?" and the answer is in the document instead of debate.
+
+## "Why 'Quiet Competence' as the design direction instead of something more fun for kids?"
+
+**Answer:** Three reasons stack.
+
+First, the user picked the memorable thing — "I can see myself getting better." That's intrinsic motivation, not extrinsic. Every kid-EdTech app builds for extrinsic motivation (streaks, hearts, mascots, dopamine loops). Designing for "I can see myself getting better" demands a different visual vocabulary: data viz prominence, restraint, tools rather than toys.
+
+Second, the audience runs from Grade 7 (12yo) to Grade 10 (15yo) and beyond. A "fun" kids' aesthetic ages out fast — a 15-year-old prepping for boards is offended by a UI designed for 11-year-olds. Quiet Competence ages with the student rather than against them.
+
+Third, the category is full. Every kid-EdTech app converges on cartoon palettes + mascots + gamification. The strategic position to occupy is the **opposite** — the serious tool. Notion for teenagers. Linear for studying. The opportunity is to be the FIRST tool in the category that respects students as readers, not players.
+
+**Trade-off:** Lower 7-day retention vs. Duolingo-style loops. We commit to retention via mastery and progress visibility, not via streak guilt-trips.
+
+## "Why no streak counter on the home screen?"
+
+**Answer:** Streaks-as-flame-numbers are a guilt mechanism. The student who missed yesterday opens the app to "Streak: 0 ❌" and their reward for showing up is a public failure. That's a category-standard pattern — it's also why kids quit Duolingo.
+
+DESIGN.md's Risk 1 says: streaks live one tap deeper, rendered as a 30-day sparkline. Consistency is shown as a *trend*, not enforced as a *leash*. The kid who missed yesterday opens to chapter progress, not a guilt-trip. The streak data is still there for the kid who wants it — just not on the front page.
+
+**Trade-off:** Measurably lower 7-day retention compared to apps that lead with streak guilt. We trade short-term retention for dignity and long-term trust. If retention falls below product viability, this is a reversible decision — the streak counter can be added back to home in a future version.
+
+## "Why one accent color (deep teal) instead of a richer multi-color palette?"
+
+**Answer:** Restraint is a brand statement. Most kid-EdTech UIs use 4–6 colors for "fun." When everything is colorful, color stops carrying meaning — it's just visual noise.
+
+When teal appears in BrainDrop, it ALWAYS means something earned: a completed lesson, a mastery milestone, an active study session, a chart line moving up. The color carries signal weight that multi-color palettes lose.
+
+**Trade-off:** Charts and dashboards are constrained to teal + neutrals (using luminance steps within the hue). Multi-series comparisons (e.g., "your three subjects side-by-side") will require darker/lighter teal variants instead of red/green/blue legends. Acceptable constraint — the data viz still reads, just disciplined.
+
+## "Why a printable Study Receipt instead of celebration screens?"
+
+**Answer:** Celebration screens are the extrinsic-motivation pattern transplanted from gambling and slot machines. "You did the thing! Here's confetti!" That's training a dopamine response, not building a learning habit.
+
+The Study Receipt is the OPPOSITE pattern — purely informational. Timestamp, chapter, problems attempted, accuracy delta, time-to-first-correct. The numbers are the reward. It's the Linear / Vercel "I am operating at a higher level" feeling, mapped to a 14-year-old's study session.
+
+The receipt format also makes the data **shareable and printable** — a parent who wants visibility into their child's study session has a real artifact, not a screenshot of confetti.
+
+**Trade-off:** Some parents and students may initially miss the cheerful UX. Onboarding will name this choice ("BrainDrop doesn't celebrate — it shows you the data, because that's what matters"). If there's strong negative feedback, we can A/B a celebration variant.
+
 ## "Why a warm cream theme on chapter detail when the rest of the app is dark synthwave?"
 
 **Answer:** Two reasons — context-switching as wayfinding, and study-mode as a distinct mental space.
