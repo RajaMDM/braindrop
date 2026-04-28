@@ -1,8 +1,48 @@
 {
   "name": "braindrop",
+  "version": "7.0.0",
+  "description": "A free, AI-powered CBSE study companion for school students. Built for two daughters; opened to every student everywhere.",
   "private": true,
-  "version": "6.0.0",
   "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "Raja Shahnawaz Soni",
+    "email": "raja.cloudmdm@gmail.com",
+    "url": "https://github.com/RajaMDM"
+  },
+  "homepage": "https://rajamdm.github.io/braindrop",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RajaMDM/braindrop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RajaMDM/braindrop/issues"
+  },
+  "keywords": [
+    "education",
+    "edtech",
+    "cbse",
+    "ncert",
+    "india",
+    "study-tool",
+    "ai-tutor",
+    "llm",
+    "rag",
+    "multi-agent",
+    "react",
+    "vite",
+    "claude",
+    "gemini",
+    "groq",
+    "nvidia",
+    "cloudflare-workers",
+    "github-pages",
+    "free",
+    "open-source"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",

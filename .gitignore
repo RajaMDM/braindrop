@@ -1,3 +1,46 @@
+# Dependencies
 node_modules/
+
+# Build output
 dist/
+.parcel-cache/
+
+# Cloudflare Worker
 .wrangler/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# macOS / OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Misc
+.cache/
+.turbo/
+.vercel/

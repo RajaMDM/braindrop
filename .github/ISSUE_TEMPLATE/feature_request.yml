@@ -1,0 +1,54 @@
+name: Feature request
+description: Suggest a new feature or enhancement for BrainDrop
+title: "[feature] "
+labels: ["enhancement"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature. Frame it from the student's perspective if you can — that's how decisions get made.
+
+  - type: textarea
+    id: student-problem
+    attributes:
+      label: What student problem does this solve?
+      description: Describe the situation a real student is in that the current app doesn't address.
+      placeholder: e.g. "Students prepping for boards have no way to simulate a timed exam in the current app."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you build?
+      description: Describe the feature concretely. Sketches, mockups, links to similar features in other apps all welcome.
+    validations:
+      required: true
+
+  - type: textarea
+    id: mvp
+    attributes:
+      label: What's the simplest version that delivers value?
+      description: We ship MVPs first. What's the smallest cut of this feature that's still useful?
+    validations:
+      required: true
+
+  - type: textarea
+    id: non-goals
+    attributes:
+      label: What this feature should NOT do
+      description: Explicit non-goals help reviewers understand scope.
+      placeholder: e.g. "This shouldn't replace the existing Quiz mode; it should be a separate timed-exam mode."
+
+  - type: textarea
+    id: design-fit
+    attributes:
+      label: How does this fit DESIGN.md?
+      description: BrainDrop has a strict design system. Does this feature inherit existing tokens, or does it propose new ones? See [DESIGN.md](https://github.com/RajaMDM/braindrop/blob/main/DESIGN.md).
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else did you think about, and why is your proposal better?

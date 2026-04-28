@@ -1,0 +1,56 @@
+cff-version: 1.2.0
+title: "BrainDrop: A free AI-powered CBSE study companion for school students"
+message: "If you use this software, the design system, or its multi-agent classroom approach in your work, please cite it as below."
+type: software
+authors:
+  - given-names: "Raja Shahnawaz"
+    family-names: "Soni"
+    email: raja.cloudmdm@gmail.com
+    affiliation: "Independent"
+    orcid: "https://orcid.org/0009-0000-0000-0000"
+identifiers:
+  - type: url
+    value: "https://github.com/RajaMDM/braindrop"
+    description: "Source code repository"
+  - type: url
+    value: "https://rajamdm.github.io/braindrop"
+    description: "Live demo"
+repository-code: "https://github.com/RajaMDM/braindrop"
+url: "https://rajamdm.github.io/braindrop"
+abstract: >
+  BrainDrop is a free, open-source AI-powered study companion for Indian
+  school students preparing for CBSE board examinations. It integrates four
+  large language models (NVIDIA Llama 3.3 70B, Groq Llama 3.3, Google
+  Gemini 2.5 Flash, Anthropic Claude Haiku 4.5) with a client-side TF-IDF
+  RAG pipeline over NCERT textbook content. Distinctive features include a
+  multi-agent classroom mode (grade-specific Teacher plus Classmates with
+  separate personalities), AI-generated interactive HTML simulations called
+  MagicBlocks, and the "Quiet Competence" design system that deliberately
+  rejects the gamified-celebration aesthetic typical of category-leading
+  EdTech apps. The project ships with no API keys in the browser; all model
+  calls route through a Cloudflare Worker proxy.
+keywords:
+  - education
+  - edtech
+  - cbse
+  - ncert
+  - india
+  - artificial-intelligence
+  - large-language-models
+  - rag
+  - retrieval-augmented-generation
+  - multi-agent-systems
+  - student-tools
+  - free-software
+  - open-source
+license: MIT
+version: "7.0.0"
+date-released: "2026-04-28"
+preferred-citation:
+  type: software
+  title: "BrainDrop: A free AI-powered CBSE study companion for school students"
+  authors:
+    - given-names: "Raja Shahnawaz"
+      family-names: "Soni"
+  year: 2026
+  url: "https://github.com/RajaMDM/braindrop"

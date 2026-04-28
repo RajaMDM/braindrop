@@ -1,0 +1,86 @@
+name: Bug report
+description: Something is broken or behaves unexpectedly in BrainDrop
+title: "[bug] "
+labels: ["bug"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug.
+
+        Most BrainDrop users are students on phones with patchy connectivity, so the more specific you can be about your environment, the faster the fix.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear, concise description of what went wrong.
+      placeholder: e.g. "I clicked Resume on chapter 4, the page froze for 5s, then nothing happened."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+      placeholder: e.g. "I expected the next lesson to mark complete and the mastery ring to fill."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps so we can follow exactly what you did.
+      value: |
+        1. Open https://rajamdm.github.io/braindrop
+        2. Sign in as ...
+        3. Click ...
+        4. ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      options:
+        - Phone (Android)
+        - Phone (iPhone)
+        - Tablet
+        - Laptop / desktop
+        - Other (mention in description)
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: e.g. "Chrome 130 on Android 14", "Safari 17 on iOS 18"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: reproducible
+    attributes:
+      label: Is this reproducible?
+      options:
+        - Every time
+        - Sometimes
+        - Once, can't reproduce
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots / DevTools console output
+      description: Drag images here. If you can paste any console errors (red text in DevTools), even better.
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else worth knowing?
+      placeholder: Connection type, what you were studying, time of day, etc.

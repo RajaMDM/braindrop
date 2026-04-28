@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Live demo
+    url: https://rajamdm.github.io/braindrop
+    about: Try the live app first — many "issues" are just questions about how a feature works.
+  - name: Documentation
+    url: https://github.com/RajaMDM/braindrop#documentation
+    about: README + DESIGN.md + ROADMAP.md + TECH_MEMORY.md cover most questions about the project.
+  - name: Email the maintainer
+    url: mailto:raja.cloudmdm@gmail.com
+    about: For private concerns, security issues, or partnership inquiries.
